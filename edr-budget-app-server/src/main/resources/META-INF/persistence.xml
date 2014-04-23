@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                        http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1">
+
+	<persistence-unit name="budgetPersistenceUnit">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		
+		<class>org.edr.po.jpa.BankrekeningPO</class>
+		
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
+			<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy" />
+			<property name="hibernate.max_fetch_depth" value="3" />
+			<property name="jadira.usertype.autoRegisterUserTypes"
+				value="true" />
+			<property name="jadira.usertype.databaseZone" value="jvm" />
+		</properties>
+	</persistence-unit>
+
+
+</persistence>

@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import org.edr.po.Bankrekening;
 
 @Entity
+@Table(name="bankrekening")
 public class BankrekeningPO extends JpaIdentifiableVersioned implements Bankrekening {
 
 	private String rekeningnr;

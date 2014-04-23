@@ -2,10 +2,11 @@ drop table if exists boeking;
 drop table if exists budget;
 drop table if exists bankrekening;
 drop table if exists boekrekening;
+drop table if exists nextkey;
 
 create table bankrekening
 (
-	id integer not null auto_increment,
+	id bigint not null auto_increment,
 	version integer not null,
 	rekeningnr varchar(50) not null,
 	omschrijving varchar(100) not null,
@@ -17,7 +18,7 @@ create table bankrekening
 
 create table boekrekening
 (
-	id integer not null auto_increment,
+	id bigint not null auto_increment,
 	version integer not null,
 	rekeningnr varchar(15) not null,
 	omschrijving varchar(100) not null,
@@ -29,10 +30,10 @@ create table boekrekening
 
 create table boeking
 (
-	id integer not null auto_increment,
+	id bigint not null auto_increment,
 	version integer not null,
-	bankrekeningid integer not null,
-	boekrekeningid integer not null,
+	bankrekeningid bigint not null,
+	boekrekeningid bigint not null,
 	omschrijving varchar(100) not null,
 	datum date not null,
 	bedrag decimal(10,2),
@@ -44,12 +45,20 @@ create table boeking
 
 create table budget
 (
-	id integer not null auto_increment,
+	id bigint not null auto_increment,
 	version integer not null,
 	jaar integer not null,
-	boekrekeningid integer not null,
+	boekrekeningid bigint not null,
 	bedrag decimal(10,2) not null,
 	
 	constraint pk_budget primary key (id),
 	constraint fk_budget_boekrekening foreign key (boekrekeningid) references boekrekening(id)
+);
+
+create table nextkey
+(
+	entityname varchar(255) not null,
+	sequence_next_hi_value bigint not null,
+
+	constraint pk_nextkey primary key(entityname)
 );
