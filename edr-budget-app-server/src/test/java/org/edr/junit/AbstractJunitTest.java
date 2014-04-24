@@ -16,6 +16,7 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.Session;
@@ -63,7 +64,8 @@ public abstract class AbstractJunitTest {
 	@BeforeClass
 	public static void fillExpectedDataSet() throws DataSetException {
 		logger.info("Opvullen dataset van dbunit met gewenste data...");
-		expectedDataSet = new FlatXmlDataSetBuilder().build(AbstractJunitTest.class.getResource("/org/edr/dbunit/eval-data.xml"));
+		expectedDataSet = new ReplacementDataSet(new FlatXmlDataSetBuilder().build(AbstractJunitTest.class.getResource("/org/edr/dbunit/eval-data.xml")));
+		((ReplacementDataSet) expectedDataSet).addReplacementObject("[null]", null);
 	}
 
 	public void assertSQL(String tableName, String sql) {
