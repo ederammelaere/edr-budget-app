@@ -22,6 +22,8 @@ import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -33,6 +35,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @Transactional
 @TransactionConfiguration
 public abstract class AbstractJunitTest {
+
+	private static final Logger logger = LoggerFactory.getLogger(AbstractJunitTest.class);
 
 	private static boolean initWithDbunitDone = false;
 	private static IDataSet expectedDataSet = null;
@@ -46,6 +50,8 @@ public abstract class AbstractJunitTest {
 	@BeforeTransaction
 	public void initWithDbunit() throws SQLException, DatabaseUnitException {
 		if (!initWithDbunitDone) {
+			logger.info("Doe initialisatie testdata met dbunit...");
+
 			IDatabaseConnection conn = new DatabaseDataSourceConnection(budgetDataSource);
 			IDataSet dataSet = new FlatXmlDataSetBuilder().build(AbstractJunitTest.class.getResource("/org/edr/dbunit/init-data.xml"));
 			DatabaseOperation.CLEAN_INSERT.execute(conn, dataSet);
@@ -56,6 +62,7 @@ public abstract class AbstractJunitTest {
 
 	@BeforeClass
 	public static void fillExpectedDataSet() throws DataSetException {
+		logger.info("Opvullen dataset van dbunit met gewenste data...");
 		expectedDataSet = new FlatXmlDataSetBuilder().build(AbstractJunitTest.class.getResource("/org/edr/dbunit/eval-data.xml"));
 	}
 

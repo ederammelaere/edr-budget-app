@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+	<!-- onderstaande lijn zorgt ervoor dat de standaard boodschappen van logback onderdrukt worden -->
+	<statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{MMM dd yyyy HH:mm:ss.SSS} %-5p %t %c - %msg%n</Pattern>
+        </layout>  
+    </appender>  
+
+    <logger name="org.edr" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    
+    <logger name="org.dbunit.dataset.AbstractTableMetaData">
+    	<level value="ERROR" />
+    	<appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <root>
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />  
+    </root> 
+    
+</configuration>

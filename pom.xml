@@ -19,6 +19,7 @@
 		<spring.version>4.0.3.RELEASE</spring.version>
 		<spring.jpa.version>1.5.2.RELEASE</spring.jpa.version>
 		<junit.version>4.11</junit.version>
+		<logback.version>1.0.13</logback.version>
 		<dbunit.version>2.4.9</dbunit.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
 		<mysql.version>5.1.30</mysql.version>
@@ -52,6 +53,13 @@
 				<artifactId>dbunit</artifactId>
 				<version>${dbunit.version}</version>
 				<scope>test</scope>
+			</dependency>
+
+			<!-- logging -->
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>${logback.version}</version>
 			</dependency>
 
 			<!-- hibernate -->
