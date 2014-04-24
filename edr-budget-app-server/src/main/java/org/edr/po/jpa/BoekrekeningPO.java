@@ -1,22 +1,20 @@
 package org.edr.po.jpa;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import org.edr.po.Bankrekening;
+import org.edr.po.Boekrekening;
 import org.edr.util.jpa.JpaIdentifiableVersioned;
 
 @Entity
-@Table(name = "bankrekening")
-public class BankrekeningPO extends JpaIdentifiableVersioned implements Bankrekening {
+@Table(name = "boekrekening")
+public class BoekrekeningPO extends JpaIdentifiableVersioned implements Boekrekening {
 
 	private String rekeningnr;
 	private String omschrijving;
-	private BigDecimal startSaldo;
-	private BigDecimal saldo;
+	private Boolean boekbaar;
+	private Boolean budgeteerbaar;
 
 	@Override
 	@Column(name = "rekeningnr")
@@ -41,25 +39,25 @@ public class BankrekeningPO extends JpaIdentifiableVersioned implements Bankreke
 	}
 
 	@Override
-	@Column(name = "startsaldo")
-	public BigDecimal getStartSaldo() {
-		return startSaldo;
+	@Column(name = "boekbaar")
+	public Boolean getBoekbaar() {
+		return boekbaar;
 	}
 
 	@Override
-	public void setStartSaldo(BigDecimal startSaldo) {
-		this.startSaldo = startSaldo;
+	public void setBoekbaar(Boolean boekbaar) {
+		this.boekbaar = boekbaar;
 	}
 
 	@Override
-	@Column(name = "saldo")
-	public BigDecimal getSaldo() {
-		return saldo;
+	@Column(name = "budgeteerbaar")
+	public Boolean getBudgeteerbaar() {
+		return budgeteerbaar;
 	}
 
 	@Override
-	public void setSaldo(BigDecimal saldo) {
-		this.saldo = saldo;
+	public void setBudgeteerbaar(Boolean budgeteerbaar) {
+		this.budgeteerbaar = budgeteerbaar;
 	}
 
 }

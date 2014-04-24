@@ -35,6 +35,7 @@
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
+		<property name="packagesToScan" value="org.edr.util.jpa" />
 		<property name="jpaProperties">
 			<props>
 				<prop key="hibernate.show_sql">${jpa.show.sql}</prop>

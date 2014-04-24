@@ -1,0 +1,2 @@
+@org.hibernate.annotations.TypeDefs({ @org.hibernate.annotations.TypeDef(name = "localDateType", defaultForType = java.time.LocalDate.class, typeClass = LocalDateUserType.class), })
+package org.edr.util.jpa;

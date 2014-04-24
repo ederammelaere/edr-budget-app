@@ -42,10 +42,10 @@ public abstract class AbstractJunitTest {
 	private static IDataSet expectedDataSet = null;
 
 	@Autowired
-	DataSource budgetDataSource;
+	private DataSource budgetDataSource;
 
 	@PersistenceContext
-	EntityManager entityManager;
+	protected EntityManager entityManager;
 
 	@BeforeTransaction
 	public void initWithDbunit() throws SQLException, DatabaseUnitException {

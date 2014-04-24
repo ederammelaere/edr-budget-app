@@ -4,21 +4,11 @@ import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.edr.junit.AbstractJunitTest;
 import org.edr.po.jpa.BankrekeningPO;
 import org.junit.Test;
 
 public class BankrekeningTest extends AbstractJunitTest {
-
-	private EntityManager entityManager;
-
-	@PersistenceContext
-	public void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
 
 	@Test
 	public void testToEasy() {

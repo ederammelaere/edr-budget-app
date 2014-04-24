@@ -2,5 +2,12 @@
 <dataset>
 	<bankrekening id="1" version="0" rekeningnr="BE27 0000 1111 2222" omschrijving="test-rekening" startsaldo="100.25" saldo="1000.27"/>
 	<bankrekening id="2" version="0" rekeningnr="BE27 0000 1111 3333" omschrijving="test-rekening2" startsaldo="10.25" saldo="1979.27"/>
+	
+	<boekrekening id="1" version="0" rekeningnr="110000" omschrijving="cash uitgaven" boekbaar="true" budgeteerbaar="true"/>
+	
+	<boeking id="1" version="0" bankrekeningid="1" boekrekeningid="1" omschrijving="sigaretten" datum="2014-04-24" bedrag="4.7"/>
+	
 	<nextkey entityname="bankrekening" sequence_next_hi_value="2" />
+	<nextkey entityname="boekrekening" sequence_next_hi_value="2" />
+	<nextkey entityname="boeking" sequence_next_hi_value="2" />
 </dataset>

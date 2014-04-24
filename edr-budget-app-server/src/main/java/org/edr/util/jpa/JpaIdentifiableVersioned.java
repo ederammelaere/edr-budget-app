@@ -1,4 +1,4 @@
-package org.edr.po.jpa;
+package org.edr.util.jpa;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

@@ -9,4 +9,7 @@
 	<bankrekening002 id="1" version="1" rekeningnr="BE27 0000 1111 2222"
 		omschrijving="Bijgewerkte omschrijving" startsaldo="100.25" saldo="1000.27" />
 		
+	<!-- BoekingTest::testPersist -->
+	<boeking003 id="10" version="0" bankrekeningid="2" boekrekeningid="1" omschrijving="test" datum="2014-04-25" bedrag="3.70"/>
+		
 </dataset>

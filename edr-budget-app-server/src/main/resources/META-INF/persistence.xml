@@ -9,7 +9,10 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
 		<class>org.edr.po.jpa.BankrekeningPO</class>
-		
+		<class>org.edr.po.jpa.BoekrekeningPO</class>
+		<class>org.edr.po.jpa.BoekingPO</class>
+		<class>org.edr.po.jpa.BudgetPO</class>
+				
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="validate" />
