@@ -13,12 +13,13 @@
 	<modules>
 		<module>edr-budget-app-server</module>
 	</modules>
-	
+
 	<properties>
 		<hibernate.version>4.3.5.Final</hibernate.version>
 		<spring.version>4.0.3.RELEASE</spring.version>
 		<spring.jpa.version>1.5.2.RELEASE</spring.jpa.version>
-		<junit.version>3.8.1</junit.version>
+		<junit.version>4.11</junit.version>
+		<dbunit.version>2.4.9</dbunit.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
 		<mysql.version>5.1.30</mysql.version>
 	</properties>
@@ -46,7 +47,13 @@
 				<version>${junit.version}</version>
 				<scope>test</scope>
 			</dependency>
-			
+			<dependency>
+				<groupId>org.dbunit</groupId>
+				<artifactId>dbunit</artifactId>
+				<version>${dbunit.version}</version>
+				<scope>test</scope>
+			</dependency>
+
 			<!-- hibernate -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -58,7 +65,7 @@
 				<artifactId>hibernate-entitymanager</artifactId>
 				<version>${hibernate.version}</version>
 			</dependency>
-			
+
 			<!-- spring -->
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -75,14 +82,20 @@
 				<artifactId>spring-data-jpa</artifactId>
 				<version>${spring.jpa.version}</version>
 			</dependency>
-			
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+				<scope>test</scope>
+			</dependency>
+
 			<!-- c3p0 -->
 			<dependency>
 				<groupId>c3p0</groupId>
 				<artifactId>c3p0</artifactId>
 				<version>${c3p0.version}</version>
 			</dependency>
-			
+
 			<!-- mysql connector -->
 			<dependency>
 				<groupId>mysql</groupId>
