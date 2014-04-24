@@ -1,4 +1,4 @@
-package org.edr.po;
+package org.edr.util.jpa;
 
 public interface IdentifiableVersioned {
 

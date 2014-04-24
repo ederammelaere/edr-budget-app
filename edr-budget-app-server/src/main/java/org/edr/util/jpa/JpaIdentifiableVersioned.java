@@ -7,8 +7,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.TableGenerator;
 import javax.persistence.Version;
 
-import org.edr.po.IdentifiableVersioned;
-
 @MappedSuperclass
 public class JpaIdentifiableVersioned implements IdentifiableVersioned {
 

@@ -45,7 +45,7 @@ public class BudgetApp {
 		p.put("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "OFF");
 		System.setProperties(p);
 
-		ApplicationContext context = new ClassPathXmlApplicationContext("org/edr/spring/bundle.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("org/edr/spring/server-bundle.xml");
 		BudgetApp app = (BudgetApp) context.getBean("app");
 		app.createBankrekening();
 		((ConfigurableApplicationContext) context).close();

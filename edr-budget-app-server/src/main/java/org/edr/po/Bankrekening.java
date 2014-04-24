@@ -2,6 +2,8 @@ package org.edr.po;
 
 import java.math.BigDecimal;
 
+import org.edr.util.jpa.IdentifiableVersioned;
+
 public interface Bankrekening extends IdentifiableVersioned {
 
 	String getRekeningnr();

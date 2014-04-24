@@ -3,6 +3,8 @@ package org.edr.po;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.edr.util.jpa.IdentifiableVersioned;
+
 public interface Boeking extends IdentifiableVersioned {
 
 	Bankrekening getBankrekening();
