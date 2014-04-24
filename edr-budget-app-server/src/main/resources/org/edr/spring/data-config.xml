@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
       					http://www.springframework.org/schema/beans/spring-beans.xsd
-        				http://www.springframework.org/schema/context 
-        				http://www.springframework.org/schema/context/spring-context-4.0.xsd
         				http://www.springframework.org/schema/tx
-                        http://www.springframework.org/schema/tx/spring-tx.xsd">
-                        
-    <bean id="app" class="org.edr.sandbox.BudgetApp"/>
-    
-    <context:annotation-config />
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<context:annotation-config />
+	<tx:annotation-driven />
 
 	<bean id="budgetDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
@@ -26,11 +25,6 @@
 		<property name="maxPoolSize" value="${c3p0.maxPoolSize}" />
 		<property name="maxIdleTime" value="${c3p0.maxIdleTime}" />
 	</bean>
-
-	<context:property-placeholder
-		location="classpath:/org/edr/conf/application.properties" />
-
-	<tx:annotation-driven />
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
 		p:entityManagerFactory-ref="entityManagerFactory" />

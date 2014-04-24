@@ -34,7 +34,7 @@ public class BudgetApp {
 	}
 	
 	public static void main(String[] args) {
-		ApplicationContext context = new ClassPathXmlApplicationContext("org/edr/spring/application-context.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("org/edr/spring/bundle.xml");
 		BudgetApp app = (BudgetApp) context.getBean("app");
 		app.createBankrekening();		
 		((ConfigurableApplicationContext)context).close();
