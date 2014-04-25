@@ -27,4 +27,8 @@ public interface Boeking extends IdentifiableVersioned {
 
 	void setBedrag(BigDecimal bedrag);
 
+	void setJournaal(Journaal journaal);
+
+	Journaal getJournaal();
+
 }

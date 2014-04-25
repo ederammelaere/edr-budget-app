@@ -12,6 +12,7 @@
 		<class>org.edr.po.jpa.BoekrekeningPO</class>
 		<class>org.edr.po.jpa.BoekingPO</class>
 		<class>org.edr.po.jpa.BudgetPO</class>
+		<class>org.edr.po.jpa.JournaalPO</class>
 				
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" />

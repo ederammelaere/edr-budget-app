@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import org.edr.po.Bankrekening;
 import org.edr.po.Boeking;
 import org.edr.po.Boekrekening;
+import org.edr.po.Journaal;
 import org.edr.util.jpa.JpaIdentifiableVersioned;
 
 @Entity
@@ -23,6 +24,7 @@ public class BoekingPO extends JpaIdentifiableVersioned implements Boeking {
 	private String omschrijving;
 	private LocalDate datum;
 	private BigDecimal bedrag;
+	private Journaal journaal;
 
 	@Override
 	@ManyToOne(targetEntity = BankrekeningPO.class)
@@ -79,6 +81,18 @@ public class BoekingPO extends JpaIdentifiableVersioned implements Boeking {
 	@Override
 	public void setBedrag(BigDecimal bedrag) {
 		this.bedrag = bedrag;
+	}
+
+	@Override
+	@ManyToOne(targetEntity = JournaalPO.class)
+	@JoinColumn(name = "journaalid")
+	public Journaal getJournaal() {
+		return journaal;
+	}
+
+	@Override
+	public void setJournaal(Journaal journaal) {
+		this.journaal = journaal;
 	}
 
 }
