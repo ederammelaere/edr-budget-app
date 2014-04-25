@@ -5,6 +5,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
       					http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="app" class="org.edr.sandbox.BudgetApp" />
+	<bean id="journaalService" class="org.edr.services.impl.StandaardJournaalService" />
 
 </beans>

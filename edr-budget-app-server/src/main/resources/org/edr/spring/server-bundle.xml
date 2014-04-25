@@ -7,6 +7,6 @@
 
 	<import resource="data-config.xml"/>
 	<import resource="property-config.xml"/>
-	<import resource="application.xml"/>
+	<import resource="services.xml"/>
 
 </beans>
