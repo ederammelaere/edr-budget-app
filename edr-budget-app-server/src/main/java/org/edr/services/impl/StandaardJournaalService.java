@@ -132,8 +132,8 @@ public class StandaardJournaalService extends StandaardAbstractService implement
 			int index = 0;
 			this.rekening = lijn[index++];
 			this.boekingsdatum = LocalDate.parse(lijn[index++], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-			this.afschriftnummer = Integer.valueOf(lijn[index++]);
-			this.transactienummer = Integer.valueOf(lijn[index++]);
+			this.afschriftnummer = Integer.valueOf(lijn[index++].equals("") ? "0" : lijn[index - 1]);
+			this.transactienummer = Integer.valueOf(lijn[index++].equals("") ? "0" : lijn[index - 1]);
 			this.tegenpartijRekenening = lijn[index++];
 			this.tegenpartijNaam = lijn[index++];
 			this.tegenpartijAdres = lijn[index++];
