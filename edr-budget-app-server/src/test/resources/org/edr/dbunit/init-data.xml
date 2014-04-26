@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-	<bankrekening id="1" version="0" rekeningnr="BE27 0000 1111 2222" omschrijving="test-rekening" startsaldo="100.25" saldo="1000.27"/>
-	<bankrekening id="2" version="0" rekeningnr="BE27 0000 1111 3333" omschrijving="test-rekening2" startsaldo="10.25" saldo="1979.27"/>
-	
-	<boekrekening id="1" version="0" rekeningnr="110000" omschrijving="cash uitgaven" boekbaar="true" budgeteerbaar="true"/>
-	
-	<boeking id="1" version="0" bankrekeningid="1" boekrekeningid="1" omschrijving="sigaretten" datum="2014-04-24" bedrag="4.7"/>
-	
+	<bankrekening id="1" version="0" rekeningnr="BE27 0000 1111 2222"
+		omschrijving="test-rekening" startsaldo="100.25" saldo="1000.27" />
+	<bankrekening id="2" version="0" rekeningnr="BE27 0000 1111 3333"
+		omschrijving="test-rekening2" startsaldo="10.25" saldo="1979.27" />
+
+	<boekrekening id="1" version="0" rekeningnr="110000"
+		omschrijving="cash uitgaven" boekbaar="true" budgeteerbaar="true" />
+
+	<boeking id="1" version="0" bankrekeningid="1" boekrekeningid="1"
+		omschrijving="sigaretten" datum="2014-04-24" bedrag="4.7" />
+
+	<journaal id="1" version="0" bankrekeningid="1" datum="2014-05-01"
+		afschriftnummer="2" transactienummer="16" tegenpartij_rekening="BEXX" tegenpartij_naam="Pizza Cosi"
+		tegenpartij_adres="Scheldestraat 22 bus1" tegenpartij_plaats="9890 Gavere"
+		transactie="betalen via bancontact" valutadatum="2014-05-01" bedrag="4.5"
+		devies="EUR" bic="" landcode="BE" />
+	<journaal id="2" version="0" bankrekeningid="1" datum="2014-06-01"
+		afschriftnummer="2" transactienummer="15" tegenpartij_rekening="BEYY" tegenpartij_naam="Base"
+		tegenpartij_adres="" tegenpartij_plaats="Brussel"
+		transactie="gsm mei 2014" valutadatum="2014-06-03" bedrag="19.0"
+		devies="EUR" bic="" landcode="BE" />
+
 	<nextkey entityname="bankrekening" sequence_next_hi_value="2" />
 	<nextkey entityname="boekrekening" sequence_next_hi_value="2" />
 	<nextkey entityname="boeking" sequence_next_hi_value="2" />
+	<nextkey entityname="journaal" sequence_next_hi_value="2" />
 </dataset>

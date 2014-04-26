@@ -4,12 +4,64 @@
 		omschrijving="zichtrekening" startsaldo="0.0" saldo="0.0" />
 	<nextkey001 entityname="bankrekening"
 		sequence_next_hi_value="3" />
-	
+
 	<!-- BankrekeningTest::testUpdate -->
 	<bankrekening002 id="1" version="1" rekeningnr="BE27 0000 1111 2222"
 		omschrijving="Bijgewerkte omschrijving" startsaldo="100.25" saldo="1000.27" />
-		
+
 	<!-- BoekingTest::testPersist -->
-	<boeking003 id="10" version="0" bankrekeningid="2" boekrekeningid="1" omschrijving="test" datum="2014-04-25" bedrag="3.70" journaalid="[null]"/>
-		
+	<boeking003 id="10" version="0" bankrekeningid="2"
+		boekrekeningid="1" omschrijving="test" datum="2014-04-25" bedrag="3.70"
+		journaalid="[null]" />
+
+	<!-- JournaalServiceTest::test5 -->
+	<journaal004 id="1" version="0" bankrekeningid="1" datum="2014-05-01"
+		afschriftnummer="2" transactienummer="16" tegenpartij_rekening="BEXX"
+		tegenpartij_rekeningid="[null]" tegenpartij_naam="Pizza Cosi"
+		tegenpartij_adres="Scheldestraat 22 bus1" tegenpartij_plaats="9890 Gavere"
+		transactie="betalen via bancontact" valutadatum="2014-05-01" bedrag="4.5"
+		devies="EUR" bic="" landcode="BE" />
+	<journaal004 id="2" version="0" bankrekeningid="1" datum="2014-06-01"
+		afschriftnummer="2" transactienummer="15" tegenpartij_rekening="BEYY"
+		tegenpartij_rekeningid="[null]" tegenpartij_naam="Base"
+		tegenpartij_adres="" tegenpartij_plaats="Brussel" transactie="gsm mei 2014"
+		valutadatum="2014-06-03" bedrag="19.0" devies="EUR" bic="" landcode="BE" />
+	<journaal004 id="10" version="0" bankrekeningid="1"
+		datum="2014-07-22" afschriftnummer="3" transactienummer="18"
+		tegenpartij_rekening="" tegenpartij_rekeningid="[null]"
+		tegenpartij_naam="BROOKLYN ROESELARE" tegenpartij_adres=""
+		tegenpartij_plaats="" transactie="AANKOOP BANCONTACT/MISTER CASH"
+		valutadatum="2014-07-22" bedrag="-119.95" devies="EUR" bic=""
+		landcode="" />
+	<journaal004 id="11" version="0" bankrekeningid="1"
+		datum="2014-07-22" afschriftnummer="3" transactienummer="17"
+		tegenpartij_rekening="" tegenpartij_rekeningid="[null]"
+		tegenpartij_naam="FOR MEN TIELT" tegenpartij_adres=""
+		tegenpartij_plaats="" transactie="AANKOOP BANCONTACT/MISTER CASH"
+		valutadatum="2014-07-22" bedrag="-144.90" devies="EUR" bic=""
+		landcode="" />
+	
+	<!-- JournaalServiceTest::test7 -->	
+	<journaal005 id="14" version="0" bankrekeningid="1"
+		datum="2014-07-22" afschriftnummer="3" transactienummer="18"
+		tegenpartij_rekening="" tegenpartij_rekeningid="[null]"
+		tegenpartij_naam="BROOKLYN ROESELARE" tegenpartij_adres=""
+		tegenpartij_plaats="" transactie="AANKOOP BANCONTACT/MISTER CASH"
+		valutadatum="2014-07-22" bedrag="-119.95" devies="EUR" bic=""
+		landcode="" />
+	<journaal005 id="15" version="0" bankrekeningid="1"
+		datum="2014-07-22" afschriftnummer="3" transactienummer="17"
+		tegenpartij_rekening="" tegenpartij_rekeningid="[null]"
+		tegenpartij_naam="FOR MEN TIELT" tegenpartij_adres=""
+		tegenpartij_plaats="" transactie="AANKOOP BANCONTACT/MISTER CASH"
+		valutadatum="2014-07-22" bedrag="-144.90" devies="EUR" bic=""
+		landcode="" />
+	<journaal005 id="16" version="0" bankrekeningid="1"
+		datum="2014-01-22" afschriftnummer="2" transactienummer="19"
+		tegenpartij_rekening="BE27 0000 1111 3333" tegenpartij_rekeningid="2"
+		tegenpartij_naam="FOR MEN TIELT" tegenpartij_adres="MARKT 10"
+		tegenpartij_plaats="8700 TIELT" transactie="AANKOOP BANCONTACT/MISTER CASH"
+		valutadatum="2014-07-22" bedrag="-144.90" devies="EUR" bic="EX"
+		landcode="BE" />
+
 </dataset>

@@ -11,31 +11,25 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.function.Predicate;
 
 import org.edr.po.Bankrekening;
 import org.edr.po.Journaal;
 import org.edr.po.jpa.JournaalPO;
 import org.edr.services.JournaalService;
 import org.edr.util.services.StandaardAbstractService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StandaardJournaalService extends StandaardAbstractService implements JournaalService {
 
+	private static final Logger logger = LoggerFactory.getLogger(StandaardJournaalService.class);
+
 	@Override
 	public void loadJournaalFromStream(BufferedReader reader) {
-		// Evalueren van header lijn
-		Optional<String> eersteLijn = reader.lines().skip(12).findFirst();
-		if (!eersteLijn.isPresent()) {
-			throw new RuntimeException("Er werd geen header lijn gevonden");
-		}
-		if (!eersteLijn.get().equals(
-				"Rekening;Boekingsdatum;Afschriftnummer;Transactienummer;Rekening tegenpartij;Naam tegenpartij bevat;Straat en nummer;"
-						+ "Postcode en plaats;Transactie;Valutadatum;Bedrag;Devies;BIC;Landcode")) {
-			throw new RuntimeException("Header lijn is niet zoals verwacht");
-		}
-
 		// Ophalen van de rekeningen
-		List<Bankrekening> rekeningenList = entityManager.createQuery("from BankrekeningPO", Bankrekening.class).getResultList();
+		List<Bankrekening> rekeningenList = entityManager.createQuery("from BankrekeningPO", Bankrekening.class)
+				.getResultList();
 		Map<String, Bankrekening> rekeningen = new HashMap<>();
 		for (Bankrekening rekening : rekeningenList) {
 			rekeningen.put(rekening.getRekeningnr(), rekening);
@@ -43,15 +37,20 @@ public class StandaardJournaalService extends StandaardAbstractService implement
 
 		// Ophalen van maximum datum en afschriftnummer
 		Date sqlMaxDatum = (Date) entityManager.createNativeQuery("select max(datum) from journaal").getSingleResult();
-		Instant instant = Instant.ofEpochMilli(sqlMaxDatum.getTime());
-		LocalDate maxDatum = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
-		Integer maxAfschriftnummer = (Integer) entityManager.createNativeQuery("select max(afschriftnummer) from journaal where datum = ?")
+		LocalDate maxDatum = sqlMaxDatum == null ? null : LocalDateTime.ofInstant(
+				Instant.ofEpochMilli(sqlMaxDatum.getTime()), ZoneId.systemDefault()).toLocalDate();
+		Integer maxAfschriftnummer = maxDatum == null ? null : (Integer) entityManager
+				.createNativeQuery("select max(afschriftnummer) from journaal where datum = ?")
 				.setParameter(1, sqlMaxDatum).getSingleResult();
+
+		// Evalueren van header lijn
+		CheckFirstlineFilter firstlineFilter = new CheckFirstlineFilter();
 
 		// Doorlopen van bestand
 		reader.lines()
-				.skip(13)
-				.map(s -> s.split(";"))
+				.skip(12)
+				.filter(firstlineFilter)
+				.map(s -> s.split(";", -1))
 				.map(s -> new IntermediairJournaal(s))
 				.map(s -> {
 					Journaal journaal = new JournaalPO();
@@ -75,9 +74,9 @@ public class StandaardJournaalService extends StandaardAbstractService implement
 					return journaal;
 				})
 				.filter(s -> s.getAfschriftnummer() > 0
-						&& (s.getDatum().compareTo(maxDatum) > 0 || (s.getDatum().equals(maxDatum) && s.getAfschriftnummer() > maxAfschriftnummer)))
-				.forEach(s -> {
-					if (!s.getLandcode().equals("BE")) {
+						&& (maxDatum == null || s.getDatum().compareTo(maxDatum) > 0 || (s.getDatum().equals(maxDatum) && s
+								.getAfschriftnummer() > maxAfschriftnummer))).forEach(s -> {
+					if (!s.getLandcode().equals("BE") && !s.getLandcode().isEmpty()) {
 						throw new RuntimeException("Onverwachte landcode " + s.getLandcode());
 					}
 					if (!s.getDevies().equals("EUR")) {
@@ -86,8 +85,31 @@ public class StandaardJournaalService extends StandaardAbstractService implement
 
 					entityManager.persist(s);
 				});
-		;
 
+		if (firstlineFilter.isFirstline()) {
+			throw new RuntimeException("Er werd geen header lijn gevonden");
+		}
+	}
+
+	private class CheckFirstlineFilter implements Predicate<String> {
+		private boolean firstline = true;
+
+		public boolean isFirstline() {
+			return this.firstline;
+		}
+
+		@Override
+		public boolean test(String t) {
+			if (!firstline)
+				return true;
+
+			firstline = false;
+			if (!t.equals("Rekening;Boekingsdatum;Afschriftnummer;Transactienummer;Rekening tegenpartij;Naam tegenpartij bevat;Straat en nummer;"
+					+ "Postcode en plaats;Transactie;Valutadatum;Bedrag;Devies;BIC;Landcode"))
+				throw new RuntimeException("Header lijn is niet zoals verwacht");
+
+			return false;
+		}
 	}
 
 	private class IntermediairJournaal {
@@ -118,7 +140,7 @@ public class StandaardJournaalService extends StandaardAbstractService implement
 			this.tegenpartijPlaats = lijn[index++];
 			this.transactie = lijn[index++];
 			this.valutadatum = LocalDate.parse(lijn[index++], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-			this.bedrag = new BigDecimal(lijn[index++]);
+			this.bedrag = new BigDecimal(lijn[index++].replace(',', '.'));
 			this.devies = lijn[index++];
 			this.bic = lijn[index++];
 			this.landcode = lijn[index++];

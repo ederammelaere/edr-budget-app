@@ -60,8 +60,7 @@ create table journaal
 	constraint fk_journaal_bankrekening2 foreign key(tegenpartij_rekeningid) references bankrekening(id)
 );
 
-create unique index idx_journaal1 on journaal(datum, afschriftnummer);
-create unique index idx_journaal2 on journaal(transactienummer, datum);
+create unique index idx_journaal1 on journaal(datum, afschriftnummer, transactienummer);
 
 create table boeking
 (
