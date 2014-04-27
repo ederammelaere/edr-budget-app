@@ -43,6 +43,8 @@ public class StandaardJournaalService extends StandaardAbstractService implement
 				.createNativeQuery("select max(afschriftnummer) from journaal where datum = ?")
 				.setParameter(1, sqlMaxDatum).getSingleResult();
 
+		logger.info("maxDatum = " + maxDatum + "; maxAfschriftnummer = " + maxAfschriftnummer);
+
 		// Evalueren van header lijn
 		CheckFirstlineFilter firstlineFilter = new CheckFirstlineFilter();
 
