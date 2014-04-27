@@ -1,5 +1,7 @@
 package org.edr.sandbox;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.Properties;
 
@@ -9,6 +11,7 @@ import javax.transaction.Transactional;
 
 import org.edr.po.Bankrekening;
 import org.edr.po.jpa.BankrekeningPO;
+import org.edr.services.JournaalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -46,9 +49,14 @@ public class BudgetApp {
 		System.setProperties(p);
 
 		ApplicationContext context = new ClassPathXmlApplicationContext("org/edr/spring/server-bundle.xml");
-		BudgetApp app = (BudgetApp) context.getBean("app");
-		app.createBankrekening();
+		JournaalService journaalService = (JournaalService) context.getBean("journaalService");
+		journaalService.loadJournaalFromStream(openReader("org/edr/xxx.csv"));
+
 		((ConfigurableApplicationContext) context).close();
+	}
+
+	private static BufferedReader openReader(String classpathResource) {
+		return new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(classpathResource)));
 	}
 
 }
