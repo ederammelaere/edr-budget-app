@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import org.apache.commons.lang3.StringUtils;
 import org.edr.po.Bankrekening;
 import org.edr.po.Journaal;
 import org.edr.po.jpa.JournaalPO;
@@ -134,8 +135,8 @@ public class StandaardJournaalService extends StandaardAbstractService implement
 			int index = 0;
 			this.rekening = lijn[index++];
 			this.boekingsdatum = LocalDate.parse(lijn[index++], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-			this.afschriftnummer = Integer.valueOf(lijn[index++].equals("") ? "0" : lijn[index - 1]);
-			this.transactienummer = Integer.valueOf(lijn[index++].equals("") ? "0" : lijn[index - 1]);
+			this.afschriftnummer = Integer.valueOf(StringUtils.defaultIfEmpty(lijn[index++], "0"));
+			this.transactienummer = Integer.valueOf(StringUtils.defaultIfEmpty(lijn[index++], "0"));
 			this.tegenpartijRekenening = lijn[index++];
 			this.tegenpartijNaam = lijn[index++];
 			this.tegenpartijAdres = lijn[index++];
