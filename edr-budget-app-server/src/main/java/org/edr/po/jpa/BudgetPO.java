@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.edr.po.Boekrekening;
 import org.edr.po.Budget;
 import org.edr.util.jpa.JpaIdentifiableVersioned;
@@ -52,6 +53,12 @@ public class BudgetPO extends JpaIdentifiableVersioned implements Budget {
 	@Override
 	public void setBedrag(BigDecimal bedrag) {
 		this.bedrag = bedrag;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).appendSuper(super.toString()).append("jaar", jaar)
+				.append("boekrekening", boekrekening).append("bedrag", bedrag).toString();
 	}
 
 }

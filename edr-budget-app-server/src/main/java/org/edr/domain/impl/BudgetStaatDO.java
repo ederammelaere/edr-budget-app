@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.edr.domain.BudgetStaat;
 import org.edr.po.Boekrekening;
 
@@ -118,6 +121,34 @@ public class BudgetStaatDO implements BudgetStaat {
 	@Override
 	public boolean isParent(BudgetStaat budgetStaat) {
 		return budgetStaat.isChild(this);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		}
+		if (obj.getClass() != getClass()) {
+			return false;
+		}
+		BudgetStaatDO rhs = (BudgetStaatDO) obj;
+		return new EqualsBuilder().append(boekrekening, rhs.boekrekening)
+				.append(gebudgetteerdBedrag, rhs.gebudgetteerdBedrag).append(geboektBedrag, rhs.geboektBedrag)
+				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(171717, 373737).append(boekrekening).toHashCode();
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).append("boekrekening", boekrekening)
+				.append("gebudgetteerdBedrag", gebudgetteerdBedrag).append("geboektBedrag", geboektBedrag).toString();
 	}
 
 }

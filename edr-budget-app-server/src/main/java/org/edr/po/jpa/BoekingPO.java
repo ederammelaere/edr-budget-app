@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.edr.po.Bankrekening;
 import org.edr.po.Boeking;
 import org.edr.po.Boekrekening;
@@ -93,6 +94,13 @@ public class BoekingPO extends JpaIdentifiableVersioned implements Boeking {
 	@Override
 	public void setJournaal(Journaal journaal) {
 		this.journaal = journaal;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).appendSuper(super.toString()).append("bankrekening", bankrekening)
+				.append("boekrekening", boekrekening).append("omschrijving", omschrijving).append("datum", datum)
+				.append("bedrag", bedrag).append("journaal", journaal).toString();
 	}
 
 }

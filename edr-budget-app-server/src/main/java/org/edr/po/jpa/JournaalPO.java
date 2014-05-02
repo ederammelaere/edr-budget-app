@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.edr.po.Bankrekening;
 import org.edr.po.Journaal;
 import org.edr.util.jpa.JpaIdentifiableVersioned;
@@ -198,6 +199,13 @@ public class JournaalPO extends JpaIdentifiableVersioned implements Journaal {
 	@Override
 	public void setLandcode(String landcode) {
 		this.landcode = landcode;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).appendSuper(super.toString()).append("bankrekening", bankrekening)
+				.append("afschriftnummer", afschriftnummer).append("transactienummer", transactienummer)
+				.append("datum", datum).append("transactie", transactie).toString();
 	}
 
 }

@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.edr.po.Bankrekening;
 import org.edr.util.jpa.JpaIdentifiableVersioned;
 
@@ -60,6 +61,13 @@ public class BankrekeningPO extends JpaIdentifiableVersioned implements Bankreke
 	@Override
 	public void setSaldo(BigDecimal saldo) {
 		this.saldo = saldo;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).appendSuper(super.toString()).append("rekeningnr", rekeningnr)
+				.append("omschrijving", omschrijving).append("startSaldo", startSaldo).append("saldo", saldo)
+				.toString();
 	}
 
 }

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.edr.po.Boekrekening;
 import org.edr.util.jpa.JpaIdentifiableVersioned;
 
@@ -58,6 +59,12 @@ public class BoekrekeningPO extends JpaIdentifiableVersioned implements Boekreke
 	@Override
 	public void setBudgeteerbaar(Boolean budgeteerbaar) {
 		this.budgeteerbaar = budgeteerbaar;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).appendSuper(super.toString()).append("rekeningnr", rekeningnr)
+				.append("omschrijving", omschrijving).toString();
 	}
 
 }
