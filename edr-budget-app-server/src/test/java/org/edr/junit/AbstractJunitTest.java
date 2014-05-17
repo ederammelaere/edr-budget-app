@@ -54,7 +54,8 @@ public abstract class AbstractJunitTest {
 			logger.info("Doe initialisatie testdata met dbunit...");
 
 			IDatabaseConnection conn = new DatabaseDataSourceConnection(budgetDataSource);
-			IDataSet dataSet = new FlatXmlDataSetBuilder().build(AbstractJunitTest.class.getResource("/org/edr/dbunit/init-data.xml"));
+			IDataSet dataSet = new FlatXmlDataSetBuilder().build(AbstractJunitTest.class
+					.getResource("/org/edr/dbunit/init-data.xml"));
 			DatabaseOperation.CLEAN_INSERT.execute(conn, dataSet);
 			conn.close();
 			initWithDbunitDone = true;
@@ -64,7 +65,8 @@ public abstract class AbstractJunitTest {
 	@BeforeClass
 	public static void fillExpectedDataSet() throws DataSetException {
 		logger.info("Opvullen dataset van dbunit met gewenste data...");
-		expectedDataSet = new ReplacementDataSet(new FlatXmlDataSetBuilder().build(AbstractJunitTest.class.getResource("/org/edr/dbunit/eval-data.xml")));
+		expectedDataSet = new ReplacementDataSet(new FlatXmlDataSetBuilder().build(AbstractJunitTest.class
+				.getResource("/org/edr/dbunit/eval-data.xml")));
 		((ReplacementDataSet) expectedDataSet).addReplacementObject("[null]", null);
 	}
 
@@ -79,7 +81,7 @@ public abstract class AbstractJunitTest {
 					IDatabaseConnection conn = new DatabaseConnection(connection);
 					ITable actualTable = conn.createQueryTable(tableName, sql);
 					ITable expectedTable = expectedDataSet.getTable(tableName);
-					Assertion.assertEquals(expectedTable, actualTable);
+					Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, new String[] { "id" });
 				} catch (DatabaseUnitException e) {
 					throw new RuntimeException(e);
 				}
