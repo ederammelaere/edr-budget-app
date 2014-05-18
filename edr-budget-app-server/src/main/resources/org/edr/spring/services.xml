@@ -6,5 +6,7 @@
       					http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="journaalService" class="org.edr.services.impl.StandaardJournaalService" />
+	
+	<bean id="budgetStaatService" class="org.edr.services.impl.StandaardBudgetStaatService" />
 
 </beans>

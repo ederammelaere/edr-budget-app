@@ -1,5 +1,6 @@
 package org.edr.services.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,4 +66,23 @@ public class StandaardBudgetStaatService extends StandaardAbstractService implem
 		});
 		return rootBudgetStaat;
 	}
+
+	@Override
+	public List<BudgetStaat> getBudgetStaatAsList(int jaar) {
+		List<BudgetStaat> budgetStaatList = new ArrayList<>();
+		BudgetStaat rootBudgetStaat = getBudgetStaat(jaar);
+		if (rootBudgetStaat != null) {
+			budgetStaatList.add(rootBudgetStaat);
+			walkBudgetStaat(rootBudgetStaat, budgetStaatList);
+		}
+		return budgetStaatList;
+	}
+
+	private void walkBudgetStaat(BudgetStaat budgetStaat, List<BudgetStaat> budgetStaatList) {
+		for (BudgetStaat childBudgetStaat : budgetStaat.getChildBudgetStaten()) {
+			budgetStaatList.add(childBudgetStaat);
+			walkBudgetStaat(childBudgetStaat, budgetStaatList);
+		}
+	}
+
 }

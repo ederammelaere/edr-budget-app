@@ -7,18 +7,38 @@
 
 	<boekrekening id="1" version="0" rekeningnr="110000"
 		omschrijving="cash uitgaven" boekbaar="true" budgeteerbaar="true" />
+	<boekrekening id="2" version="0" rekeningnr="000000"
+		omschrijving="resultaat" boekbaar="false" budgeteerbaar="false" />
+	<boekrekening id="3" version="0" rekeningnr="100000"
+		omschrijving="uitgaven" boekbaar="false" budgeteerbaar="false" />
+	<boekrekening id="4" version="0" rekeningnr="200000"
+		omschrijving="inkomsten" boekbaar="false" budgeteerbaar="false" />
+	<boekrekening id="5" version="0" rekeningnr="220000"
+		omschrijving="inkomsten op rekening" boekbaar="false" budgeteerbaar="false" />
+	<boekrekening id="6" version="0" rekeningnr="220100"
+		omschrijving="diverse inkomsten op rekening" boekbaar="true"
+		budgeteerbaar="true" />
 
 	<boeking id="1" version="0" bankrekeningid="1" boekrekeningid="1"
-		omschrijving="sigaretten" datum="2014-04-24" bedrag="4.7" />
+		omschrijving="sigaretten" datum="2014-04-24" bedrag="4.75" />
+	<boeking id="2" version="0" bankrekeningid="1" boekrekeningid="6"
+		omschrijving="onbekend" datum="2014-04-29" bedrag="40.25" />
+	<boeking id="3" version="0" bankrekeningid="1" boekrekeningid="6"
+		omschrijving="onbekend" datum="2013-04-29" bedrag="40.7" />
+
+	<budget id="1" version="0" jaar="2014" boekrekeningid="1"
+		bedrag="300.0" />
+	<budget id="2" version="0" jaar="2013" boekrekeningid="1"
+		bedrag="250.0" />
 
 	<journaal id="1" version="0" bankrekeningid="1" datum="2014-05-01"
-		afschriftnummer="2" transactienummer="16" tegenpartij_rekening="BEXX" tegenpartij_naam="Pizza Cosi"
-		tegenpartij_adres="Scheldestraat 22 bus1" tegenpartij_plaats="9890 Gavere"
-		transactie="betalen via bancontact" valutadatum="2014-05-01" bedrag="4.5"
-		devies="EUR" bic="" landcode="BE" />
+		afschriftnummer="2" transactienummer="16" tegenpartij_rekening="BEXX"
+		tegenpartij_naam="Pizza Cosi" tegenpartij_adres="Scheldestraat 22 bus1"
+		tegenpartij_plaats="9890 Gavere" transactie="betalen via bancontact"
+		valutadatum="2014-05-01" bedrag="4.5" devies="EUR" bic="" landcode="BE" />
 	<journaal id="2" version="0" bankrekeningid="1" datum="2014-06-01"
-		afschriftnummer="2" transactienummer="15" tegenpartij_rekening="BEYY" tegenpartij_naam="Base"
-		tegenpartij_adres="" tegenpartij_plaats="Brussel"
+		afschriftnummer="2" transactienummer="15" tegenpartij_rekening="BEYY"
+		tegenpartij_naam="Base" tegenpartij_adres="" tegenpartij_plaats="Brussel"
 		transactie="gsm mei 2014" valutadatum="2014-06-03" bedrag="19.0"
 		devies="EUR" bic="" landcode="BE" />
 

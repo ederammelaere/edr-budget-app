@@ -18,7 +18,7 @@ public class BoekingTest extends AbstractJunitTest {
 		Boeking boeking = entityManager.find(BoekingPO.class, Long.valueOf(1l));
 
 		assertEquals("sigaretten", boeking.getOmschrijving());
-		assertEquals(new BigDecimal("4.70"), boeking.getBedrag());
+		assertEquals(new BigDecimal("4.75"), boeking.getBedrag());
 		assertEquals(LocalDate.of(2014, 4, 24), boeking.getDatum());
 		assertEquals("test-rekening", boeking.getBankrekening().getOmschrijving());
 		assertEquals("cash uitgaven", boeking.getBoekrekening().getOmschrijving());
