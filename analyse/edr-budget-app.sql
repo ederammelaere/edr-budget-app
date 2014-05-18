@@ -11,8 +11,6 @@ create table bankrekening
 	version integer not null,
 	rekeningnr varchar(50) not null,
 	omschrijving varchar(100) not null,
-	startsaldo decimal(10,2) not null,
-	saldo decimal(10,2) not null,
 	
 	constraint pk_bankrekening primary key (id)
 );

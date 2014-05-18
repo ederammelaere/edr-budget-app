@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
 	<bankrekening id="1" version="0" rekeningnr="BE27 0000 1111 2222"
-		omschrijving="test-rekening" startsaldo="100.25" saldo="1000.27" />
+		omschrijving="test-rekening" />
 	<bankrekening id="2" version="0" rekeningnr="BE27 0000 1111 3333"
-		omschrijving="test-rekening2" startsaldo="10.25" saldo="1979.27" />
+		omschrijving="test-rekening2" />
 
 	<boekrekening id="1" version="0" rekeningnr="110000"
 		omschrijving="cash uitgaven" boekbaar="true" budgeteerbaar="true" />

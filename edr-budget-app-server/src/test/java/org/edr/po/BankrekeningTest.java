@@ -2,8 +2,6 @@ package org.edr.po;
 
 import static org.junit.Assert.*;
 
-import java.math.BigDecimal;
-
 import org.edr.junit.AbstractJunitTest;
 import org.edr.po.jpa.BankrekeningPO;
 import org.junit.Test;
@@ -36,8 +34,6 @@ public class BankrekeningTest extends AbstractJunitTest {
 		Bankrekening bankRekening = new BankrekeningPO();
 		bankRekening.setOmschrijving("zichtrekening");
 		bankRekening.setRekeningnr("BE02 256 66");
-		bankRekening.setSaldo(BigDecimal.ZERO);
-		bankRekening.setStartSaldo(BigDecimal.ZERO);
 		entityManager.persist(bankRekening);
 		entityManager.flush();
 

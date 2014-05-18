@@ -1,7 +1,5 @@
 package org.edr.po;
 
-import java.math.BigDecimal;
-
 import org.edr.util.jpa.IdentifiableVersioned;
 
 public interface Bankrekening extends IdentifiableVersioned {
@@ -13,13 +11,5 @@ public interface Bankrekening extends IdentifiableVersioned {
 	String getOmschrijving();
 
 	void setOmschrijving(String omschrijving);
-
-	BigDecimal getStartSaldo();
-
-	void setStartSaldo(BigDecimal startSaldo);
-
-	BigDecimal getSaldo();
-
-	void setSaldo(BigDecimal saldo);
 
 }

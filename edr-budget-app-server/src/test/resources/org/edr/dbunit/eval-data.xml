@@ -1,13 +1,13 @@
 <dataset>
 	<!-- BankrekeningTest::testPersist -->
 	<bankrekening001 id="10" version="0" rekeningnr="BE02 256 66"
-		omschrijving="zichtrekening" startsaldo="0.0" saldo="0.0" />
+		omschrijving="zichtrekening" />
 	<nextkey001 entityname="bankrekening"
 		sequence_next_hi_value="3" />
 
 	<!-- BankrekeningTest::testUpdate -->
 	<bankrekening002 id="1" version="1" rekeningnr="BE27 0000 1111 2222"
-		omschrijving="Bijgewerkte omschrijving" startsaldo="100.25" saldo="1000.27" />
+		omschrijving="Bijgewerkte omschrijving" />
 
 	<!-- BoekingTest::testPersist -->
 	<boeking003 id="10" version="0" bankrekeningid="2"
