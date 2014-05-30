@@ -12,6 +12,7 @@
 
 	<modules>
 		<module>edr-budget-app-server</module>
+		<module>edr-budget-app-rest</module>
 	</modules>
 
 	<properties>
