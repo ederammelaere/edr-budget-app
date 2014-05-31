@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>edr-budget-app-rest</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+  <context-param>
+    <description>spring context configuration</description>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      classpath:services.xml
+    </param-value>
+  </context-param>
+
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <servlet>
+    <servlet-name>Jersey</servlet-name>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+    <init-param>
+      <!-- Enable POJO-JSON support + welke packages bevatten REST-resources -->
+      <param-name>jersey.config.server.provider.packages</param-name>
+      <param-value>org.codehaus.jackson.jaxrs;org.edr.resource</param-value>
+    </init-param>
+    <!-- Enable POJO-JSON support voor jersey-media-json-jackson -->
+    <init-param>
+      <param-name>jersey.config.server.provider.classnames</param-name>
+      <param-value>org.glassfish.jersey.jackson.JacksonFeature</param-value>
+    </init-param>
+    <!-- optioneel: debug info toevoegen in headers -->
+    <init-param>
+      <param-name>jersey.config.server.tracing</param-name>
+      <param-value>ALL</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <!-- REST API -->
+    <servlet-name>Jersey</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+
+</web-app>

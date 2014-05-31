@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>edr-budget-app-rest</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>edr-budget-app-rest</name>
 	<url>http://maven.apache.org</url>
@@ -24,5 +24,39 @@
 			<groupId>org.edr</groupId>
 			<artifactId>edr-budget-app-server</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-spring3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thetransactioncompany</groupId>
+			<artifactId>cors-filter</artifactId>
+		</dependency>
+
 	</dependencies>
 </project>
