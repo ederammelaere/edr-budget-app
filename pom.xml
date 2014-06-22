@@ -179,10 +179,6 @@
 				<version>1.9.3</version>
 				<exclusions>
 					<exclusion>
-						<groupId>com.thetransactioncompany</groupId>
-						<artifactId>java-property-utils</artifactId>
-					</exclusion>
-					<exclusion>
 						<groupId>javax.servlet</groupId>
 						<artifactId>servlet-api</artifactId>
 					</exclusion>

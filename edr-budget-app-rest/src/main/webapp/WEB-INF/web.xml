@@ -43,5 +43,32 @@
     <servlet-name>Jersey</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
+  
+  <filter>
+    <filter-name>CORS</filter-name>
+    <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+    <init-param>
+      <param-name>cors.allowGenericHttpRequests</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.allowOrigin</param-name>
+      <param-value>*</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.supportedMethods</param-name>
+      <param-value>GET, HEAD, POST, OPTIONS, PUT, DELETE</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.supportedHeaders</param-name>
+      <param-value>Origin, Content-Type, X-Requested-With</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>CORS</filter-name>
+    <servlet-name>Jersey</servlet-name>
+  </filter-mapping>
+
 
 </web-app>

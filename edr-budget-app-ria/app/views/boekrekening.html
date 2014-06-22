@@ -1,1 +1,16 @@
-<p>This is the boekrekening view.</p>
+<h2>Boekrekeningen</h2>
+
+<table ng-controller="BoekrekeningCtrl">
+	<tr>
+		<th>rekeningnr</th>
+		<th>omschrijving</th>
+		<th>budgeteerbaar</th>
+		<th>boekbaar</th>
+	</tr>
+	<tr ng-repeat="boekrekening in boekrekeningen">
+		<td>{{boekrekening.rekeningnr}}</td>
+		<td>{{boekrekening.omschrijving}}</td>
+		<td>{{boekrekening.budgeteerbaar}}</td>
+		<td>{{boekrekening.boekbaar}}</td>
+	</tr>
+</table>
