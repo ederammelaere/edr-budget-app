@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('edrBudgetAppRiaApp').factory('Boekrekening', ['$resource', function($resource) {
-	  return $resource('http://localhost:8080/edr-budget-app-rest/rest/boekrekening/');
+angular.module('edrBudgetAppRiaApp').factory('Boekrekening', ['$resource', 'baseRestPath', function($resource, baseRestPath) {
+	  return $resource(baseRestPath + 'boekrekening/');
 	}]);
 
 angular.module('edrBudgetAppRiaApp')
