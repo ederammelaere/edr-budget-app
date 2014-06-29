@@ -27,4 +27,18 @@ public class StandaardBoekrekeningService extends StandaardAbstractService imple
 		return entityManager.createQuery(criteriaQueryBoekrekening).getResultList();
 	}
 
+	@Override
+	public void createBoekrekening(Boekrekening boekrekening) {
+		entityManager.persist(boekrekening);
+	}
+
+	@Override
+	public void deleteBoekrekening(Long id) {
+		entityManager.remove(entityManager.find(BoekrekeningPO.class, id));
+	}
+
+	@Override
+	public void updateBoekrekening(Boekrekening boekrekening) {
+		entityManager.merge(boekrekening);
+	}
 }

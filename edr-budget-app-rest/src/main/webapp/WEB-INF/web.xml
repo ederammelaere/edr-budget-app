@@ -61,7 +61,7 @@
     </init-param>
     <init-param>
       <param-name>cors.supportedHeaders</param-name>
-      <param-value>Origin, Content-Type, X-Requested-With</param-value>
+      <param-value>*</param-value>
     </init-param>
   </filter>
 

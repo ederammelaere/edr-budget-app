@@ -1,6 +1,7 @@
 <h2>Boekrekeningen</h2>
 
-<table ng-controller="BoekrekeningCtrl">
+<div ng-controller="BoekrekeningCtrl">
+<table>
 	<tr>
 		<th>rekeningnr</th>
 		<th>omschrijving</th>
@@ -12,5 +13,17 @@
 		<td>{{boekrekening.omschrijving}}</td>
 		<td>{{boekrekening.budgeteerbaar}}</td>
 		<td>{{boekrekening.boekbaar}}</td>
+		<td><button ng-click="verwijderen($index)">Verwijderen</button></td>
+		<td><button ng-click="bijwerken($index)">Bijwerken</button></td>
 	</tr>
 </table>
+<div>
+	<form ng-submit="save()">
+		Rekeningnr: <input type="text" ng-model="br.rekeningnr"/>
+		Omschrijving: <input type="text" ng-model="br.omschrijving"/>
+		Budgeteerbaar: <input type ="checkbox" ng-model="br.budgeteerbaar"/>
+		Boekbaar: <input type ="checkbox" ng-model="br.boekbaar"/>
+		<button type="submit">Opslaan</button>	
+	</form>
+</div>
+</div>
