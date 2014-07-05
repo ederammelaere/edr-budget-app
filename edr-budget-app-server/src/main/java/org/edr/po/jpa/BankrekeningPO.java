@@ -1,8 +1,11 @@
 package org.edr.po.jpa;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.edr.po.Bankrekening;
@@ -14,6 +17,11 @@ public class BankrekeningPO extends JpaIdentifiableVersioned implements Bankreke
 
 	private String rekeningnr;
 	private String omschrijving;
+	private BigDecimal saldo;
+
+	public BankrekeningPO() {
+		this.saldo = BigDecimal.ZERO;
+	}
 
 	@Override
 	@Column(name = "rekeningnr")
@@ -35,6 +43,17 @@ public class BankrekeningPO extends JpaIdentifiableVersioned implements Bankreke
 	@Override
 	public void setOmschrijving(String omschrijving) {
 		this.omschrijving = omschrijving;
+	}
+
+	@Override
+	@Transient
+	public BigDecimal getSaldo() {
+		return saldo;
+	}
+
+	@Override
+	public void setSaldo(BigDecimal saldo) {
+		this.saldo = saldo;
 	}
 
 	@Override

@@ -10,5 +10,7 @@
 	<bean id="budgetStaatService" class="org.edr.services.impl.StandaardBudgetStaatService" />
 	
 	<bean id="boekrekeningService" class="org.edr.services.impl.StandaardBoekrekeningService" />
+	
+	<bean id="bankrekeningService" class="org.edr.services.impl.StandaardBankrekeningService" />
 
 </beans>

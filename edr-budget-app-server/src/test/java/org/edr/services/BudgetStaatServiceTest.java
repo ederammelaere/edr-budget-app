@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class BudgetStaatServiceTest extends AbstractJunitTest {
 
 	@Autowired
-	BudgetStaatService budgetStaatService;
+	private BudgetStaatService budgetStaatService;
 
 	@Test
 	public void test1() {

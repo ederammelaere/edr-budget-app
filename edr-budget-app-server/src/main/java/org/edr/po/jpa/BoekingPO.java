@@ -27,6 +27,14 @@ public class BoekingPO extends JpaIdentifiableVersioned implements Boeking {
 	private BigDecimal bedrag;
 	private Journaal journaal;
 
+	public BoekingPO() {
+	}
+
+	public BoekingPO(Bankrekening bankrekening, BigDecimal bedrag) {
+		this.bankrekening = bankrekening;
+		this.bedrag = bedrag;
+	}
+
 	@Override
 	@ManyToOne(targetEntity = BankrekeningPO.class)
 	@JoinColumn(name = "bankrekeningid")
