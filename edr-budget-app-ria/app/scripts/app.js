@@ -16,6 +16,10 @@ var edrBudgetAppRiaApp = angular.module('edrBudgetAppRiaApp', [
         templateUrl: 'views/boekrekening.html',
         controller: 'BoekrekeningCtrl'
       })
+      .when('/bankrekening', {
+        templateUrl: 'views/bankrekening.html',
+        controller: 'BankrekeningCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
