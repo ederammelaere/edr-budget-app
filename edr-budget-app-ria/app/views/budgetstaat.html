@@ -1,0 +1,19 @@
+<h2>BudgetStaat</h2>
+
+<div ng-controller="BudgetstaatCtrl">
+jaar: <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh</button>
+<table>
+	<tr>
+		<th>rekeningnr</th>
+		<th>omschrijving</th>
+		<th>budget</th>
+		<th>boeking</th>
+	</tr>
+	<tr ng-repeat="budgetstaatitem in budgetstaat">
+		<td>{{budgetstaatitem.boekrekening.rekeningnr}}</td>
+		<td>{{budgetstaatitem.boekrekening.omschrijving}}</td>
+		<td>{{budgetstaatitem.gebudgetteerdBedrag}}</td>
+		<td>{{budgetstaatitem.geboektBedrag}}</td>
+	</tr>
+</table>
+</div>
