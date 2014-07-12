@@ -1,0 +1,27 @@
+<h2>Boeking</h2>
+
+<div ng-controller="BoekingCtrl">
+jaar: <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh</button>
+<table>
+	<tr>
+		<th>bankrekening</th>
+		<th>bankrekening - omschrijving</th>
+		<th>boekrekening</th>
+		<th>boekrekening - omschrijving</th>
+		<th>boeking - omschrijving</th>
+		<th>datum</th>
+		<th>bedrag</th>
+		<th>journaalid</th>
+	</tr>
+	<tr ng-repeat="boeking in boekingen">
+		<td>{{boeking.bankrekening.rekeningnr}}</td>
+		<td>{{boeking.bankrekening.omschrijving}}</td>
+		<td>{{boeking.boekrekening.rekeningnr}}</td>
+		<td>{{boeking.boekrekening.omschrijving}}</td>
+		<td>{{boeking.omschrijving}}</td>
+		<td>{{boeking.datum}}</td>
+		<td>{{boeking.bedrag}}</td>
+		<td>{{boeking.journaal.id}}</td>
+	</tr>
+</table>
+</div>

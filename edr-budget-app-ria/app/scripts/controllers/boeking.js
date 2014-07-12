@@ -1,0 +1,44 @@
+'use strict';
+
+angular.module('edrBudgetAppRiaApp').factory('Boeking', ['$resource', 'baseRestPath', function($resource, baseRestPath) {
+	  return $resource(baseRestPath + 'boeking/:id?jaar=:jaar', {id:'@id'}, {jaar:'@jaar'});
+	}]);
+
+angular.module('edrBudgetAppRiaApp')
+  .controller('BoekingCtrl', ['$scope', 'Boeking', function ($scope, Boeking) {
+    $scope.boekingen = Boeking.query({'jaar' : new Date().getFullYear()});
+    
+    $scope.bg = {};
+    
+    $scope.jaar = new Date().getFullYear();
+    
+    $scope.save = function() {
+    	var param;
+    	if ($scope.bg.id)
+    		param = {'id': $scope.bg.id};
+    	else
+    		param = {};
+    	Boeking.save(param, $scope.bg, 
+    			function(data, responseHeaders)
+    			{
+					$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
+				});
+    	$scope.bg = {};
+    };
+    
+    $scope.verwijderen = function(index) {
+    	Boeking.remove({ id:$scope.boekingen[index].id }, 
+			function(data, responseHeaders)
+			{
+				$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
+			});
+    };
+    
+    $scope.bijwerken = function(index) {
+    	$scope.bg = $scope.boekingen[index];
+    };
+    
+    $scope.refresh = function(){
+    	$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
+    };
+  }]);

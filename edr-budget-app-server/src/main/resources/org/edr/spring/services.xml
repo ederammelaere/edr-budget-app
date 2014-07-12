@@ -12,5 +12,7 @@
 	<bean id="boekrekeningService" class="org.edr.services.impl.StandaardBoekrekeningService" />
 	
 	<bean id="bankrekeningService" class="org.edr.services.impl.StandaardBankrekeningService" />
+	
+	<bean id="boekingService" class="org.edr.services.impl.StandaardBoekingService" />
 
 </beans>
