@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('edrBudgetAppRiaApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('MainCtrl', ['$scope', '$http', 'baseRestPath', function ($scope, $http, baseRestPath) {
+	  
+	$http({method: "GET", url: baseRestPath+'werkgebied'})
+	  .success(function(data){ 
+		  $scope.werkgebied = data;
+	  }
+	);
+  }]);

@@ -1,6 +1,7 @@
 <h2>Boeking</h2>
 
 <div ng-controller="BoekingCtrl">
+<div>
 jaar: <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh</button>
 <table>
 	<tr>
@@ -22,6 +23,27 @@ jaar: <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh<
 		<td>{{boeking.datum}}</td>
 		<td>{{boeking.bedrag}}</td>
 		<td>{{boeking.journaal.id}}</td>
+		<td><button ng-click="verwijderen($index)">Verwijderen</button></td>
+		<td><button ng-click="bijwerken($index)">Bijwerken</button></td>
 	</tr>
 </table>
+</div>
+<div>
+	<form ng-submit="save()">
+		<div>Bankrekening: 
+			<select ng-model="bg.bankrekening.id">
+				<option ng-repeat="bankrekening in bankrekeningen" value="{{bankrekening.id}}">{{bankrekening.rekeningnr}} - {{bankrekening.omschrijving}}</option>
+			</select>
+		</div>
+		<div>Boekrekening: 
+			<select ng-model="bg.boekrekening.id">
+				<option ng-repeat="boekrekening in boekrekeningen" value="{{boekrekening.id}}">{{boekrekening.rekeningnr}} - {{boekrekening.omschrijving}}</option>
+			</select>
+		</div>
+		<div>Omschrijving: <input type="text" ng-model="bg.omschrijving"/></div>
+		<div>Datum: <input type="text" ng-model="bg.datum"/></div>
+		<div>Bedrag: <input type="text" ng-model="bg.bedrag"/></div>
+		<div><button type="submit">Opslaan</button></div>	
+	</form>
+</div>
 </div>

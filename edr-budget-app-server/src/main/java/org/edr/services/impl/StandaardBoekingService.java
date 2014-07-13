@@ -7,8 +7,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.edr.po.Boeking;
+import org.edr.po.jpa.BankrekeningPO;
 import org.edr.po.jpa.BoekingPO;
 import org.edr.po.jpa.BoekingPO_;
+import org.edr.po.jpa.BoekrekeningPO;
 import org.edr.services.BoekingService;
 import org.edr.util.services.StandaardAbstractService;
 
@@ -33,6 +35,8 @@ public class StandaardBoekingService extends StandaardAbstractService implements
 
 	@Override
 	public void createBoeking(Boeking boeking) {
+		boeking.setBankrekening(entityManager.find(BankrekeningPO.class, boeking.getBankrekening().getId()));
+		boeking.setBoekrekening(entityManager.find(BoekrekeningPO.class, boeking.getBoekrekening().getId()));
 		entityManager.persist(boeking);
 	}
 

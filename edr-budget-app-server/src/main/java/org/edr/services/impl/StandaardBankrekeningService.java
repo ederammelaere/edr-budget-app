@@ -43,8 +43,8 @@ public class StandaardBankrekeningService extends StandaardAbstractService imple
 		entityManager.createQuery(criteriaQueryBoeking).getResultList().stream().forEach(s -> {
 			boolean found = false;
 			for (int i = 0; i < resultList.size(); i++) {
-				if (resultList.get(0).getId().equals(s.getBankrekening().getId())) {
-					resultList.get(0).setSaldo(s.getBedrag());
+				if (resultList.get(i).getId().equals(s.getBankrekening().getId())) {
+					resultList.get(i).setSaldo(s.getBedrag());
 					found = true;
 					break;
 				}

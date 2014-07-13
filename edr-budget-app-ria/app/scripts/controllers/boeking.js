@@ -1,12 +1,15 @@
 'use strict';
 
 angular.module('edrBudgetAppRiaApp').factory('Boeking', ['$resource', 'baseRestPath', function($resource, baseRestPath) {
-	  return $resource(baseRestPath + 'boeking/:id?jaar=:jaar', {id:'@id'}, {jaar:'@jaar'});
+	  return $resource(baseRestPath + 'boeking/:id', {id:'@id'});
 	}]);
 
 angular.module('edrBudgetAppRiaApp')
-  .controller('BoekingCtrl', ['$scope', 'Boeking', function ($scope, Boeking) {
-    $scope.boekingen = Boeking.query({'jaar' : new Date().getFullYear()});
+  .controller('BoekingCtrl', ['$scope', 'Boeking', 'Bankrekening', 'Boekrekening', function ($scope, Boeking, Bankrekening, Boekrekening) {
+    
+	$scope.boekingen = Boeking.query({'jaar' : new Date().getFullYear()});
+    $scope.bankrekeningen = Bankrekening.query();
+    $scope.boekrekeningen = Boekrekening.query();
     
     $scope.bg = {};
     
