@@ -25,6 +25,11 @@ angular.module('edrBudgetAppRiaApp')
     			function(data, responseHeaders)
     			{
 					$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
+				},
+				function(error)
+				{
+					$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
+					alert("Fout gebeurd...");
 				});
     	$scope.bg = {};
     };
@@ -34,6 +39,11 @@ angular.module('edrBudgetAppRiaApp')
 			function(data, responseHeaders)
 			{
 				$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
+			},
+			function(error)
+			{
+				$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
+				alert("Fout gebeurd...");
 			});
     };
     

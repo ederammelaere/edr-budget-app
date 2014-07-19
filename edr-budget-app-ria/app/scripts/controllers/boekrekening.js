@@ -28,6 +28,11 @@ angular.module('edrBudgetAppRiaApp')
     			function(data, responseHeaders)
     			{
 					$scope.boekrekeningen = Boekrekening.query();
+				},
+				function(error)
+				{
+					$scope.boekrekeningen = Boekrekening.query();
+					alert("Fout gebeurd...");
 				});
     	$scope.br = {};
     };
@@ -37,6 +42,11 @@ angular.module('edrBudgetAppRiaApp')
 			function(data, responseHeaders)
 			{
 				$scope.boekrekeningen = Boekrekening.query();
+			},
+			function(error)
+			{
+				$scope.boekrekeningen = Boekrekening.query();
+				alert("Fout gebeurd...");
 			});
     };
     

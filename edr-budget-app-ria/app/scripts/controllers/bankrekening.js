@@ -20,6 +20,11 @@ angular.module('edrBudgetAppRiaApp')
     			function(data, responseHeaders)
     			{
 					$scope.bankrekeningen = Bankrekening.query();
+				},
+				function(error)
+				{
+					$scope.bankrekeningen = Bankrekening.query();
+					alert("Fout gebeurd...");
 				});
     	$scope.br = {};
     };
@@ -29,6 +34,11 @@ angular.module('edrBudgetAppRiaApp')
 			function(data, responseHeaders)
 			{
 				$scope.bankrekeningen = Bankrekening.query();
+			},
+			function(error)
+			{
+				$scope.bankrekeningen = Bankrekening.query();
+				alert("Fout gebeurd...");
 			});
     };
     
