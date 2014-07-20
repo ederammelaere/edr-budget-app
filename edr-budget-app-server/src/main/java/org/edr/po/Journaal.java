@@ -2,6 +2,7 @@ package org.edr.po;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 import org.edr.util.jpa.IdentifiableVersioned;
 
@@ -66,5 +67,9 @@ public interface Journaal extends IdentifiableVersioned {
 	String getLandcode();
 
 	void setLandcode(String landcode);
+
+	Set<Boeking> getBoekingen();
+
+	void setBoekingen(Set<Boeking> boekingen);
 
 }

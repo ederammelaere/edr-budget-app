@@ -2,15 +2,18 @@ package org.edr.po.jpa;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.edr.po.Bankrekening;
+import org.edr.po.Boeking;
 import org.edr.po.Journaal;
 import org.edr.util.jpa.JpaIdentifiableVersioned;
 
@@ -33,6 +36,8 @@ public class JournaalPO extends JpaIdentifiableVersioned implements Journaal {
 	private String devies;
 	private String bic;
 	private String landcode;
+
+	private Set<Boeking> boekingen;
 
 	@Override
 	@ManyToOne(targetEntity = BankrekeningPO.class)
@@ -206,6 +211,17 @@ public class JournaalPO extends JpaIdentifiableVersioned implements Journaal {
 		return new ToStringBuilder(this).appendSuper(super.toString()).append("bankrekening", bankrekening)
 				.append("afschriftnummer", afschriftnummer).append("transactienummer", transactienummer)
 				.append("datum", datum).append("transactie", transactie).toString();
+	}
+
+	@Override
+	@OneToMany(mappedBy = "journaal", targetEntity = BoekingPO.class)
+	public Set<Boeking> getBoekingen() {
+		return boekingen;
+	}
+
+	@Override
+	public void setBoekingen(Set<Boeking> boekingen) {
+		this.boekingen = boekingen;
 	}
 
 }

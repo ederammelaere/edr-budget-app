@@ -13,10 +13,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.apache.commons.lang3.StringUtils;
 import org.edr.po.Bankrekening;
 import org.edr.po.Journaal;
 import org.edr.po.jpa.JournaalPO;
+import org.edr.po.jpa.JournaalPO_;
 import org.edr.services.JournaalService;
 import org.edr.util.services.StandaardAbstractService;
 import org.slf4j.Logger;
@@ -25,6 +30,24 @@ import org.slf4j.LoggerFactory;
 public class StandaardJournaalService extends StandaardAbstractService implements JournaalService {
 
 	private static final Logger logger = LoggerFactory.getLogger(StandaardJournaalService.class);
+
+	@Override
+	public List<Journaal> findJournaal(int jaar) {
+
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<Journaal> criteriaQueryJournaal = cb.createQuery(Journaal.class);
+		Root<JournaalPO> journaalFrom = criteriaQueryJournaal.from(JournaalPO.class);
+		criteriaQueryJournaal.select(journaalFrom);
+		journaalFrom.fetch(JournaalPO_.bankrekening);
+		journaalFrom.fetch(JournaalPO_.boekingen);
+		criteriaQueryJournaal.where(cb.equal(cb.function("year", Integer.class, journaalFrom.get(JournaalPO_.datum)),
+				jaar));
+		criteriaQueryJournaal.orderBy(cb.asc(journaalFrom.get(JournaalPO_.datum)),
+				cb.asc(journaalFrom.get(JournaalPO_.id)));
+
+		return entityManager.createQuery(criteriaQueryJournaal).getResultList();
+	}
 
 	@Override
 	public void loadJournaalFromStream(BufferedReader reader) {

@@ -2,3 +2,35 @@
   <p>Selecteer een bestand : <input type="file" name="journaalbestand" size="50" /></p>
   <input type="submit" value="Upload het!" />
 </form>
+<div ng-controller="JournaalCtrl">
+jaar: <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh</button>
+
+<table>
+	<tr>
+		<th>...</th>
+		<th>Datum</th>
+		<th>Afschriftnummer</th>
+		<th>Transactienummer</th>
+		<th>Transactie</th>
+		<th>Bedrag</th>
+	</tr>
+	<tr ng-repeat-start="journaalitem in journaal">
+		<td><button ng-click="bewerken($index)">...</button></td>
+		<td>{{journaalitem.datum}}</td>
+		<td>{{journaalitem.afschriftnummer}}</td>
+		<td>{{journaalitem.transactienummer}}</td>
+		<td>{{journaalitem.transactie}}</td>
+		<td>{{journaalitem.bedrag}}</td>
+	</tr>
+	<tr ng-repeat-end ng-show="editeerZichtbaar[$index]">
+		<td></td>
+		<td colspan="5">
+			<div>Bankrekening: {{journaalitem.bankrekening.rekeningnr}}</div>
+			<div>Rekening tegenpartij: {{journaalitem.tegenpartijRekening}}</div>
+			<div>Naam tegenpartij: {{journaalitem.tegenpartijNaam}}</div>
+			<div>Adres tegenpartij: {{journaalitem.tegenpartijAdres}} - {{journaalitem.tegenpartijPlaats}}</div>
+			<div>Devies: {{journaalitem.devies}}</div>
+		</td>
+	</tr>
+</table>
+</div>
