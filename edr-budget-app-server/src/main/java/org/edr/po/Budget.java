@@ -2,7 +2,9 @@ package org.edr.po;
 
 import java.math.BigDecimal;
 
-public interface Budget {
+import org.edr.util.jpa.IdentifiableVersioned;
+
+public interface Budget extends IdentifiableVersioned {
 
 	Integer getJaar();
 

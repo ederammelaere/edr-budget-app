@@ -54,4 +54,9 @@ angular.module('edrBudgetAppRiaApp')
     $scope.refresh = function(){
     	$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
     };
+    
+    $scope.reset = function(){
+    	$scope.bg = {};
+    };
+    
   }]);

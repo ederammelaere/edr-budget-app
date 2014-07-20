@@ -53,4 +53,9 @@ angular.module('edrBudgetAppRiaApp')
     $scope.bijwerken = function(index) {
     	$scope.br = $scope.boekrekeningen[index];
     };
+    
+    $scope.reset = function(){
+    	$scope.br = {};
+    };
+    
   }]);
