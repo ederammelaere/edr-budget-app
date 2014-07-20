@@ -32,6 +32,10 @@ var edrBudgetAppRiaApp = angular.module('edrBudgetAppRiaApp', [
         templateUrl: 'views/budget.html',
         controller: 'BudgetCtrl'
       })
+      .when('/journaal', {
+        templateUrl: 'views/journaal.html',
+        controller: 'JournaalCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
