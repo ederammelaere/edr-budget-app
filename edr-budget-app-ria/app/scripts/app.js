@@ -41,4 +41,8 @@ var edrBudgetAppRiaApp = angular.module('edrBudgetAppRiaApp', [
       });
   });
 
-edrBudgetAppRiaApp.constant('baseRestPath','http://localhost:8080/edr-budget-app-rest/rest/');
+if (window.location.host=='127.0.0.1:9000') {
+	edrBudgetAppRiaApp.constant('baseRestPath','http://localhost:8080/edr-budget-app-rest/rest/');
+} else {
+	edrBudgetAppRiaApp.constant('baseRestPath','/edr-budget-app-rest-prod/rest/');
+}
