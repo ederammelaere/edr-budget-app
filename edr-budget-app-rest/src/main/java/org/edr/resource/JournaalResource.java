@@ -14,6 +14,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.edr.po.Journaal;
+import org.edr.po.jpa.JournaalPO;
+import org.edr.services.BoekingService;
 import org.edr.services.JournaalService;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class JournaalResource {
 	@Autowired
 	JournaalService journaalService;
 
+	@Autowired
+	BoekingService boekingService;
+
 	@Path("/upload")
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -33,8 +38,15 @@ public class JournaalResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Journaal> getBudgetStaat(@QueryParam("jaar") int jaar) {
+	public List<Journaal> findJournaal(@QueryParam("jaar") int jaar) {
 		return journaalService.findJournaal(jaar);
+	}
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/{id}")
+	public void saveBoekingen(JournaalPO journaal) {
+		boekingService.saveBoekingen(journaal);
 	}
 
 }

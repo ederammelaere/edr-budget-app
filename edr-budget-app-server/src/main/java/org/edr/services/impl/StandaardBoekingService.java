@@ -1,5 +1,6 @@
 package org.edr.services.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -7,6 +8,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.edr.po.Boeking;
+import org.edr.po.Journaal;
 import org.edr.po.jpa.BankrekeningPO;
 import org.edr.po.jpa.BoekingPO;
 import org.edr.po.jpa.BoekingPO_;
@@ -48,5 +50,42 @@ public class StandaardBoekingService extends StandaardAbstractService implements
 	@Override
 	public void updateBoeking(Boeking boeking) {
 		entityManager.merge(boeking);
+	}
+
+	@Override
+	public void saveBoekingen(Journaal journaal) {
+		BigDecimal bedrag = new BigDecimal(0.00);
+		for (Boeking boeking : journaal.getBoekingen()) {
+			bedrag = bedrag.add(boeking.getBedrag());
+		}
+
+		if (!bedrag.equals(journaal.getBedrag())) {
+			throw new IllegalArgumentException("Bedrag komt niet overeen");
+		}
+
+		findBoekingen(journaal).stream().forEach(s -> {
+			entityManager.remove(s);
+		});
+
+		for (Boeking boeking : journaal.getBoekingen()) {
+			boeking.setId(null);
+			boeking.setVersion(0);
+			boeking.setJournaal(journaal);
+			boeking.setBankrekening(journaal.getBankrekening());
+			boeking.setDatum(journaal.getDatum());
+			createBoeking(boeking);
+		}
+	}
+
+	public List<Boeking> findBoekingen(Journaal journaal) {
+
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<Boeking> criteriaQueryBoeking = cb.createQuery(Boeking.class);
+		Root<BoekingPO> boekingFrom = criteriaQueryBoeking.from(BoekingPO.class);
+		criteriaQueryBoeking.select(boekingFrom);
+		criteriaQueryBoeking.where(cb.equal(boekingFrom.get(BoekingPO_.journaal), journaal));
+
+		return entityManager.createQuery(criteriaQueryBoeking).getResultList();
 	}
 }

@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
@@ -39,8 +40,9 @@ public class StandaardJournaalService extends StandaardAbstractService implement
 		CriteriaQuery<Journaal> criteriaQueryJournaal = cb.createQuery(Journaal.class);
 		Root<JournaalPO> journaalFrom = criteriaQueryJournaal.from(JournaalPO.class);
 		criteriaQueryJournaal.select(journaalFrom);
+		criteriaQueryJournaal.distinct(true);
 		journaalFrom.fetch(JournaalPO_.bankrekening);
-		journaalFrom.fetch(JournaalPO_.boekingen);
+		journaalFrom.fetch(JournaalPO_.boekingen, JoinType.LEFT);
 		criteriaQueryJournaal.where(cb.equal(cb.function("year", Integer.class, journaalFrom.get(JournaalPO_.datum)),
 				jaar));
 		criteriaQueryJournaal.orderBy(cb.asc(journaalFrom.get(JournaalPO_.datum)),

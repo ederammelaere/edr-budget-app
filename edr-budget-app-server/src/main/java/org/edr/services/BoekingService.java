@@ -3,6 +3,7 @@ package org.edr.services;
 import java.util.List;
 
 import org.edr.po.Boeking;
+import org.edr.po.Journaal;
 
 public interface BoekingService {
 
@@ -13,5 +14,7 @@ public interface BoekingService {
 	void updateBoeking(Boeking boeking);
 
 	void deleteBoeking(Long id);
+
+	void saveBoekingen(Journaal journaal);
 
 }

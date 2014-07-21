@@ -22,9 +22,9 @@ jaar: <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh<
 		<td>{{boeking.omschrijving}}</td>
 		<td>{{boeking.datum}}</td>
 		<td>{{boeking.bedrag}}</td>
-		<td>{{boeking.journaal.id}}</td>
-		<td><button ng-click="verwijderen($index)">Verwijderen</button></td>
-		<td><button ng-click="bijwerken($index)">Bijwerken</button></td>
+		<td>{{boeking.isJournaalSet}}</td>
+		<td><button ng-click="verwijderen($index)" ng-disabled="boeking.isJournaalSet">Verwijderen</button></td>
+		<td><button ng-click="bijwerken($index)" ng-disabled="boeking.isJournaalSet">Bijwerken</button></td>
 	</tr>
 </table>
 </div>

@@ -1,13 +1,14 @@
-<form action="http://localhost:8080/edr-budget-app-rest/rest/journaal/upload" method="post" enctype="multipart/form-data">
+<div ng-controller="JournaalCtrl">
+<form action="{{baseRestPath + 'journaal/upload'}}" method="post" enctype="multipart/form-data">
   <p>Selecteer een bestand : <input type="file" name="journaalbestand" size="50" /></p>
   <input type="submit" value="Upload het!" />
 </form>
-<div ng-controller="JournaalCtrl">
 jaar: <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh</button>
 
 <table>
 	<tr>
 		<th>...</th>
+		<th>B</th>
 		<th>Datum</th>
 		<th>Afschriftnummer</th>
 		<th>Transactienummer</th>
@@ -16,6 +17,7 @@ jaar: <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh<
 	</tr>
 	<tr ng-repeat-start="journaalitem in journaal">
 		<td><button ng-click="bewerken($index)">...</button></td>
+		<td>{{isGeboekt($index)}}</td>
 		<td>{{journaalitem.datum}}</td>
 		<td>{{journaalitem.afschriftnummer}}</td>
 		<td>{{journaalitem.transactienummer}}</td>
@@ -25,11 +27,31 @@ jaar: <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh<
 	<tr ng-repeat-end ng-show="editeerZichtbaar[$index]">
 		<td></td>
 		<td colspan="5">
-			<div>Bankrekening: {{journaalitem.bankrekening.rekeningnr}}</div>
+			<div>Bankrekening: {{journaalitem.bankrekening.rekeningnr}} - {{journaalitem.bankrekening.omschrijving}}</div>
 			<div>Rekening tegenpartij: {{journaalitem.tegenpartijRekening}}</div>
 			<div>Naam tegenpartij: {{journaalitem.tegenpartijNaam}}</div>
 			<div>Adres tegenpartij: {{journaalitem.tegenpartijAdres}} - {{journaalitem.tegenpartijPlaats}}</div>
 			<div>Devies: {{journaalitem.devies}}</div>
+			<div><b>Boekingen:</b></div>
+			<form ng-submit="save($index)">
+				<div ng-repeat="boeking in journaalitem.boekingen track by $index">
+				Boekrekening: 
+					<select ng-model="boeking.boekrekening" ng-options="boekrekening.rekeningnr  + ' - ' + boekrekening.omschrijving for boekrekening in boekrekeningen | filter:{boekbaar:'true'} track by boekrekening.id">
+					</select>
+				Omschrijving: <input type="text" ng-model="boeking.omschrijving"/>
+				Bedrag: <input type="text" ng-model="boeking.bedrag"/>
+				<button type="button" ng-click="verwijderen($parent.$index, $index)">-</button>
+				</div>
+				<div>
+				Boekrekening: 
+					<select ng-model="newboeking.boekrekening" ng-options="boekrekening.rekeningnr  + ' - ' + boekrekening.omschrijving for boekrekening in boekrekeningen | filter:{boekbaar:'true'} track by boekrekening.id">
+					</select>
+				Omschrijving: <input type="text" ng-model="newboeking.omschrijving"/> 
+				Bedrag: <input type="text" ng-model="newboeking.bedrag"/>
+				<button type="button" ng-click="toevoegen($index)">+</button>
+				</div>
+				<div><button type="submit">Opslaan</button></div>
+			</form>
 		</td>
 	</tr>
 </table>

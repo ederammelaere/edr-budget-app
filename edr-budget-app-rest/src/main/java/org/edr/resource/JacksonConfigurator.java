@@ -9,9 +9,12 @@ import javax.ws.rs.ext.Provider;
 
 import org.edr.domain.BudgetStaat;
 import org.edr.po.Bankrekening;
+import org.edr.po.Boeking;
 import org.edr.po.Boekrekening;
 import org.edr.po.jpa.BankrekeningPO;
+import org.edr.po.jpa.BoekingPO;
 import org.edr.po.jpa.BoekrekeningPO;
+import org.edr.resource.json.MixInBoeking;
 import org.edr.resource.json.MixInBudgetStaat;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -64,12 +67,14 @@ public class JacksonConfigurator implements ContextResolver<ObjectMapper> {
 
 	public JacksonConfigurator() {
 		mapper.addMixInAnnotations(BudgetStaat.class, MixInBudgetStaat.class);
+		mapper.addMixInAnnotations(Boeking.class, MixInBoeking.class);
 		SimpleModule module = new SimpleModule("SimpleModule", new Version(1, 1, 0, null, null, null));
 		module.addSerializer(new LocalDateSerializer());
 		module.addDeserializer(LocalDate.class, new LocalDateDeserializer());
 
 		module.addAbstractTypeMapping(Bankrekening.class, BankrekeningPO.class);
 		module.addAbstractTypeMapping(Boekrekening.class, BoekrekeningPO.class);
+		module.addAbstractTypeMapping(Boeking.class, BoekingPO.class);
 
 		mapper.registerModule(module);
 	}

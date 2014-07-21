@@ -31,4 +31,6 @@ public interface Boeking extends IdentifiableVersioned {
 
 	Journaal getJournaal();
 
+	boolean getIsJournaalSet();
+
 }
