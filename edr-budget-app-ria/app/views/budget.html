@@ -1,36 +1,40 @@
-<h2>Boeking</h2>
+<h2>Budget</h2>
 
 <div ng-controller="BudgetCtrl">
 <div>
-jaar: <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh</button>
+	<label>Jaar:</label> <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh</button>
+	<hr>
+</div>
+
 <table>
 	<tr>
 		<th>boekrekening</th>
 		<th>boekrekening - omschrijving</th>
 		<th>jaar</th>
 		<th>bedrag</th>
+		<th></th>
 	</tr>
 	<tr ng-repeat="budget in budgetten">
 		<td>{{budget.boekrekening.rekeningnr}}</td>
 		<td>{{budget.boekrekening.omschrijving}}</td>
 		<td>{{budget.jaar}}</td>
 		<td>{{budget.bedrag}}</td>
-		<td><button ng-click="verwijderen($index)">Verwijderen</button></td>
-		<td><button ng-click="bijwerken($index)">Bijwerken</button></td>
+		<td><button ng-click="verwijderen($index)">Verwijderen</button> <button ng-click="bijwerken($index)">Bijwerken</button></td>
 	</tr>
 </table>
-</div>
+
+<hr>
+
 <div>
 	<form ng-submit="save()">
-		<div>Boekrekening: 
-			<select ng-model="bt.boekrekening.id">
-				<option ng-repeat="boekrekening in boekrekeningen | filter:{budgeteerbaar:'true'}" value="{{boekrekening.id}}">{{boekrekening.rekeningnr}} - {{boekrekening.omschrijving}}</option>
-			</select>
-		</div>
-		<div>Jaar: <input type="text" ng-model="bt.jaar"/></div>
-		<div>Bedrag: <input type="text" ng-model="bt.bedrag"/></div>
-		<div><button type="submit">Opslaan</button></div>
-		<div><button type="reset" ng-click="reset()">Reset</button></div>	
+		<label>Boekrekening:</label> 
+		<select ng-model="bt.boekrekening.id">
+			<option ng-repeat="boekrekening in boekrekeningen | filter:{budgeteerbaar:'true'}" value="{{boekrekening.id}}">{{boekrekening.rekeningnr}} - {{boekrekening.omschrijving}}</option>
+		</select>
+		<label>Jaar: </label><input type="number" ng-model="bt.jaar" placeholder="Jaar"/>
+		<label>Bedrag: </label><input type="text" ng-model="bt.bedrag" placeholder="Bedrag in EUR"/>
+		<button type="submit">Opslaan</button>
+		<button type="reset" ng-click="reset()">Reset</button>	
 	</form>
 </div>
 </div>

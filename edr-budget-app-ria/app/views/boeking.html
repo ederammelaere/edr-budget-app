@@ -1,8 +1,10 @@
-<h2>Boeking</h2>
+<h2>Boekingen</h2>
 
 <div ng-controller="BoekingCtrl">
 <div>
-jaar: <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh</button>
+	<label>Jaar:</label> <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh</button>
+	<hr>
+</div>
 <table>
 	<tr>
 		<th>bankrekening</th>
@@ -13,6 +15,7 @@ jaar: <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh<
 		<th>datum</th>
 		<th>bedrag</th>
 		<th>journaalid</th>
+		<th></th>
 	</tr>
 	<tr ng-repeat="boeking in boekingen">
 		<td>{{boeking.bankrekening.rekeningnr}}</td>
@@ -23,28 +26,26 @@ jaar: <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh<
 		<td>{{boeking.datum}}</td>
 		<td>{{boeking.bedrag}}</td>
 		<td>{{boeking.isJournaalSet}}</td>
-		<td><button ng-click="verwijderen($index)" ng-disabled="boeking.isJournaalSet">Verwijderen</button></td>
-		<td><button ng-click="bijwerken($index)" ng-disabled="boeking.isJournaalSet">Bijwerken</button></td>
+		<td><button ng-click="verwijderen($index)" ng-disabled="boeking.isJournaalSet">Verwijderen</button> <button ng-click="bijwerken($index)" ng-disabled="boeking.isJournaalSet">Bijwerken</button></td>
 	</tr>
 </table>
-</div>
+<hr>
 <div>
-	<form ng-submit="save()">
-		<div>Bankrekening: 
+	<form ng-submit="save()" class="boekingForm">
+		<div><label>Bankrekening:</label> 
 			<select ng-model="bg.bankrekening.id">
 				<option ng-repeat="bankrekening in bankrekeningen" value="{{bankrekening.id}}">{{bankrekening.rekeningnr}} - {{bankrekening.omschrijving}}</option>
 			</select>
 		</div>
-		<div>Boekrekening: 
+		<div><label>Boekrekening:</label> 
 			<select ng-model="bg.boekrekening.id">
 				<option ng-repeat="boekrekening in boekrekeningen | filter:{boekbaar:'true'}" value="{{boekrekening.id}}">{{boekrekening.rekeningnr}} - {{boekrekening.omschrijving}}</option>
 			</select>
 		</div>
-		<div>Omschrijving: <input type="text" ng-model="bg.omschrijving"/></div>
-		<div>Datum: <input type="text" ng-model="bg.datum"/></div>
-		<div>Bedrag: <input type="text" ng-model="bg.bedrag"/></div>
-		<div><button type="submit">Opslaan</button></div>	
-		<div><button type="reset" ng-click="reset()">Reset</button></div>
+		<div><label>Omschrijving:</label> <input type="text" ng-model="bg.omschrijving" size="50" placeholder="Geef een omschrijving voor de boeking"/></div>
+		<div><label>Datum:</label> <input type="date" ng-model="bg.datum"/></div>
+		<div><label>Bedrag:</label> <input type="text" ng-model="bg.bedrag" placeholder="Bedrag in EUR"/></div>
+		<div><button type="submit">Opslaan</button> <button type="reset" ng-click="reset()">Reset</button></div>
 	</form>
 </div>
 </div>

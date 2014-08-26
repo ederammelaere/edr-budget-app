@@ -6,8 +6,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
-    <meta name="description" content="">
+    <title>EDR-Budget-App</title>
+    <meta name="description" content="beheer budget">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css styles/vendor.css -->
@@ -17,32 +17,32 @@
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/main-edr.css">
     <!-- endbuild -->
   </head>
   <body ng-app="edrBudgetAppRiaApp">
-  
-  	<h1>EDR-Budget-App</h1>
-  	
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+  	<header>
+	   	<h1>EDR-Budget-App</h1>
+	   	<div ng-controller="MainCtrl">werkgebied = <b>{{werkgebied}}</b></div>
+	  	
+	    <!--[if lt IE 7]>
+	      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+	    <![endif]-->
+	    
+	    <nav>
+	    	<a ng-href="#/boekrekening">Boekrekeningen</a> - 
+	    	<a ng-href="#/bankrekening">Bankrekeningen</a> - 
+	    	<a ng-href="#/journaal">Journaal</a> - 
+	    	<a ng-href="#/boeking">Boekingen</a> - 
+	    	<a ng-href="#/budget">Budget</a> - 
+	    	<a ng-href="#/budgetstaat">Budgetstaat</a> 
+	    </nav>
+	    
     
-    <div ng-controller="MainCtrl">werkgebied = <b>{{werkgebied}}</b></div>
-
-    <!-- Add your site or application content here -->
-    <div>
-    	<table>
-	    	<tr>
-    			<th> <a ng-href="#/boekrekening">Boekrekeningen</a> - </th>
-    			<th> <a ng-href="#/bankrekening">Bankrekeningen</a> - </th>
-    			<th> <a ng-href="#/journaal">Journaal</a> - </th>
-    			<th> <a ng-href="#/boeking">Boekingen</a> - </th>
-    			<th> <a ng-href="#/budget">Budget</a> - </th>
-    			<th> <a ng-href="#/budgetstaat">Budgetstaat</a> </th>
-    		</tr>
-    	</table>    
-    </div>
-    <div ng-view=""></div>
+    </header>
+    
+    <main ng-view="">
+    </main>
 
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>

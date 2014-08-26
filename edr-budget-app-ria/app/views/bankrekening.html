@@ -1,26 +1,30 @@
 <h2>Bankrekeningen</h2>
 
 <div ng-controller="BankrekeningCtrl">
+
 <table>
 	<tr>
 		<th>rekeningnr</th>
 		<th>omschrijving</th>
 		<th>saldo</th>
+		<th></th>
 	</tr>
 	<tr ng-repeat="bankrekening in bankrekeningen">
 		<td>{{bankrekening.rekeningnr}}</td>
 		<td>{{bankrekening.omschrijving}}</td>
 		<td>{{bankrekening.saldo}}</td>
-		<td><button ng-click="verwijderen($index)">Verwijderen</button></td>
-		<td><button ng-click="bijwerken($index)">Bijwerken</button></td>
+		<td><button ng-click="verwijderen($index)">Verwijderen</button> <button ng-click="bijwerken($index)">Bijwerken</button></td>
 	</tr>
 </table>
+<hr>
 <div>
 	<form ng-submit="save()">
-		Rekeningnr: <input type="text" ng-model="br.rekeningnr"/>
-		Omschrijving: <input type="text" ng-model="br.omschrijving"/>
+		<label>Rekeningnr:</label> <input type="text" ng-model="br.rekeningnr" placeholder="Geef het rekeningnummer" size="30"/>
+		<label>Omschrijving:</label> <input type="text" ng-model="br.omschrijving" placeholder="Geef hier een omschrijving" size="50"/>
+		
 		<button type="submit">Opslaan</button>
 		<button type="reset" ng-click="reset()">Reset</button>
 	</form>
 </div>
+
 </div>
