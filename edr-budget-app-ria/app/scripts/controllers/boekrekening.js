@@ -6,56 +6,35 @@ angular.module('edrBudgetAppRiaApp').factory('Boekrekening', ['$resource', 'base
 
 angular.module('edrBudgetAppRiaApp')
   .controller('BoekrekeningCtrl', ['$scope', 'Boekrekening', function ($scope, Boekrekening) {
-    $scope.boekrekeningen = Boekrekening.query();
-    
-    $scope.br = {};
-    
+	  
+	function refresh()
+	{
+		$scope.boekrekeningen = Boekrekening.query();
+	}
+	
+	refresh();
+    resetFormObj($scope);
+        
     $scope.save = function() {
-    	if (!$scope.br.budgeteerbaar)
-    	{
-    		$scope.br.budgeteerbaar = false;
-    	}
-    	if (!$scope.br.boekbaar)
-    	{
-    		$scope.br.boekbaar = false;
-    	}
-    	var param;
-    	if ($scope.br.id)
-    		param = {'id': $scope.br.id};
-    	else
-    		param = {};
-    	Boekrekening.save(param, $scope.br, 
-    			function(data, responseHeaders)
-    			{
-					$scope.boekrekeningen = Boekrekening.query();
-				},
-				function(error)
-				{
-					$scope.boekrekeningen = Boekrekening.query();
-					alert("Fout gebeurd...");
-				});
-    	$scope.br = {};
+    	addFalse($scope, "budgeteerbaar");
+    	addFalse($scope, "boekbaar");
+    	var param = addId($scope);
+
+    	Boekrekening.save(param, $scope.formObj, succesHandler(refresh), errorHandler);
+    	
+    	resetFormObj($scope);
     };
     
     $scope.verwijderen = function(index) {
-    	Boekrekening.remove({ id:$scope.boekrekeningen[index].id }, 
-			function(data, responseHeaders)
-			{
-				$scope.boekrekeningen = Boekrekening.query();
-			},
-			function(error)
-			{
-				$scope.boekrekeningen = Boekrekening.query();
-				alert("Fout gebeurd...");
-			});
+    	Boekrekening.remove({ id:$scope.boekrekeningen[index].id }, succesHandler(refresh),	errorHandler);
     };
     
     $scope.bijwerken = function(index) {
-    	$scope.br = $scope.boekrekeningen[index];
+    	$scope.formObj = angular.copy($scope.boekrekeningen[index]);
     };
     
     $scope.reset = function(){
-    	$scope.br = {};
+    	resetFormObj($scope);
     };
     
   }]);

@@ -7,55 +7,37 @@ angular.module('edrBudgetAppRiaApp').factory('Budget', ['$resource', 'baseRestPa
 angular.module('edrBudgetAppRiaApp')
   .controller('BudgetCtrl', ['$scope', 'Budget', 'Boekrekening', function ($scope, Budget, Boekrekening) {
     
-	$scope.budgetten = Budget.query({'jaar' : new Date().getFullYear()});
+	function refresh()
+	{
+		$scope.budgetten = Budget.query({'jaar' : $scope.jaar});
+	}
+		
+	$scope.jaar = new Date().getFullYear();
+	refresh();
+	
+	$scope.$watch("jaar", function(newValue){ 
+		if (newValue > 2000 && newValue < 3000) refresh(); });
+	
+	resetFormObj($scope);
+	
     $scope.boekrekeningen = Boekrekening.query();
     
-    $scope.bt = {};
-    
-    $scope.jaar = new Date().getFullYear();
-    
     $scope.save = function() {
-    	var param;
-    	if ($scope.bt.id)
-    		param = {'id': $scope.bt.id};
-    	else
-    		param = {};
-    	Budget.save(param, $scope.bt, 
-    			function(data, responseHeaders)
-    			{
-					$scope.budgetten = Budget.query({'jaar' : $scope.jaar});
-				},
-				function(error)
-				{
-					$scope.budgetten = Budget.query({'jaar' : $scope.jaar});
-					alert("Fout gebeurd...");
-				});
-    	$scope.bt = {};
+    	var param = addId($scope);
+    	Budget.save(param, $scope.formObj, succesHandler(refresh), errorHandler);
+    	resetFormObj($scope);
     };
     
     $scope.verwijderen = function(index) {
-    	Budget.remove({ id:$scope.budgetten[index].id }, 
-			function(data, responseHeaders)
-			{
-    			$scope.budgetten = Budget.query({'jaar' : $scope.jaar});
-			},
-			function(error)
-			{
-				$scope.budgetten = Budget.query({'jaar' : $scope.jaar});
-				alert("Fout gebeurd...");
-			});
+    	Budget.remove({ id:$scope.budgetten[index].id }, succesHandler(refresh), errorHandler); 
     };
     
     $scope.bijwerken = function(index) {
-    	$scope.bt = $scope.budgetten[index];
-    };
-    
-    $scope.refresh = function(){
-    	$scope.budgetten = Budget.query({'jaar' : $scope.jaar});
+    	$scope.formObj = angular.copy($scope.budgetten[index]);
     };
     
     $scope.reset = function(){
-    	$scope.bt = {};
+    	resetFormObj($scope);
     };
     
   }]);

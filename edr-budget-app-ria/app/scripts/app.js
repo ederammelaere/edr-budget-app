@@ -46,3 +46,34 @@ if (window.location.host=='127.0.0.1:9000') {
 } else {
 	edrBudgetAppRiaApp.constant('baseRestPath','/edr-budget-app-rest-prod/rest/');
 }
+
+function resetFormObj($scope)
+{
+	$scope.formObj = {};		
+}
+
+function addFalse($scope, property)
+{
+	if (!$scope.formObj[property])
+	{
+		$scope.formObj[property] = false;
+	}
+}
+
+function addId($scope)
+{
+	if ($scope.formObj.id)
+		return {'id': $scope.formObj.id};
+	else
+		return {};
+}
+
+function errorHandler(error)
+{
+	alert("Fout gebeurd...");
+}
+
+function succesHandler(functie)
+{
+	return function(){functie()};
+}

@@ -7,56 +7,38 @@ angular.module('edrBudgetAppRiaApp').factory('Boeking', ['$resource', 'baseRestP
 angular.module('edrBudgetAppRiaApp')
   .controller('BoekingCtrl', ['$scope', 'Boeking', 'Bankrekening', 'Boekrekening', function ($scope, Boeking, Bankrekening, Boekrekening) {
     
-	$scope.boekingen = Boeking.query({'jaar' : new Date().getFullYear()});
+	function refresh()
+	{
+		$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
+	}
+	  
+	$scope.jaar = new Date().getFullYear();
+	refresh();
+	resetFormObj($scope);
+	
+	$scope.$watch("jaar", function(newValue){ 
+		if (newValue > 2000 && newValue < 3000) refresh(); });
+	
     $scope.bankrekeningen = Bankrekening.query();
     $scope.boekrekeningen = Boekrekening.query();
     
-    $scope.bg = {};
-    
-    $scope.jaar = new Date().getFullYear();
-    
     $scope.save = function() {
-    	var param;
-    	if ($scope.bg.id)
-    		param = {'id': $scope.bg.id};
-    	else
-    		param = {};
-    	Boeking.save(param, $scope.bg, 
-    			function(data, responseHeaders)
-    			{
-					$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
-				},
-				function(error)
-				{
-					$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
-					alert("Fout gebeurd...");
-				});
-    	$scope.bg = {};
+    	var param = addId($scope);
+    	Boeking.save(param, $scope.formObj, succesHandler(refresh), errorHandler); 
+    	resetFormObj($scope);
     };
     
     $scope.verwijderen = function(index) {
-    	Boeking.remove({ id:$scope.boekingen[index].id }, 
-			function(data, responseHeaders)
-			{
-				$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
-			},
-			function(error)
-			{
-				$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
-				alert("Fout gebeurd...");
-			});
+    	Boeking.remove({ id:$scope.boekingen[index].id }, succesHandler(refresh), errorHandler);
     };
     
     $scope.bijwerken = function(index) {
-    	$scope.bg = $scope.boekingen[index];
-    };
-    
-    $scope.refresh = function(){
-    	$scope.boekingen = Boeking.query({'jaar' : $scope.jaar});
+    	$scope.formObj = angular.copy($scope.boekingen[index]);
+    	delete $scope.formObj.isJournaalSet;
     };
     
     $scope.reset = function(){
-    	$scope.bg = {};
+    	resetFormObj($scope);
     };
     
   }]);

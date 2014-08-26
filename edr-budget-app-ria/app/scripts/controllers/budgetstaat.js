@@ -6,9 +6,15 @@ angular.module('edrBudgetAppRiaApp').factory('BudgetStaat', ['$resource', 'baseR
 
 angular.module('edrBudgetAppRiaApp')
   .controller('BudgetstaatCtrl', ['$scope', 'BudgetStaat', function ($scope, BudgetStaat) {
-    $scope.budgetstaat = BudgetStaat.query({'jaar' : new Date().getFullYear()});
-    $scope.jaar = new Date().getFullYear();
-    $scope.refresh = function(){
-    	$scope.budgetstaat = BudgetStaat.query({'jaar' : $scope.jaar});
-    };
+	  
+	  function refresh()
+	  {
+		  $scope.budgetstaat = BudgetStaat.query({'jaar' : $scope.jaar});
+	  }
+			
+	  $scope.jaar = new Date().getFullYear();
+	  refresh();
+		
+	  $scope.$watch("jaar", function(newValue){ 
+		  if (newValue > 2000 && newValue < 3000) refresh(); });
   }]);

@@ -2,7 +2,7 @@
 
 <div ng-controller="BudgetCtrl">
 <div>
-	<label>Jaar:</label> <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh</button>
+	<label>Jaar:</label> <input type="text" ng-model="jaar"/>
 	<hr>
 </div>
 
@@ -28,11 +28,11 @@
 <div>
 	<form ng-submit="save()">
 		<label>Boekrekening:</label> 
-		<select ng-model="bt.boekrekening.id">
+		<select ng-model="formObj.boekrekening.id">
 			<option ng-repeat="boekrekening in boekrekeningen | filter:{budgeteerbaar:'true'}" value="{{boekrekening.id}}">{{boekrekening.rekeningnr}} - {{boekrekening.omschrijving}}</option>
 		</select>
-		<label>Jaar: </label><input type="number" ng-model="bt.jaar" placeholder="Jaar"/>
-		<label>Bedrag: </label><input type="text" ng-model="bt.bedrag" placeholder="Bedrag in EUR"/>
+		<label>Jaar: </label><input type="number" ng-model="formObj.jaar" placeholder="Jaar"/>
+		<label>Bedrag: </label><input type="text" ng-model="formObj.bedrag" placeholder="Bedrag in EUR"/>
 		<button type="submit">Opslaan</button>
 		<button type="reset" ng-click="reset()">Reset</button>	
 	</form>

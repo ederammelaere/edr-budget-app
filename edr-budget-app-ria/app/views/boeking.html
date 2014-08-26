@@ -2,7 +2,7 @@
 
 <div ng-controller="BoekingCtrl">
 <div>
-	<label>Jaar:</label> <input type="text" ng-model="jaar"/> <button ng-click="refresh()">refresh</button>
+	<label>Jaar:</label> <input type="text" ng-model="jaar"/>
 	<hr>
 </div>
 <table>
@@ -33,18 +33,18 @@
 <div>
 	<form ng-submit="save()" class="boekingForm">
 		<div><label>Bankrekening:</label> 
-			<select ng-model="bg.bankrekening.id">
+			<select ng-model="formObj.bankrekening.id">
 				<option ng-repeat="bankrekening in bankrekeningen" value="{{bankrekening.id}}">{{bankrekening.rekeningnr}} - {{bankrekening.omschrijving}}</option>
 			</select>
 		</div>
 		<div><label>Boekrekening:</label> 
-			<select ng-model="bg.boekrekening.id">
+			<select ng-model="formObj.boekrekening.id">
 				<option ng-repeat="boekrekening in boekrekeningen | filter:{boekbaar:'true'}" value="{{boekrekening.id}}">{{boekrekening.rekeningnr}} - {{boekrekening.omschrijving}}</option>
 			</select>
 		</div>
-		<div><label>Omschrijving:</label> <input type="text" ng-model="bg.omschrijving" size="50" placeholder="Geef een omschrijving voor de boeking"/></div>
-		<div><label>Datum:</label> <input type="date" ng-model="bg.datum"/></div>
-		<div><label>Bedrag:</label> <input type="text" ng-model="bg.bedrag" placeholder="Bedrag in EUR"/></div>
+		<div><label>Omschrijving:</label> <input type="text" ng-model="formObj.omschrijving" size="50" placeholder="Geef een omschrijving voor de boeking"/></div>
+		<div><label>Datum:</label> <input type="text" ng-model="formObj.datum"/></div>
+		<div><label>Bedrag:</label> <input type="text" ng-model="formObj.bedrag" placeholder="Bedrag in EUR"/></div>
 		<div><button type="submit">Opslaan</button> <button type="reset" ng-click="reset()">Reset</button></div>
 	</form>
 </div>

@@ -6,48 +6,33 @@ angular.module('edrBudgetAppRiaApp').factory('Bankrekening', ['$resource', 'base
 
 angular.module('edrBudgetAppRiaApp')
   .controller('BankrekeningCtrl', ['$scope', 'Bankrekening', function ($scope, Bankrekening) {
-    $scope.bankrekeningen = Bankrekening.query();
-    
-    $scope.br = {};
+	  
+	function refresh()
+	{
+		$scope.bankrekeningen = Bankrekening.query();
+	}
+	
+	refresh();
+	resetFormObj($scope);
     
     $scope.save = function() {
-    	var param;
-    	if ($scope.br.id)
-    		param = {'id': $scope.br.id};
-    	else
-    		param = {};
-    	Bankrekening.save(param, $scope.br, 
-    			function(data, responseHeaders)
-    			{
-					$scope.bankrekeningen = Bankrekening.query();
-				},
-				function(error)
-				{
-					$scope.bankrekeningen = Bankrekening.query();
-					alert("Fout gebeurd...");
-				});
-    	$scope.br = {};
+    	var param = addId($scope);
+    	
+    	Bankrekening.save(param, $scope.formObj, succesHandler(refresh), errorHandler); 
+
+    	resetFormObj($scope);
     };
     
     $scope.verwijderen = function(index) {
-    	Bankrekening.remove({ id:$scope.bankrekeningen[index].id }, 
-			function(data, responseHeaders)
-			{
-				$scope.bankrekeningen = Bankrekening.query();
-			},
-			function(error)
-			{
-				$scope.bankrekeningen = Bankrekening.query();
-				alert("Fout gebeurd...");
-			});
+    	Bankrekening.remove({ id:$scope.bankrekeningen[index].id }, succesHandler(refresh), errorHandler); 
     };
     
     $scope.bijwerken = function(index) {
-    	$scope.br = $scope.bankrekeningen[index];
+    	$scope.formObj = angular.copy($scope.bankrekeningen[index]);
     };
     
     $scope.reset = function(){
-    	$scope.br = {};
+    	resetFormObj($scope);
     };
     
   }]);
