@@ -24,6 +24,7 @@ angular.module('edrBudgetAppRiaApp')
     
     $scope.save = function() {
     	var param = addId($scope);
+    	$scope.formObj.datum = $scope.formObj.datum.split("-").reverse().toString().replace(/,/g, "/");
     	Boeking.save(param, $scope.formObj, succesHandler(refresh), errorHandler); 
     	resetFormObj($scope);
     };
@@ -34,6 +35,7 @@ angular.module('edrBudgetAppRiaApp')
     
     $scope.bijwerken = function(index) {
     	$scope.formObj = angular.copy($scope.boekingen[index]);
+    	$scope.formObj.datum = $scope.formObj.datum.split("/").reverse().toString().replace(/,/g, "-");
     	delete $scope.formObj.isJournaalSet;
     };
     
