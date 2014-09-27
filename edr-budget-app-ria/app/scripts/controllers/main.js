@@ -8,4 +8,10 @@ angular.module('edrBudgetAppRiaApp')
 		  $scope.werkgebied = data;
 	  }
 	);
+	
+	$scope.clickMenu = function($event)
+	{
+		$($event.target).closest('ul').children('li').removeClass("active");
+		$($event.target).closest('li').addClass("active");
+	}
   }]);

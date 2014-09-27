@@ -21,7 +21,7 @@
 <hr>
 <div>
 	<form ng-submit="save()">
-		<label>Rekeningnr:</label> <input type="text" ng-model="formObj.rekeningnr" placeholder="XXXXXX" required />
+		<label>Rekeningnr:</label> <input type="text" ng-model="formObj.rekeningnr" placeholder="XXXXXX" pattern="[0-9]{6}" required />
 		<label>Omschrijving:</label> <input type="text" ng-model="formObj.omschrijving" placeholder="Geef hier een omschrijving" size="50" required />
 		<label>Budgeteerbaar:</label> <input type ="checkbox" ng-model="formObj.budgeteerbaar"/>
 		<label>Boekbaar:</label> <input type ="checkbox" ng-model="formObj.boekbaar"/>

@@ -17,31 +17,32 @@
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/main-edr.css">
     <!-- endbuild -->
   </head>
   <body ng-app="edrBudgetAppRiaApp">
-  	<header>
-	   	<h1>EDR-Budget-App</h1>
-	   	<div ng-controller="MainCtrl">werkgebied = <b>{{werkgebied}}</b></div>
-	  	
-	    <!--[if lt IE 7]>
-	      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-	    <![endif]-->
-	    
-	    <nav>
-	    	<a ng-href="#/boekrekening">Boekrekeningen</a> - 
-	    	<a ng-href="#/bankrekening">Bankrekeningen</a> - 
-	    	<a ng-href="#/journaal">Journaal</a> - 
-	    	<a ng-href="#/boeking">Boekingen</a> - 
-	    	<a ng-href="#/budget">Budget</a> - 
-	    	<a ng-href="#/budgetstaat">Budgetstaat</a> 
-	    </nav>
-	    
-    
+  	<header class="navbar navbar-default navbar-fixed-top navbar-inverse" ng-controller="MainCtrl">
+  		<div class="container">
+		   	<div class="navbar-brand text-muted">EDR-Budget-App - <span>werkgebied = <b>{{werkgebied}}</b></span></div>
+		   			  	
+		    <!--[if lt IE 7]>
+		      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		    <![endif]-->
+		    
+		    <nav class="collapse navbar-collapse">
+             <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a ng-href="#" ng-click="clickMenu($event)">Home</a></li>
+		    	<li><a ng-href="#/boekrekening" ng-click="clickMenu($event)">Boekrekeningen</a></li> 
+		    	<li><a ng-href="#/bankrekening" ng-click="clickMenu($event)">Bankrekeningen</a></li>
+		    	<li><a ng-href="#/journaal" ng-click="clickMenu($event)">Journaal</a></li>
+		    	<li><a ng-href="#/boeking" ng-click="clickMenu($event)">Boekingen</a></li>
+		    	<li><a ng-href="#/budget" ng-click="clickMenu($event)">Budget</a></li>
+		    	<li><a ng-href="#/budgetstaat" ng-click="clickMenu($event)">Budgetstaat</a></li>
+            </ul>
+          </nav>
+	    </div>
     </header>
     
-    <main ng-view="">
+    <main class="container" ng-view="">
     </main>
 
     <!--[if lt IE 9]>
