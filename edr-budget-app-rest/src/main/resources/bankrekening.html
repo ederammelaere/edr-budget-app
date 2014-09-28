@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="nl_BE">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+				
+		<script>
+		function ParseCsv(csv)
+		{
+			var result = [];
+			
+			var lines = csv.split('\n');
+			for(var i=0; i<lines.length; i++ ){
+				var item = [];
+				var tokens = lines[i].split("|");
+				
+				for (var j=0; j<tokens.length; j++){
+					item.push(tokens[j]);							  
+				}
+				result.push(item);
+			}
+			return result;
+		}
+		
+		var edrRestCallApp = angular.module('edrRestCallApp',[]);
+		
+		angular.module('edrRestCallApp')
+		  .controller('RestCtrl', ['$scope', '$http', function ($scope, $http) {
+			  $scope.restCall = function()
+			  {
+				  $scope.reply = [];
+				  $http.get('/edr-budget-app-rest/rest/' + $scope.param + '/csv').success(function(result)
+				  {
+					  $scope.reply = ParseCsv(result);
+				  });
+			  }
+		  }]);
+
+		</script>
+	</head>
+	<body ng-app="edrRestCallApp">
+		<h1>Rest call</h1>
+		<div ng-controller="RestCtrl">
+			<input type="text" length="10" ng-model="param">
+			<button ng-click="restCall()">Call it</button>
+			
+			<table border="1px">
+				<tr><th>id</th><th>omschrijving</th><th>saldo</th></tr>
+				<tr ng-repeat="line in reply">
+					<td ng-repeat="token in line">{{token}}</td>
+				</tr>
+			</table>
+		</div>
+	</body>	
+</html>
