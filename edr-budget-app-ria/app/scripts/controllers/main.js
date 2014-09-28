@@ -9,6 +9,13 @@ angular.module('edrBudgetAppRiaApp')
 	  }
 	);
 	
+	var hash = window.location.hash;
+	if (hash == '')
+	{
+		hash = '#/';
+	}
+	$('#mainMenu a[ng-href="' + hash + '"]').closest('li').addClass("active");
+	
 	$scope.clickMenu = function($event)
 	{
 		$($event.target).closest('ul').children('li').removeClass("active");
