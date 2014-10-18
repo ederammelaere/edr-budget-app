@@ -13,7 +13,10 @@
 		<td>{{bankrekening.rekeningnr}}</td>
 		<td>{{bankrekening.omschrijving}}</td>
 		<td>{{bankrekening.saldo}}</td>
-		<td><button ng-click="verwijderen($index)" class="btn">Verwijderen</button> <button ng-click="bijwerken($index)" class="btn">Bijwerken</button></td>
+		<td>
+		 <button ng-click="verwijderen($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+		 <button ng-click="bijwerken($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+		</td>
 	</tr>
 </table>
 <hr>
@@ -22,8 +25,8 @@
 		<label>Rekeningnr:</label> <input type="text" ng-model="formObj.rekeningnr" placeholder="Geef het rekeningnummer" size="30" required />
 		<label>Omschrijving:</label> <input type="text" ng-model="formObj.omschrijving" placeholder="Geef hier een omschrijving" size="50" required />
 		
-		<button type="submit" class="btn">Opslaan</button>
-		<button type="reset" ng-click="reset()" class="btn">Reset</button>
+		<button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-save"></span></button>
+		<button type="reset" ng-click="reset()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
 	</form>
 </div>
 

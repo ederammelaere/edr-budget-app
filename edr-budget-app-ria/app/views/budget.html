@@ -19,7 +19,11 @@
 		<td>{{budget.boekrekening.omschrijving}}</td>
 		<td>{{budget.jaar}}</td>
 		<td>{{budget.bedrag}}</td>
-		<td><button ng-click="verwijderen($index)">Verwijderen</button> <button ng-click="bijwerken($index)">Bijwerken</button></td>
+		<td>
+			<button ng-click="verwijderen($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+			<button ng-click="bijwerken($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+		</td>
+
 	</tr>
 </table>
 
@@ -33,8 +37,8 @@
 		</select>
 		<label>Jaar: </label><input type="number" ng-model="formObj.jaar" placeholder="Jaar" required />
 		<label>Bedrag: </label><input type="text" ng-model="formObj.bedrag" placeholder="Bedrag in EUR" required />
-		<button type="submit">Opslaan</button>
-		<button type="reset" ng-click="reset()">Reset</button>	
+		<button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-save"></span></button>
+		<button type="reset" ng-click="reset()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
 	</form>
 </div>
 </div>

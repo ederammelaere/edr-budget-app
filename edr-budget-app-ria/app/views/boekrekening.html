@@ -15,7 +15,10 @@
 		<td>{{boekrekening.omschrijving}}</td>
 		<td>{{boekrekening.budgeteerbaar}}</td>
 		<td>{{boekrekening.boekbaar}}</td>
-		<td><button ng-click="verwijderen($index)">Verwijderen</button> <button ng-click="bijwerken($index)">Bijwerken</button></td>
+		<td>
+			<button ng-click="verwijderen($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+			<button ng-click="bijwerken($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+		</td>
 	</tr>
 </table>
 <hr>
@@ -26,8 +29,8 @@
 		<label>Budgeteerbaar:</label> <input type ="checkbox" ng-model="formObj.budgeteerbaar"/>
 		<label>Boekbaar:</label> <input type ="checkbox" ng-model="formObj.boekbaar"/>
 		
-		<button type="submit">Opslaan</button>
-		<button type="reset" ng-click="reset()">Reset</button>	
+		<button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-save"></span></button>
+		<button type="reset" ng-click="reset()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
 	</form>
 </div>
 
