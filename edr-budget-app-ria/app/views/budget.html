@@ -6,25 +6,29 @@
 	<hr>
 </div>
 
-<table>
-	<tr>
-		<th>boekrekening</th>
-		<th>boekrekening - omschrijving</th>
-		<th>jaar</th>
-		<th>bedrag</th>
-		<th></th>
-	</tr>
-	<tr ng-repeat="budget in budgetten">
-		<td>{{budget.boekrekening.rekeningnr}}</td>
-		<td>{{budget.boekrekening.omschrijving}}</td>
-		<td>{{budget.jaar}}</td>
-		<td>{{budget.bedrag}}</td>
-		<td>
-			<button ng-click="verwijderen($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
-			<button ng-click="bijwerken($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-		</td>
-
-	</tr>
+<table class="table table-striped table-condensed">
+	<thead>
+		<tr>
+			<th>boekrekening</th>
+			<th>boekrekening - omschrijving</th>
+			<th>jaar</th>
+			<th>bedrag</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="budget in budgetten">
+			<td>{{budget.boekrekening.rekeningnr}}</td>
+			<td>{{budget.boekrekening.omschrijving}}</td>
+			<td>{{budget.jaar}}</td>
+			<td>{{budget.bedrag}}</td>
+			<td>
+				<button ng-click="verwijderen($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+				<button ng-click="bijwerken($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+			</td>
+	
+		</tr>
+	</tbody>
 </table>
 
 <hr>
