@@ -21,10 +21,15 @@
 </table>
 <hr>
 <div>
-	<form ng-submit="save()">
-		<label>Rekeningnr:</label> <input type="text" ng-model="formObj.rekeningnr" placeholder="Geef het rekeningnummer" size="30" required />
-		<label>Omschrijving:</label> <input type="text" ng-model="formObj.omschrijving" placeholder="Geef hier een omschrijving" size="50" required />
-		
+	<form ng-submit="save()" role="form">
+		<div class="form-group">
+			<label for="rekeningnr">Rekeningnr:</label>
+			<input type="text" id="rekeningnr" class="form-control" ng-model="formObj.rekeningnr" placeholder="Geef het rekeningnummer" size="30" required />
+		</div>
+		<div class="form-group">
+			<label for="omschrijving">Omschrijving:</label>
+			<input type="text" id="omschrijving" class="form-control" ng-model="formObj.omschrijving" placeholder="Geef hier een omschrijving" size="50" required />
+		</div>
 		<button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-save"></span></button>
 		<button type="reset" ng-click="reset()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
 	</form>

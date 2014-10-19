@@ -27,31 +27,40 @@
 		<td>{{boeking.bedrag}}</td>
 		<td>{{boeking.isJournaalSet}}</td>
 		<td>
-			<button ng-click="verwijderen($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
-		 	<button ng-click="bijwerken($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+			<button ng-click="verwijderen($index)" ng-disabled="boeking.isJournaalSet" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+		 	<button ng-click="bijwerken($index)" ng-disabled="boeking.isJournaalSet" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
 		</td>
 	</tr>
 </table>
 <hr>
 <div>
-	<form ng-submit="save()" class="boekingForm">
-		<div><label>Bankrekening:</label> 
-			<select ng-model="formObj.bankrekening.id">
+	<form ng-submit="save()" class="boekingForm" role="form">
+		<div class="form-group">
+			<label for="bankrekening">Bankrekening:</label> 
+			<select id="bankrekening" class="form-control" ng-model="formObj.bankrekening.id">
 				<option ng-repeat="bankrekening in bankrekeningen" value="{{bankrekening.id}}">{{bankrekening.rekeningnr}} - {{bankrekening.omschrijving}}</option>
 			</select>
 		</div>
-		<div><label>Boekrekening:</label> 
-			<select ng-model="formObj.boekrekening.id">
+		<div class="form-group">
+			<label for="boekrekening">Boekrekening:</label> 
+			<select id="boekrekening" class="form-control" ng-model="formObj.boekrekening.id">
 				<option ng-repeat="boekrekening in boekrekeningen | filter:{boekbaar:'true'}" value="{{boekrekening.id}}">{{boekrekening.rekeningnr}} - {{boekrekening.omschrijving}}</option>
 			</select>
 		</div>
-		<div><label>Omschrijving:</label> <input type="text" ng-model="formObj.omschrijving" size="50" placeholder="Geef een omschrijving voor de boeking"/ required ></div>
-		<div><label>Datum:</label> <input type="date" ng-model="formObj.datum" required /></div>
-		<div><label>Bedrag:</label> <input type="text" ng-model="formObj.bedrag" placeholder="Bedrag in EUR" required /></div>
-		<div>
-			<button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-save"></span></button>
-			<button type="reset" ng-click="reset()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
+		<div class="form-group">
+			<label for="omschrijving">Omschrijving:</label>
+			<input id="omschrijving" type="text" class="form-control" ng-model="formObj.omschrijving" size="50" placeholder="Geef een omschrijving voor de boeking"/ required >
 		</div>
+		<div class="form-group">
+			<label for="datum">Datum:</label>
+			<input id="datum" type="date" class="form-control" ng-model="formObj.datum" required />
+		</div>
+		<div class="form-group">
+			<label for="bedrag">Bedrag:</label>
+			<input id="bedrag" type="text" class="form-control" ng-model="formObj.bedrag" placeholder="Bedrag in EUR" required />
+		</div>
+		<button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-save"></span></button>
+		<button type="reset" ng-click="reset()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
 	</form>
 </div>
 </div>

@@ -23,11 +23,21 @@
 </table>
 <hr>
 <div>
-	<form ng-submit="save()">
-		<label>Rekeningnr:</label> <input type="text" ng-model="formObj.rekeningnr" placeholder="XXXXXX" pattern="[0-9]{6}" required />
-		<label>Omschrijving:</label> <input type="text" ng-model="formObj.omschrijving" placeholder="Geef hier een omschrijving" size="50" required />
-		<label>Budgeteerbaar:</label> <input type ="checkbox" ng-model="formObj.budgeteerbaar"/>
-		<label>Boekbaar:</label> <input type ="checkbox" ng-model="formObj.boekbaar"/>
+	<form ng-submit="save()" role="form">
+		<div class="form-group">
+			<label>Rekeningnr:</label>
+			<input id="rekeningnr" class="form-control" type="text" ng-model="formObj.rekeningnr" placeholder="XXXXXX" pattern="[0-9]{6}" required />
+		</div>
+		<div class="form-group">
+			<label>Omschrijving:</label>
+			<input id="omschrijving" class="form-control" type="text" ng-model="formObj.omschrijving" placeholder="Geef hier een omschrijving" size="50" required />
+		</div>
+		<div class="checkbox">
+			<label><input type ="checkbox" ng-model="formObj.budgeteerbaar"/> Budgeteerbaar</label>
+		</div>
+		<div class="checkbox">
+			<label><input type ="checkbox" ng-model="formObj.boekbaar"/> Boekbaar</label>
+		</div>
 		
 		<button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-save"></span></button>
 		<button type="reset" ng-click="reset()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>

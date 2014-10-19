@@ -30,13 +30,21 @@
 <hr>
 
 <div>
-	<form ng-submit="save()">
-		<label>Boekrekening:</label> 
-		<select ng-model="formObj.boekrekening.id">
-			<option ng-repeat="boekrekening in boekrekeningen | filter:{budgeteerbaar:'true'}" value="{{boekrekening.id}}">{{boekrekening.rekeningnr}} - {{boekrekening.omschrijving}}</option>
-		</select>
-		<label>Jaar: </label><input type="number" ng-model="formObj.jaar" placeholder="Jaar" required />
-		<label>Bedrag: </label><input type="text" ng-model="formObj.bedrag" placeholder="Bedrag in EUR" required />
+	<form ng-submit="save()" role="form">
+		<div class="form-group">
+			<label for="boekrekening">Boekrekening:</label> 
+			<select id="boekrekening" class="form-control" ng-model="formObj.boekrekening.id">
+				<option ng-repeat="boekrekening in boekrekeningen | filter:{budgeteerbaar:'true'}" value="{{boekrekening.id}}">{{boekrekening.rekeningnr}} - {{boekrekening.omschrijving}}</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="jaar">Jaar: </label>
+			<input id="jaar" class="form-control" type="number" ng-model="formObj.jaar" placeholder="Jaar" required />
+		</div>
+		<div class="form-group">
+			<label for="bedrag">Bedrag: </label>
+			<input id="bedrag" class="form-control" type="text" ng-model="formObj.bedrag" placeholder="Bedrag in EUR" required />
+		</div>
 		<button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-save"></span></button>
 		<button type="reset" ng-click="reset()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
 	</form>
