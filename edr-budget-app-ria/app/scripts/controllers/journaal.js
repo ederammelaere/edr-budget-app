@@ -77,11 +77,6 @@ angular.module('edrBudgetAppRiaApp')
     };
     
     $scope.save = function(index){
-    	for (var i=0; i<$scope.journaal[index].boekingen.length; i++)
-    	{
-    		delete $scope.journaal[index].boekingen[i].isJournaalSet;
-    	}
-    	
     	Journaal.save({'id': $scope.journaal[index].id}, $scope.journaal[index], 
     			null,errorHandler);
     };

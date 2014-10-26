@@ -112,6 +112,10 @@ public class BoekingPO extends JpaIdentifiableVersioned implements Boeking {
 	}
 
 	@Override
+	public void setIsJournaalSet(boolean dummy) {
+	}
+
+	@Override
 	public String toString() {
 		return new ToStringBuilder(this).appendSuper(super.toString()).append("bankrekening", bankrekening)
 				.append("boekrekening", boekrekening).append("omschrijving", omschrijving).append("datum", datum)

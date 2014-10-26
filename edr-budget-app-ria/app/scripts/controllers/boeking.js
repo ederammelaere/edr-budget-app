@@ -36,7 +36,6 @@ angular.module('edrBudgetAppRiaApp')
     $scope.bijwerken = function(index) {
     	$scope.formObj = angular.copy($scope.boekingen[index]);
     	$scope.formObj.datum = $scope.formObj.datum.split("/").reverse().toString().replace(/,/g, "-");
-    	delete $scope.formObj.isJournaalSet;
     };
     
     $scope.reset = function(){
