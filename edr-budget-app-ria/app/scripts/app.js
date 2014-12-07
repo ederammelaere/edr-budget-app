@@ -4,7 +4,8 @@ var edrBudgetAppRiaApp = angular.module('edrBudgetAppRiaApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'ui.bootstrap'
 ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -64,6 +65,14 @@ function addId($scope)
 {
 	if ($scope.formObj.id)
 		return {'id': $scope.formObj.id};
+	else
+		return {};
+}
+
+function addId2(formObj)
+{
+	if (formObj.id)
+		return {'id': formObj.id};
 	else
 		return {};
 }
