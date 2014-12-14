@@ -27,7 +27,7 @@ angular.module('edrBudgetAppRiaApp')
     	MyModalWindow.openModal(formObj, $scope.save, 'bankrekeningModal.html');
     };
     
-    $scope.toevoegen = function(index) {
+    $scope.toevoegen = function() {
     	MyModalWindow.openModal({}, $scope.save, 'bankrekeningModal.html');
     };
             

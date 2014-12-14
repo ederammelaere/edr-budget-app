@@ -109,10 +109,19 @@ angular.module('edrBudgetAppRiaApp').factory('MyModalWindow', ['$modal', functio
 }]);
 
 angular.module('edrBudgetAppRiaApp')
-	.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'formObj', function ($scope, $modalInstance, formObj) {
+	.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'formObj', 'Bankrekening', 'Boekrekening', 
+	                                  function ($scope, $modalInstance, formObj, Bankrekening, Boekrekening) {
 	$scope.formObj = formObj;
 	$scope.actie = (formObj.id) ? 'Bewerken' : 'Toevoegen';
 	
+	$scope.initBankrekeningen = function(){
+		$scope.bankrekeningen = Bankrekening.query();		
+	};
+	
+	$scope.initBoekrekeningen = function(){
+		$scope.boekrekeningen = Boekrekening.query();		
+	};
+		
 	$scope.reset = function(){
     	$modalInstance.dismiss('cancel');
     };

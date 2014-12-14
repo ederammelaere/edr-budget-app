@@ -5,7 +5,7 @@ angular.module('edrBudgetAppRiaApp').factory('Boeking', ['$resource', 'baseRestP
 	}]);
 
 angular.module('edrBudgetAppRiaApp')
-  .controller('BoekingCtrl', ['$scope', 'Boeking', 'Bankrekening', 'Boekrekening', function ($scope, Boeking, Bankrekening, Boekrekening) {
+  .controller('BoekingCtrl', ['$scope', 'Boeking', 'MyModalWindow', function ($scope, Boeking, MyModalWindow) {
     
 	function refresh()
 	{
@@ -14,19 +14,13 @@ angular.module('edrBudgetAppRiaApp')
 	  
 	$scope.jaar = new Date().getFullYear();
 	refresh();
-	resetFormObj($scope);
-	
+		
 	$scope.$watch("jaar", function(newValue){ 
 		if (newValue > 2000 && newValue < 3000) refresh(); });
-	
-    $scope.bankrekeningen = Bankrekening.query();
-    $scope.boekrekeningen = Boekrekening.query();
     
-    $scope.save = function() {
-    	var param = addId($scope);
-    	$scope.formObj.datum = $scope.formObj.datum.split("-").reverse().toString().replace(/,/g, "/");
-    	Boeking.save(param, $scope.formObj, succesHandler(refresh), errorHandler); 
-    	resetFormObj($scope);
+    $scope.save = function(formObj) {
+    	formObj.datum = formObj.datum.split("-").reverse().toString().replace(/,/g, "/");
+    	Boeking.save(addIdObject(formObj), formObj, succesHandler(refresh), errorHandler); 
     };
     
     $scope.verwijderen = function(index) {
@@ -34,12 +28,13 @@ angular.module('edrBudgetAppRiaApp')
     };
     
     $scope.bijwerken = function(index) {
-    	$scope.formObj = angular.copy($scope.boekingen[index]);
-    	$scope.formObj.datum = $scope.formObj.datum.split("/").reverse().toString().replace(/,/g, "-");
+    	var formObj = angular.copy($scope.boekingen[index]);
+    	formObj.datum = formObj.datum.split("/").reverse().toString().replace(/,/g, "-");
+    	MyModalWindow.openModal(formObj, $scope.save, 'boekingModal.html');
     };
     
-    $scope.reset = function(){
-    	resetFormObj($scope);
+    $scope.toevoegen = function() {
+    	MyModalWindow.openModal({}, $scope.save, 'boekingModal.html');
     };
-    
+        
   }]);
