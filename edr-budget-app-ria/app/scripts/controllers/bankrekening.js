@@ -5,7 +5,7 @@ angular.module('edrBudgetAppRiaApp').factory('Bankrekening', ['$resource', 'base
 	}]);
 
 angular.module('edrBudgetAppRiaApp')
-  .controller('BankrekeningCtrl', ['$scope', 'Bankrekening', '$modal', function ($scope, Bankrekening, $modal) {
+  .controller('BankrekeningCtrl', ['$scope', 'Bankrekening', 'MyModalWindow', function ($scope, Bankrekening, MyModalWindow) {
 	  
 	function refresh()
 	{
@@ -24,11 +24,11 @@ angular.module('edrBudgetAppRiaApp')
     
     $scope.bijwerken = function(index) {
     	var formObj = angular.copy($scope.bankrekeningen[index]);
-    	openModal($modal, formObj, $scope, 'bankrekeningModal.html');
+    	MyModalWindow.openModal(formObj, $scope.save, 'bankrekeningModal.html');
     };
     
     $scope.toevoegen = function(index) {
-    	openModal($modal, {}, $scope, 'bankrekeningModal.html');
+    	MyModalWindow.openModal({}, $scope.save, 'bankrekeningModal.html');
     };
             
   }]);

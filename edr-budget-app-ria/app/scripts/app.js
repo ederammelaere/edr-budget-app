@@ -87,22 +87,26 @@ function succesHandler(functie)
 	return function(){functie();};
 }
 
-function openModal (modal, formObj, scope, templateUrl) {
+angular.module('edrBudgetAppRiaApp').factory('MyModalWindow', ['$modal', function($modal){
+	return {
+		openModal : function (formObj, save, templateUrl) {
 
-    var modalInstance = modal.open({
-      templateUrl: templateUrl,
-      controller: 'ModalInstanceCtrl',
-      resolve: {
-          formObj: function () {
-            return formObj;
-          }
-        }
-    });
-    
-    modalInstance.result.then(function (formObj) {
-        scope.save(formObj);
-      });
-};
+			var modalInstance = $modal.open({
+				templateUrl: templateUrl,
+				controller: 'ModalInstanceCtrl',
+				resolve: {
+					formObj: function () {
+						return formObj;
+					}
+				}
+			});
+	    
+			modalInstance.result.then(function (formObj) {
+				save(formObj);
+			});
+		}
+	};
+}]);
 
 angular.module('edrBudgetAppRiaApp')
 	.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'formObj', function ($scope, $modalInstance, formObj) {
