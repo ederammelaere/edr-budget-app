@@ -69,7 +69,7 @@ function addId($scope)
 		return {};
 }
 
-function addId2(formObj)
+function addIdObject(formObj)
 {
 	if (formObj.id)
 		return {'id': formObj.id};
@@ -84,5 +84,35 @@ function errorHandler(error)
 
 function succesHandler(functie)
 {
-	return function(){functie()};
+	return function(){functie();};
 }
+
+function openModal (modal, formObj, scope, templateUrl) {
+
+    var modalInstance = modal.open({
+      templateUrl: templateUrl,
+      controller: 'ModalInstanceCtrl',
+      resolve: {
+          formObj: function () {
+            return formObj;
+          }
+        }
+    });
+    
+    modalInstance.result.then(function (formObj) {
+        scope.save(formObj);
+      });
+};
+
+angular.module('edrBudgetAppRiaApp')
+	.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'formObj', function ($scope, $modalInstance, formObj) {
+	$scope.formObj = formObj;
+	$scope.actie = (formObj.id) ? 'Bewerken' : 'Toevoegen';
+	
+	$scope.reset = function(){
+    	$modalInstance.dismiss('cancel');
+    };
+    $scope.save = function(){
+    	$modalInstance.close($scope.formObj);
+    };	    
+}]);
