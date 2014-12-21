@@ -15,7 +15,8 @@ angular.module('edrBudgetAppRiaApp')
 	$scope.jaar = new Date().getFullYear();
 	refresh();
 	
-	$scope.$watch("jaar", function(newValue){ 
+	$scope.$watch("jaar", function(newValue, oldValue){
+		if (newValue === oldValue) return;
 		if (newValue > 2000 && newValue < 3000) refresh(); });
 	
     $scope.boekrekeningen = Boekrekening.query();

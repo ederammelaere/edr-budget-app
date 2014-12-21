@@ -27,7 +27,8 @@ angular.module('edrBudgetAppRiaApp')
 	
 	// we werken hier met een timeout omdat bij gebruik van de pijltjes anders twee units ineens
 	// omhoog geteld wordt
-	$scope.$watch("jaar", function(newValue){ 
+	$scope.$watch("jaar", function(newValue, oldValue){
+		if (newValue === oldValue) return; 
 		setTimeout(function(){if (newValue > 2000 && newValue < 3000) refresh(); },500);});
 	  
 	$scope.baseRestPath = baseRestPath;
