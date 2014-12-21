@@ -34,7 +34,7 @@ body {
 /* Customize container */
 @media (min-width: 768px) {
   .container {
-    max-width: 1800px;
+    max-width: 1900px;
   }
 }
 .container-narrow > hr {
@@ -76,4 +76,9 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+}
+
+.container-full {
+  margin: 0 auto;
+  width: 90%;
 }
