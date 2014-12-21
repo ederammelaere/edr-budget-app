@@ -53,11 +53,11 @@ function resetFormObj($scope)
 	$scope.formObj = {};		
 }
 
-function addFalse($scope, property)
+function addFalse(formObj, property)
 {
-	if (!$scope.formObj[property])
+	if (!formObj[property])
 	{
-		$scope.formObj[property] = false;
+		formObj[property] = false;
 	}
 }
 

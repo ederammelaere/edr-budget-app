@@ -5,7 +5,7 @@ angular.module('edrBudgetAppRiaApp').factory('Boekrekening', ['$resource', 'base
 	}]);
 
 angular.module('edrBudgetAppRiaApp')
-  .controller('BoekrekeningCtrl', ['$scope', 'Boekrekening', function ($scope, Boekrekening) {
+  .controller('BoekrekeningCtrl', ['$scope', 'Boekrekening', 'MyModalWindow', function ($scope, Boekrekening, MyModalWindow) {
 	  
 	function refresh()
 	{
@@ -13,16 +13,12 @@ angular.module('edrBudgetAppRiaApp')
 	}
 	
 	refresh();
-    resetFormObj($scope);
-        
-    $scope.save = function() {
-    	addFalse($scope, "budgeteerbaar");
-    	addFalse($scope, "boekbaar");
-    	var param = addId($scope);
-
-    	Boekrekening.save(param, $scope.formObj, succesHandler(refresh), errorHandler);
+            
+    $scope.save = function(formObj) {
+    	addFalse(formObj, "budgeteerbaar");
+    	addFalse(formObj, "boekbaar");
     	
-    	resetFormObj($scope);
+    	Boekrekening.save(addIdObject(formObj), formObj, succesHandler(refresh), errorHandler);
     };
     
     $scope.verwijderen = function(index) {
@@ -30,11 +26,12 @@ angular.module('edrBudgetAppRiaApp')
     };
     
     $scope.bijwerken = function(index) {
-    	$scope.formObj = angular.copy($scope.boekrekeningen[index]);
+    	var formObj = angular.copy($scope.boekrekeningen[index]);
+    	MyModalWindow.openModal(formObj, $scope.save, 'boekrekeningModal.html');
     };
     
-    $scope.reset = function(){
-    	resetFormObj($scope);
+    $scope.toevoegen = function() {
+    	MyModalWindow.openModal({}, $scope.save, 'boekrekeningModal.html');
     };
-    
-  }]);
+        
+}]);
