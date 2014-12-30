@@ -82,3 +82,7 @@ body {
   margin: 0 auto;
   width: 90%;
 }
+
+.app-modal-window .modal-dialog {
+  width: 60%;
+}

@@ -5,21 +5,12 @@ angular.module('edrBudgetAppRiaApp').factory('Journaal', ['$resource', 'baseRest
 	}]);
 
 angular.module('edrBudgetAppRiaApp')
-  .controller('JournaalCtrl', ['$scope', 'Journaal', 'Boekrekening', 'baseRestPath', function ($scope, Journaal, Boekrekening, baseRestPath) {
+  .controller('JournaalCtrl', ['$scope', 'Journaal', 'Boekrekening', 'baseRestPath', '$modal', '$sce', 
+                function ($scope, Journaal, Boekrekening, baseRestPath, $modal, $sce) {
 	  
 	function refresh()
 	{
 		$scope.journaal = Journaal.query({'jaar' : $scope.jaar});
-	}
-	
-	function restBedrag(index)
-	{
-		var bedrag = $scope.journaal[index].bedrag;
-    	for (var i=0; i<$scope.journaal[index].boekingen.length; i++)
-    	{
-    		bedrag = bedrag - $scope.journaal[index].boekingen[i].bedrag;
-    	}
-    	$scope.newboeking.bedrag = Math.round(bedrag*100)/100;
 	}
 	
 	$scope.jaar = new Date().getFullYear();
@@ -33,52 +24,91 @@ angular.module('edrBudgetAppRiaApp')
 	  
 	$scope.baseRestPath = baseRestPath;
     
-    $scope.boekrekeningen = Boekrekening.query();
-        
-    $scope.editeerZichtbaar = new Array;
-    $scope.newboeking = {};
-    $scope.geboekt = new Array;
-    for (var i=0; i<$scope.journaal.length; i++)
-    {
-    	$scope.editeerZichtbaar[i] = false;
-    }
-    
     $scope.isGeboekt = function(index)
     {
     	return $scope.journaal[index].boekingen.length > 0 ? "V" : "X";
     };
     
     $scope.bewerken = function(index){
-    	if ($scope.editeerZichtbaar[index])
+    	var journaalitem = angular.copy($scope.journaal[index]);
+    	$scope.openModal(journaalitem);
+    };
+            
+    $scope.save = function(journaalitem){
+    	Journaal.save({'id': journaalitem.id}, journaalitem, 
+    			succesHandler(refresh),errorHandler);
+    };
+    
+    $scope.openModal = function(journaalitem) {
+		var modalInstance = $modal.open({
+			templateUrl: 'journaalModal.html',
+			controller: 'JournaalModalInstanceCtrl',
+			windowClass: 'app-modal-window',
+			resolve: {
+				journaalitem: function () {
+					return journaalitem;
+				}
+			}
+		});
+    
+		modalInstance.result.then(function (journaalitem) {
+			$scope.save(journaalitem);
+		});
+	
+    };
+    
+  }]);
+
+angular.module('edrBudgetAppRiaApp')
+	.controller('JournaalModalInstanceCtrl', ['$scope', '$modalInstance', 'journaalitem', 'Bankrekening', 'Boekrekening', 
+                                  function ($scope, $modalInstance, journaalitem, Bankrekening, Boekrekening) {
+		
+	var restBedrag = function(journaalitem)
+	{
+		var bedrag = journaalitem.bedrag;
+    	for (var i=0; i<journaalitem.boekingen.length; i++)
     	{
-    		$scope.editeerZichtbaar[index] = false;
-    		return;
+    		bedrag = bedrag - journaalitem.boekingen[i].bedrag;
     	}
-    	
-    	for (var i=0; i<$scope.journaal.length; i++)
-        {
-        	$scope.editeerZichtbaar[i] = false;
-        }
-    	$scope.editeerZichtbaar[index] = true;
-    	$scope.newboeking = {};
-    	restBedrag(index);
+    	$scope.newboeking.bedrag = Math.round(bedrag*100)/100;
+	};
+		
+	$scope.journaalitem = journaalitem;
+	$scope.newboeking = {};
+	restBedrag($scope.journaalitem);
+	
+	$scope.initBankrekeningen = function(){
+		$scope.bankrekeningen = Bankrekening.query();		
+	};
+	
+	$scope.initBoekrekeningen = function(){
+		$scope.boekrekeningen = Boekrekening.query();		
+	};
+	
+    $scope.verwijderen = function(index){
+    	$scope.journaalitem.boekingen.splice(index, 1);
+    	restBedrag($scope.journaalitem);
     };
     
     $scope.toevoegen = function(index){
+    	if (!$scope.newboeking.omschrijving)
+    		return;
+    	
+    	if (!$scope.newboeking.boekrekening)
+    		return;
+    	
     	$scope.newboeking.boekrekening.id = parseInt($scope.newboeking.boekrekening.id, 10);
-    	$scope.journaal[index].boekingen.push($scope.newboeking);
+    	$scope.journaalitem.boekingen.push($scope.newboeking);
     	$scope.newboeking = {};
     	
-    	restBedrag(index);
+    	restBedrag($scope.journaalitem);
     };
-        
-    $scope.verwijderen = function(journaalindex, boekingindex){
-    	$scope.journaal[journaalindex].boekingen.splice(boekingindex, 1);
-    	restBedrag(journaalindex);
-    };
-    
-    $scope.save = function(index){
-    	Journaal.save({'id': $scope.journaal[index].id}, $scope.journaal[index], 
-    			null,errorHandler);
-    };
-  }]);
+    		
+	$scope.reset = function(){
+		$modalInstance.dismiss('cancel');
+	};
+	
+	$scope.save = function(){
+		$modalInstance.close($scope.journaalitem);
+	};	    
+}]);
