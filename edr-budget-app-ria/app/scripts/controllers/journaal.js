@@ -63,8 +63,7 @@ angular.module('edrBudgetAppRiaApp')
 	.controller('JournaalModalInstanceCtrl', ['$scope', '$modalInstance', 'journaalitem', 'Bankrekening', 'Boekrekening', 
                                   function ($scope, $modalInstance, journaalitem, Bankrekening, Boekrekening) {
 		
-	var restBedrag = function(journaalitem)
-	{
+	var restBedrag = function(journaalitem){
 		var bedrag = journaalitem.bedrag;
     	for (var i=0; i<journaalitem.boekingen.length; i++)
     	{
@@ -72,25 +71,53 @@ angular.module('edrBudgetAppRiaApp')
     	}
     	$scope.newboeking.bedrag = Math.round(bedrag*100)/100;
 	};
+	
+	var initialiseer = function(journaalitem){
+		$scope.isNormaal = true;
 		
+		if (journaalitem.boekingen.length == 2)
+		{
+			if (journaalitem.boekingen[0].bedrag == journaalitem.bedrag)
+			{
+				if (journaalitem.boekingen[1].bedrag == -1 * journaalitem.bedrag)
+				{
+					$scope.transferboeking.boekrekening = journaalitem.boekingen[0].boekrekening;
+					$scope.transferboeking.bankrekening = journaalitem.boekingen[1].bankrekening;
+					$scope.transferboeking.omschrijving = journaalitem.boekingen[0].omschrijving;
+					$scope.isNormaal = false;
+					journaalitem.boekingen = [];
+				}
+			}
+			else if (journaalitem.boekingen[1].bedrag == journaalitem.bedrag)
+			{
+				if (journaalitem.boekingen[0].bedrag == -1 * journaalitem.bedrag)
+				{
+					$scope.transferboeking.boekrekening = journaalitem.boekingen[1].boekrekening;
+					$scope.transferboeking.bankrekening = journaalitem.boekingen[0].bankrekening;
+					$scope.transferboeking.omschrijving = journaalitem.boekingen[1].omschrijving;
+					$scope.isNormaal = false;
+					journaalitem.boekingen = [];
+				}
+			}
+		}
+		$scope.isTransfer = !$scope.isNormaal;
+	};
+				
 	$scope.journaalitem = journaalitem;
 	$scope.newboeking = {};
+	$scope.transferboeking = {};
 	restBedrag($scope.journaalitem);
+	initialiseer($scope.journaalitem);
 	
-	$scope.initBankrekeningen = function(){
-		$scope.bankrekeningen = Bankrekening.query();		
-	};
-	
-	$scope.initBoekrekeningen = function(){
-		$scope.boekrekeningen = Boekrekening.query();		
-	};
-	
+	$scope.bankrekeningen = Bankrekening.query();		
+	$scope.boekrekeningen = Boekrekening.query();		
+		
     $scope.verwijderen = function(index){
     	$scope.journaalitem.boekingen.splice(index, 1);
     	restBedrag($scope.journaalitem);
     };
     
-    $scope.toevoegen = function(index){
+    $scope.toevoegen = function(){
     	if (!$scope.newboeking.omschrijving)
     		return;
     	
@@ -108,7 +135,34 @@ angular.module('edrBudgetAppRiaApp')
 		$modalInstance.dismiss('cancel');
 	};
 	
-	$scope.save = function(){
+	$scope.saveNormaal = function(){
 		$modalInstance.close($scope.journaalitem);
-	};	    
+	};
+	
+	$scope.saveTransfer = function(){
+		$scope.journaalitem.boekingen = [];
+		var boekingVan = {
+			boekrekening : { id : $scope.transferboeking.boekrekening.id }, 
+			bankrekening : { id : $scope.journaalitem.bankrekening.id },
+			omschrijving : $scope.transferboeking.omschrijving ,
+			datum : $scope.journaalitem.datum,
+			bedrag : $scope.journaalitem.bedrag
+		};
+		var boekingNaar = {
+			boekrekening : { id : $scope.transferboeking.boekrekening.id }, 
+			bankrekening : { id : $scope.transferboeking.bankrekening.id },
+			omschrijving : $scope.transferboeking.omschrijving ,
+			datum : $scope.journaalitem.datum,
+			bedrag : -1 * $scope.journaalitem.bedrag
+		};
+		$scope.journaalitem.boekingen.push(boekingVan);
+		$scope.journaalitem.boekingen.push(boekingNaar);
+		$modalInstance.close($scope.journaalitem);
+	};
+	
+	$scope.changeTab = function(tabIndex){
+		$scope.isNormaal = tabIndex == 0;
+		$scope.isTransfer = tabIndex == 1;
+	};
+			
 }]);

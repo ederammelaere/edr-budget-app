@@ -47,8 +47,11 @@
 		<div><b>Naam tegenpartij:</b> {{journaalitem.tegenpartijNaam}}</div>
 		<div><b>Adres tegenpartij:</b> {{journaalitem.tegenpartijAdres}} - {{journaalitem.tegenpartijPlaats}}</div>
 		<div><b>Devies:</b> {{journaalitem.devies}}</div>
-		<div><b>Boekingen:</b></div>
-		<form ng-submit="save($index)" class="form-inline" role="form" id="myform" ng-init="initBankrekeningen(); initBoekrekeningen()">
+		
+		<tabset>
+		<tab heading="Normale boeking" select="changeTab(0)" active="isNormaal">
+
+		<form ng-submit="saveNormaal()" class="form-inline" role="form" id="formNormaal">
 			<div ng-repeat="boeking in journaalitem.boekingen track by $index">
 				<div class="form-group">
 					<label>Boekrekening:</label> 
@@ -79,12 +82,34 @@
 					<label>Bedrag:</label>
 					<input class="form-control" type="text" ng-model="newboeking.bedrag" placeholder="Bedrag in EUR"/>
 				</div>
-				<button type="button" ng-click="toevoegen($index)"><span class="glyphicon glyphicon-plus"></span></button>
+				<button type="button" ng-click="toevoegen()"><span class="glyphicon glyphicon-plus"></span></button>
 			</div>
 		</form>
+
+		</tab>
+		<tab heading="Transfer" select="changeTab(1)" active="isTransfer">
+			<form role="form" ng-submit="saveTransfer()" id="formTransfer">
+				<div class="form-group">
+					<label>Boekrekening:</label> 
+					<select class="form-control" ng-model="transferboeking.boekrekening" ng-options="boekrekening.rekeningnr  + ' - ' + boekrekening.omschrijving for boekrekening in boekrekeningen | filter:{boekbaar:'true'} track by boekrekening.id">
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Bankrekening:</label> 
+					<select class="form-control" ng-model="transferboeking.bankrekening" ng-options="bankrekening.rekeningnr  + ' - ' + bankrekening.omschrijving for bankrekening in bankrekeningen track by bankrekening.id">
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Omschrijving:</label>
+					<input class="form-control" type="text" ng-model="transferboeking.omschrijving" placeholder="Geef omschrijving"/>
+				</div>
+			</form>
+		</tab>
+		</tabset>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn btn-success btn-sm" form="myform"><span class="glyphicon glyphicon-save"></span></button>
+		<button type="submit" class="btn btn-success btn-sm" form="formNormaal" ng-hide="!isNormaal"><span class="glyphicon glyphicon-save"></span></button>
+		<button type="submit" class="btn btn-success btn-sm" form="formTransfer" ng-hide="isNormaal"><span class="glyphicon glyphicon-save"></span></button>
 		<button type="reset" ng-click="reset()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
 	</div>
 </script>

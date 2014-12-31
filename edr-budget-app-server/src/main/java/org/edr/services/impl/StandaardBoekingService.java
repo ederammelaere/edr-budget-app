@@ -59,7 +59,9 @@ public class StandaardBoekingService extends StandaardAbstractService implements
 			bedrag = bedrag.add(boeking.getBedrag());
 		}
 
-		if (!bedrag.equals(journaal.getBedrag())) {
+		boolean transferBoeking = (bedrag.compareTo(BigDecimal.ZERO) == 0 && journaal.getBoekingen().size() == 2);
+
+		if (!bedrag.equals(journaal.getBedrag()) && !transferBoeking) {
 			throw new IllegalArgumentException("Bedrag komt niet overeen");
 		}
 
@@ -67,13 +69,26 @@ public class StandaardBoekingService extends StandaardAbstractService implements
 			entityManager.remove(s);
 		});
 
-		for (Boeking boeking : journaal.getBoekingen()) {
-			boeking.setId(null);
-			boeking.setVersion(0);
-			boeking.setJournaal(journaal);
-			boeking.setBankrekening(journaal.getBankrekening());
-			boeking.setDatum(journaal.getDatum());
-			createBoeking(boeking);
+		if (!transferBoeking) {
+			for (Boeking boeking : journaal.getBoekingen()) {
+				boeking.setId(null);
+				boeking.setVersion(0);
+				boeking.setJournaal(journaal);
+				boeking.setBankrekening(journaal.getBankrekening());
+				boeking.setDatum(journaal.getDatum());
+				createBoeking(boeking);
+			}
+		} else {
+			for (Boeking boeking : journaal.getBoekingen()) {
+				boeking.setId(null);
+				boeking.setVersion(0);
+				boeking.setJournaal(journaal);
+				boeking.setDatum(journaal.getDatum());
+				createBoeking(boeking);
+				if (boeking.getBedrag().abs().compareTo(journaal.getBedrag().abs()) != 0) {
+					throw new IllegalArgumentException("Ongeldige transfer");
+				}
+			}
 		}
 	}
 
