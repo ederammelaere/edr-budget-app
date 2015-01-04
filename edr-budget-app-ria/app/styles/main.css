@@ -86,8 +86,3 @@ body {
 .app-modal-window .modal-dialog {
   width: 60%;
 }
-
-.div-scroll {
-  height: 700px;
-  overflow: auto;
-}
