@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 
 	<name>edr-budget-app</name>
-	<url>http://maven.apache.org</url>
+	<url>http://localhost</url>
 
 	<modules>
 		<module>edr-budget-app-server</module>
