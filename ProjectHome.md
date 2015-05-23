@@ -1,0 +1,1 @@
+This is an application for maintaining a personal budget, and I kind of sandbox for learning purposes.
