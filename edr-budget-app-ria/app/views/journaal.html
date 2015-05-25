@@ -6,6 +6,7 @@
 <div>
 	<hr>
 	<label>Jaar: </label> <input type="number" ng-model="jaar"/>
+	<label>Toon enkel ongeboekte <input type="checkbox" ng-model="toonEnkelOngeboekte"/></label>
 	<hr>
 </div>
 
@@ -22,9 +23,9 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="journaalitem in journaal">
-			<td><button ng-click="bewerken($index)"><span class="glyphicon glyphicon-pencil"></span></button></td>
-			<td>{{isGeboekt($index)}}</td>
+		<tr ng-repeat="journaalitem in journaal | filter : enkelOngeboekt ">
+			<td><button ng-click="bewerken(journaal.indexOf(journaalitem))"><span class="glyphicon glyphicon-pencil"></span></button></td>
+			<td>{{isGeboekt(journaal.indexOf(journaalitem))}}</td>
 			<td>{{journaalitem.datum}}</td>
 			<td>{{journaalitem.afschriftnummer}}</td>
 			<td>{{journaalitem.transactienummer}}</td>

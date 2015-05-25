@@ -23,6 +23,14 @@ angular.module('edrBudgetAppRiaApp')
 		setTimeout(function(){if (newValue > 2000 && newValue < 3000) refresh(); },500);});
 	  
 	$scope.baseRestPath = baseRestPath;
+	
+	$scope.enkelOngeboekt = function(journaalitem)
+	{
+		if ($scope.toonEnkelOngeboekte)
+			return journaalitem.boekingen.length == 0;
+		else
+			return true;
+	};
     
     $scope.isGeboekt = function(index)
     {
