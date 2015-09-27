@@ -30,7 +30,7 @@
 		datum="2014-07-22" afschriftnummer="3" transactienummer="18"
 		tegenpartij_rekening="" tegenpartij_rekeningid="[null]"
 		tegenpartij_naam="BROOKLYN ROESELARE" tegenpartij_adres=""
-		tegenpartij_plaats="" transactie="AANKOOP BANCONTACT/MISTER CASH"
+		tegenpartij_plaats="" transactie="UW EUROPESE DOMICILIERING 000004457967 VOOR BASE Company NV MEDEDELING: BASE Company NV/ Contract/0004457967412707150000000 0000007750/000004457967 SCHULDEISERSREFERTE: 00044579674127071500000000000007750 REF. : 0819684035915 VAL. 04-08"
 		valutadatum="2014-07-22" bedrag="-119.95" devies="EUR" bic=""
 		landcode="" />
 	<journaal004 id="11" version="0" bankrekeningid="1"
@@ -46,7 +46,7 @@
 		datum="2014-07-22" afschriftnummer="3" transactienummer="18"
 		tegenpartij_rekening="" tegenpartij_rekeningid="[null]"
 		tegenpartij_naam="BROOKLYN ROESELARE" tegenpartij_adres=""
-		tegenpartij_plaats="" transactie="AANKOOP BANCONTACT/MISTER CASH"
+		tegenpartij_plaats="" transactie="UW EUROPESE DOMICILIERING 000004457967 VOOR BASE Company NV MEDEDELING: BASE Company NV/ Contract/0004457967412707150000000 0000007750/000004457967 SCHULDEISERSREFERTE: 00044579674127071500000000000007750 REF. : 0819684035915 VAL. 04-08"
 		valutadatum="2014-07-22" bedrag="-119.95" devies="EUR" bic=""
 		landcode="" />
 	<journaal005 id="15" version="0" bankrekeningid="1"

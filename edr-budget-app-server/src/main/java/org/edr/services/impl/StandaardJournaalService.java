@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -74,6 +76,9 @@ public class StandaardJournaalService extends StandaardAbstractService implement
 		// Evalueren van header lijn
 		CheckFirstlineFilter firstlineFilter = new CheckFirstlineFilter();
 
+		// Pattern die spaties zal reduceren in de transactie-String
+		Pattern patternSpatiesReduceren = Pattern.compile("  +");
+
 		// Doorlopen van bestand
 		reader.lines()
 				.skip(12)
@@ -82,6 +87,13 @@ public class StandaardJournaalService extends StandaardAbstractService implement
 				.map(s -> new IntermediairJournaal(s))
 				.map(s -> {
 					Journaal journaal = new JournaalPO();
+
+					// Transactie => eerst spaties reduceren, en zo nodig nog
+					// afkappen op 250 posities
+					String transactie = s.getTransactie();
+					Matcher matcherSpatiesReduceren = patternSpatiesReduceren.matcher(transactie);
+					transactie = matcherSpatiesReduceren.replaceAll(" ");
+					transactie = StringUtils.abbreviate(transactie, 250);
 
 					journaal.setBankrekening(rekeningen.get(s.getRekening()));
 					journaal.setDatum(s.getBoekingsdatum());
@@ -92,7 +104,7 @@ public class StandaardJournaalService extends StandaardAbstractService implement
 					journaal.setTegenpartijNaam(s.getTegenpartijNaam());
 					journaal.setTegenpartijAdres(s.getTegenpartijAdres());
 					journaal.setTegenpartijPlaats(s.getTegenpartijPlaats());
-					journaal.setTransactie(s.getTransactie());
+					journaal.setTransactie(transactie);
 					journaal.setValutadatum(s.getValutadatum());
 					journaal.setBedrag(s.getBedrag());
 					journaal.setDevies(s.getDevies());
