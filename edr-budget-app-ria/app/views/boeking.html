@@ -2,6 +2,7 @@
 
 <div>
 	<label>Jaar:</label> <input type="number" ng-model="jaar"/>
+	<label>Filter: <input type="text" ng-model="inputFilter"/></label>
 	<hr>
 </div>
 
@@ -22,7 +23,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="boeking in boekingen">
+		<tr ng-repeat="boeking in boekingen | filter : tekstFilter ">
 			<td>{{boeking.bankrekening.rekeningnr}}</td>
 			<td>{{boeking.bankrekening.omschrijving}}</td>
 			<td>{{boeking.boekrekening.rekeningnr}}</td>

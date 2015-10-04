@@ -37,5 +37,20 @@ angular.module('edrBudgetAppRiaApp')
     $scope.toevoegen = function() {
     	MyModalWindow.openModal({}, $scope.save, 'boekingModal.html');
     };
-        
+    
+    $scope.inputFilter = "";
+    $scope.tekstFilter = function(boeking) {
+    	if ($scope.inputFilter == "") {
+    		return true;
+    	}
+    	else {
+    		var regexpFilter = RegExp($scope.inputFilter, "i");
+    		
+    		return regexpFilter.test(boeking.bankrekening.rekeningnr) || 
+    			regexpFilter.test(boeking.bankrekening.omschrijving) || 
+    			regexpFilter.test(boeking.boekrekening.rekeningnr) || 
+    			regexpFilter.test(boeking.boekrekening.omschrijving) || 
+    			regexpFilter.test(boeking.omschrijving);
+    	}
+    };
   }]);
