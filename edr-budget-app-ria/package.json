@@ -37,6 +37,7 @@
     "node": ">=0.8.0"
   },
   "scripts": {
+    "installdev":"npm update && bower update",
     "test": "grunt test"
   }
 }
