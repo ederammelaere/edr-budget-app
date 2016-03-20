@@ -7,10 +7,10 @@
                         http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<!-- Om vanuit Eclipse met andere properties te werken zet je onder de Eclipse map een map conf -->
-	<!-- met daarin application-eclipse.properties -->
+	<!-- voor het testen van de applicatie geef je aan Tomcat een extra VM argument mee : -->
+	<!-- "-Dtestproperties=C:\Sources\idea-edr-budget-app" -->
 
 	<context:property-placeholder ignore-resource-not-found="true"
-		location="classpath:/org/edr/conf/application.properties,file:${user.dir}/conf/application-eclipse.properties" />
+		location="classpath:/org/edr/conf/application.properties,file:${testproperties}/application-test.properties" />
 
 </beans>
