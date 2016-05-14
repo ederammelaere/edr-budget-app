@@ -47,14 +47,14 @@
     <div class="modal-body">
 		<form ng-submit="save()" class="boekingForm" role="form" id="myform">
 			<div class="form-group">
-				<label for="bankrekening">Bankrekening:</label> 
-				<select id="bankrekening" class="form-control" ng-model="formObj.bankrekening" ng-init="initBankrekeningen()" 
+				<label for="bankrekening">Bankrekening:</label>
+				<select id="bankrekening" class="form-control" ng-model="formObj.bankrekening" ng-init="initBankrekeningen()"
 					ng-options="bankrekening.rekeningnr + ' - ' + bankrekening.omschrijving for bankrekening in bankrekeningen track by bankrekening.id" />
 			</div>
 			<div class="form-group">
 				<label for="boekrekening">Boekrekening:</label>
-				<select class="form-control" ng-model="formObj.boekrekening" ng-init="initBoekrekeningen()" 
-					ng-options="boekrekening.rekeningnr  + ' - ' + boekrekening.omschrijving for boekrekening in boekrekeningen | filter:{boekbaar:'true'} track by boekrekening.id" /> 
+				<select class="form-control" ng-model="formObj.boekrekening" ng-init="initBoekrekeningen()"
+					ng-options="boekrekening.rekeningnr  + ' - ' + boekrekening.omschrijving for boekrekening in boekrekeningen track by boekrekening.id" />
 			</div>
 			<div class="form-group">
 				<label for="omschrijving">Omschrijving:</label>

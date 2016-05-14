@@ -14,7 +14,6 @@ public class BoekrekeningPO extends JpaIdentifiableVersioned implements Boekreke
 
 	private String rekeningnr;
 	private String omschrijving;
-	private Boolean boekbaar;
 
 	@Override
 	@Column(name = "rekeningnr")
