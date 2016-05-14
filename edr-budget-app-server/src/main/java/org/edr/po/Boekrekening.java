@@ -12,12 +12,4 @@ public interface Boekrekening extends IdentifiableVersioned {
 
 	void setOmschrijving(String omschrijving);
 
-	Boolean getBoekbaar();
-
-	void setBoekbaar(Boolean boekbaar);
-
-	Boolean getBudgeteerbaar();
-
-	void setBudgeteerbaar(Boolean budgeteerbaar);
-
 }

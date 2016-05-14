@@ -7,8 +7,6 @@
 		<tr>
 			<th>rekeningnr</th>
 			<th>omschrijving</th>
-			<th>budgeteerbaar</th>
-			<th>boekbaar</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -16,8 +14,6 @@
 		<tr ng-repeat="boekrekening in boekrekeningen" class="stripe">
 			<td>{{boekrekening.rekeningnr}}</td>
 			<td>{{boekrekening.omschrijving}}</td>
-			<td>{{boekrekening.budgeteerbaar}}</td>
-			<td>{{boekrekening.boekbaar}}</td>
 			<td>
 				<button ng-click="verwijderen($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
 				<button ng-click="bijwerken($index)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>

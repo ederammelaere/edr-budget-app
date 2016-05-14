@@ -14,7 +14,6 @@ import org.edr.util.domain.RekeningStelselUtil;
 public class BudgetStaatDO implements BudgetStaat {
 
 	private Boekrekening boekrekening;
-	private BigDecimal gebudgetteerdBedrag;
 	private BigDecimal geboektBedrag;
 
 	private BudgetStaat parentBudgetStaat;
@@ -22,7 +21,6 @@ public class BudgetStaatDO implements BudgetStaat {
 
 	public BudgetStaatDO(Boekrekening boekrekening, BudgetStaat parentBudgetStaat) {
 		this.boekrekening = boekrekening;
-		this.gebudgetteerdBedrag = BigDecimal.ZERO;
 		this.geboektBedrag = BigDecimal.ZERO;
 
 		this.parentBudgetStaat = parentBudgetStaat;
@@ -43,20 +41,6 @@ public class BudgetStaatDO implements BudgetStaat {
 	@Override
 	public Boekrekening getBoekrekening() {
 		return boekrekening;
-	}
-
-	@Override
-	public BigDecimal getGebudgetteerdBedrag() {
-		return gebudgetteerdBedrag;
-	}
-
-	@Override
-	public void addGebudgetteerdBedrag(BigDecimal gebudgetteerdBedrag) {
-		this.gebudgetteerdBedrag = this.gebudgetteerdBedrag.add(gebudgetteerdBedrag);
-
-		if (this.parentBudgetStaat != null) {
-			this.parentBudgetStaat.addGebudgetteerdBedrag(gebudgetteerdBedrag);
-		}
 	}
 
 	@Override
@@ -124,7 +108,7 @@ public class BudgetStaatDO implements BudgetStaat {
 		}
 		BudgetStaatDO rhs = (BudgetStaatDO) obj;
 		return new EqualsBuilder().append(boekrekening, rhs.boekrekening)
-				.append(gebudgetteerdBedrag, rhs.gebudgetteerdBedrag).append(geboektBedrag, rhs.geboektBedrag)
+				.append(geboektBedrag, rhs.geboektBedrag)
 				.isEquals();
 	}
 
@@ -136,7 +120,7 @@ public class BudgetStaatDO implements BudgetStaat {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("boekrekening", boekrekening)
-				.append("gebudgetteerdBedrag", gebudgetteerdBedrag).append("geboektBedrag", geboektBedrag).toString();
+				.append("geboektBedrag", geboektBedrag).toString();
 	}
 
 }

@@ -9,10 +9,6 @@ public interface BudgetStaat {
 
 	Boekrekening getBoekrekening();
 
-	BigDecimal getGebudgetteerdBedrag();
-
-	void addGebudgetteerdBedrag(BigDecimal gebudgetteerdBedrag);
-
 	BigDecimal getGeboektBedrag();
 
 	void addGeboektBedrag(BigDecimal geboektBedrag);

@@ -14,13 +14,10 @@ import javax.persistence.criteria.Root;
 import org.edr.domain.BudgetStaat;
 import org.edr.domain.impl.BudgetStaatDO;
 import org.edr.po.Boekrekening;
-import org.edr.po.Budget;
 import org.edr.po.jpa.BoekingPO;
 import org.edr.po.jpa.BoekingPO_;
 import org.edr.po.jpa.BoekrekeningPO;
 import org.edr.po.jpa.BoekrekeningPO_;
-import org.edr.po.jpa.BudgetPO;
-import org.edr.po.jpa.BudgetPO_;
 import org.edr.services.BudgetStaatService;
 import org.edr.util.domain.RekeningStelselUtil;
 import org.edr.util.services.StandaardAbstractService;
@@ -65,20 +62,6 @@ public class StandaardBudgetStaatService extends StandaardAbstractService implem
 				budgetStaatMap.put(boekrekening, previousBudgetStaat);
 			}
 		}
-
-		//
-		// Inlezen van budget
-		//
-
-		CriteriaQuery<Budget> criteriaQueryBudget = cb.createQuery(Budget.class);
-
-		Root<BudgetPO> budgetFrom = criteriaQueryBudget.from(BudgetPO.class);
-		criteriaQueryBudget.select(budgetFrom);
-		criteriaQueryBudget.where(cb.equal(budgetFrom.get(BudgetPO_.jaar), jaar));
-
-		entityManager.createQuery(criteriaQueryBudget).getResultList().forEach(s -> {
-			budgetStaatMap.get(s.getBoekrekening()).addGebudgetteerdBedrag(s.getBedrag());
-		});
 
 		//
 		// Inlezen van boekingen

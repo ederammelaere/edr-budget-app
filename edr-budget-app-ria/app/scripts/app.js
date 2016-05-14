@@ -29,10 +29,6 @@ var edrBudgetAppRiaApp = angular.module('edrBudgetAppRiaApp', [
         templateUrl: 'views/boeking.html',
         controller: 'BoekingCtrl'
       })
-      .when('/budget', {
-        templateUrl: 'views/budget.html',
-        controller: 'BudgetCtrl'
-      })
       .when('/journaal', {
         templateUrl: 'views/journaal.html',
         controller: 'JournaalCtrl'

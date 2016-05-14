@@ -22,16 +22,13 @@ public class BudgetStaatServiceTest extends AbstractJunitTest {
 		BudgetStaat rootBudgetStaat = budgetStaatService.getBudgetStaat(2014);
 		assertEquals("000000", rootBudgetStaat.getBoekrekening().getRekeningnr());
 		assertEquals(new BigDecimal("45.00"), rootBudgetStaat.getGeboektBedrag());
-		assertEquals(new BigDecimal("300.00"), rootBudgetStaat.getGebudgetteerdBedrag());
 
 		assertEquals(2, rootBudgetStaat.getChildBudgetStaten().size());
 		assertEquals("100000", rootBudgetStaat.getChildBudgetStaten().get(0).getBoekrekening().getRekeningnr());
 		assertEquals(new BigDecimal("4.75"), rootBudgetStaat.getChildBudgetStaten().get(0).getGeboektBedrag());
-		assertEquals(new BigDecimal("300.00"), rootBudgetStaat.getChildBudgetStaten().get(0).getGebudgetteerdBedrag());
 
 		assertEquals("200000", rootBudgetStaat.getChildBudgetStaten().get(1).getBoekrekening().getRekeningnr());
 		assertEquals(new BigDecimal("40.25"), rootBudgetStaat.getChildBudgetStaten().get(1).getGeboektBedrag());
-		assertEquals(new BigDecimal("0"), rootBudgetStaat.getChildBudgetStaten().get(1).getGebudgetteerdBedrag());
 	}
 
 	@Test(expected = RuntimeException.class)
@@ -64,6 +61,5 @@ public class BudgetStaatServiceTest extends AbstractJunitTest {
 		assertEquals("220100", budgetStaatList.get(5).getBoekrekening().getRekeningnr());
 
 		assertEquals(new BigDecimal("40.25"), budgetStaatList.get(5).getGeboektBedrag());
-		assertEquals(new BigDecimal("0"), budgetStaatList.get(5).getGebudgetteerdBedrag());
 	}
 }

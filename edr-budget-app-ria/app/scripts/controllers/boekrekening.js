@@ -15,9 +15,6 @@ angular.module('edrBudgetAppRiaApp')
 	refresh();
             
     $scope.save = function(formObj) {
-    	addFalse(formObj, "budgeteerbaar");
-    	addFalse(formObj, "boekbaar");
-    	
     	Boekrekening.save(addIdObject(formObj), formObj, succesHandler(refresh), errorHandler);
     };
     

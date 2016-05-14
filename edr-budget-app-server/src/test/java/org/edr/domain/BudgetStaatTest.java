@@ -57,32 +57,21 @@ public class BudgetStaatTest {
 		b110301.addGeboektBedrag(new BigDecimal("10.05"));
 		b110302.addGeboektBedrag(new BigDecimal("1.05"));
 
-		b110301.addGebudgetteerdBedrag(new BigDecimal("100.0"));
-		b110302.addGebudgetteerdBedrag(new BigDecimal("10.0"));
-
 		b200000.addGeboektBedrag(new BigDecimal("120.51"));
-		b200000.addGebudgetteerdBedrag(new BigDecimal("90.0"));
 
 		assertEquals(new BigDecimal("131.61"), rootBudgetStaat.getGeboektBedrag());
-		assertEquals(new BigDecimal("200.0"), rootBudgetStaat.getGebudgetteerdBedrag());
 
 		assertEquals(new BigDecimal("11.10"), b100000.getGeboektBedrag());
-		assertEquals(new BigDecimal("110.0"), b100000.getGebudgetteerdBedrag());
 
 		assertEquals(new BigDecimal("120.51"), b200000.getGeboektBedrag());
-		assertEquals(new BigDecimal("90.0"), b200000.getGebudgetteerdBedrag());
 
 		assertEquals(new BigDecimal("11.10"), b110000.getGeboektBedrag());
-		assertEquals(new BigDecimal("110.0"), b110000.getGebudgetteerdBedrag());
 
 		assertEquals(new BigDecimal("11.10"), b110300.getGeboektBedrag());
-		assertEquals(new BigDecimal("110.0"), b110300.getGebudgetteerdBedrag());
 
 		assertEquals(new BigDecimal("10.05"), b110301.getGeboektBedrag());
-		assertEquals(new BigDecimal("100.0"), b110301.getGebudgetteerdBedrag());
 
 		assertEquals(new BigDecimal("1.05"), b110302.getGeboektBedrag());
-		assertEquals(new BigDecimal("10.0"), b110302.getGebudgetteerdBedrag());
 
 	}
 

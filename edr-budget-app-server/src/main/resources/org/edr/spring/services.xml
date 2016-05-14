@@ -15,6 +15,4 @@
 	
 	<bean id="boekingService" class="org.edr.services.impl.StandaardBoekingService" />
 	
-	<bean id="budgetService" class="org.edr.services.impl.StandaardBudgetService" />
-
 </beans>

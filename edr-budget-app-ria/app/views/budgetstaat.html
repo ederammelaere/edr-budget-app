@@ -10,7 +10,6 @@
 		<tr>
 			<th>rekeningnr</th>
 			<th>omschrijving</th>
-			<th>budget</th>
 			<th>boeking</th>
 		</tr>
 	</thead>
@@ -18,7 +17,6 @@
 		<tr ng-repeat="budgetstaatitem in budgetstaat">
 			<td>{{budgetstaatitem.boekrekening.rekeningnr}}</td>
 			<td>{{budgetstaatitem.boekrekening.omschrijving}}</td>
-			<td>{{budgetstaatitem.gebudgetteerdBedrag}}</td>
 			<td>{{budgetstaatitem.geboektBedrag}}</td>
 		</tr>
 	</tbody>
