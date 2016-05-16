@@ -2,6 +2,7 @@
 
 <div>
 	<label>Jaar:</label> <input type="number" ng-model="jaar"/>
+  <label>Referentie jaar:</label> <input type="number" ng-model="referentieJaar"/>
 	<hr>
 </div>
 
@@ -10,13 +11,17 @@
 		<tr>
 			<th>rekeningnr</th>
 			<th>omschrijving</th>
-			<th>boeking</th>
+      <th>boeking {{referentieJaar}}</th>
+      <th>boeking referentie</th>
+			<th>boeking {{jaar}}</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="budgetstaatitem in budgetstaat">
 			<td>{{budgetstaatitem.boekrekening.rekeningnr}}</td>
 			<td>{{budgetstaatitem.boekrekening.omschrijving}}</td>
+      <td>{{budgetstaatitem.referentieJaarBedrag}}</td>
+      <td>{{budgetstaatitem.referentieBedrag}}</td>
 			<td>{{budgetstaatitem.geboektBedrag}}</td>
 		</tr>
 	</tbody>

@@ -11,7 +11,15 @@ public interface BudgetStaat {
 
 	BigDecimal getGeboektBedrag();
 
+	BigDecimal getReferentieBedrag();
+
+	BigDecimal getReferentieJaarBedrag();
+
 	void addGeboektBedrag(BigDecimal geboektBedrag);
+
+	void addReferentieBedrag(BigDecimal referentieBedrag);
+
+	void addReferentieJaarBedrag(BigDecimal referentieJaarBedrag);
 
 	void addChildBudgetStaat(BudgetStaat childBudget);
 

@@ -24,6 +24,8 @@
 		omschrijving="onbekend" datum="2014-04-29" bedrag="40.25" />
 	<boeking id="3" version="0" bankrekeningid="1" boekrekeningid="6"
 		omschrijving="onbekend" datum="2013-04-29" bedrag="40.7" />
+	<boeking id="4" version="0" bankrekeningid="1" boekrekeningid="6"
+			 omschrijving="onbekend" datum="2013-04-30" bedrag="22.3" />
 
 	<journaal id="1" version="0" bankrekeningid="1" datum="2014-05-01"
 		afschriftnummer="2" transactienummer="16" tegenpartij_rekening="BEXX"

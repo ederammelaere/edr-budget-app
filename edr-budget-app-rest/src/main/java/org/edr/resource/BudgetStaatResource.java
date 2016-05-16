@@ -20,8 +20,8 @@ public class BudgetStaatResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<BudgetStaat> getBudgetStaat(@QueryParam("jaar") int jaar) {
-		return budgetStaatService.getBudgetStaatAsList(jaar);
+	public List<BudgetStaat> getBudgetStaat(@QueryParam("jaar") int jaar, @QueryParam("referentieJaar") int referentieJaar) {
+		return budgetStaatService.getBudgetStaatAsList(jaar, referentieJaar);
 	}
 
 }

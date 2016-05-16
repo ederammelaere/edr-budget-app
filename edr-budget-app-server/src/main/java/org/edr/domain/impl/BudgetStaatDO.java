@@ -15,6 +15,8 @@ public class BudgetStaatDO implements BudgetStaat {
 
 	private Boekrekening boekrekening;
 	private BigDecimal geboektBedrag;
+	private BigDecimal referentieBedrag;
+	private BigDecimal referentieJaarBedrag;
 
 	private BudgetStaat parentBudgetStaat;
 	private List<BudgetStaat> childBudgetStaten;
@@ -22,6 +24,8 @@ public class BudgetStaatDO implements BudgetStaat {
 	public BudgetStaatDO(Boekrekening boekrekening, BudgetStaat parentBudgetStaat) {
 		this.boekrekening = boekrekening;
 		this.geboektBedrag = BigDecimal.ZERO;
+        this.referentieBedrag = BigDecimal.ZERO;
+        this.referentieJaarBedrag = BigDecimal.ZERO;
 
 		this.parentBudgetStaat = parentBudgetStaat;
 		this.childBudgetStaten = new ArrayList<>();
@@ -46,6 +50,34 @@ public class BudgetStaatDO implements BudgetStaat {
 	@Override
 	public BigDecimal getGeboektBedrag() {
 		return geboektBedrag;
+	}
+
+	@Override
+	public BigDecimal getReferentieBedrag() {
+		return referentieBedrag;
+	}
+
+	@Override
+	public BigDecimal getReferentieJaarBedrag() {
+		return referentieJaarBedrag;
+	}
+
+	@Override
+	public void addReferentieBedrag(BigDecimal referentieBedrag) {
+		this.referentieBedrag = this.referentieBedrag.add(referentieBedrag);
+
+		if (this.parentBudgetStaat != null) {
+			this.parentBudgetStaat.addReferentieBedrag(referentieBedrag);
+		}
+	}
+
+	@Override
+	public void addReferentieJaarBedrag(BigDecimal referentieJaarBedrag) {
+		this.referentieJaarBedrag = this.referentieJaarBedrag.add(referentieJaarBedrag);
+
+		if (this.parentBudgetStaat != null) {
+			this.parentBudgetStaat.addReferentieJaarBedrag(referentieJaarBedrag);
+		}
 	}
 
 	@Override
