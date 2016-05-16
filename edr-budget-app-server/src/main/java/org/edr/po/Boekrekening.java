@@ -2,6 +2,8 @@ package org.edr.po;
 
 import org.edr.util.jpa.IdentifiableVersioned;
 
+import javax.persistence.Column;
+
 public interface Boekrekening extends IdentifiableVersioned {
 
 	String getRekeningnr();
@@ -12,4 +14,7 @@ public interface Boekrekening extends IdentifiableVersioned {
 
 	void setOmschrijving(String omschrijving);
 
+	Boolean getTotalisatie();
+
+	void setTotalisatie(Boolean totalisatie);
 }

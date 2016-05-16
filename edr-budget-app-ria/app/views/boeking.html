@@ -54,7 +54,7 @@
 			<div class="form-group">
 				<label for="boekrekening">Boekrekening:</label>
 				<select class="form-control" ng-model="formObj.boekrekening" ng-init="initBoekrekeningen()"
-					ng-options="boekrekening.rekeningnr  + ' - ' + boekrekening.omschrijving for boekrekening in boekrekeningen track by boekrekening.id" />
+					ng-options="boekrekening.rekeningnr  + ' - ' + boekrekening.omschrijving for boekrekening in boekrekeningen | filter:{totalisatie:'false'} track by boekrekening.id" />
 			</div>
 			<div class="form-group">
 				<label for="omschrijving">Omschrijving:</label>

@@ -14,6 +14,7 @@ public class BoekrekeningPO extends JpaIdentifiableVersioned implements Boekreke
 
 	private String rekeningnr;
 	private String omschrijving;
+	private Boolean totalisatie;
 
 	@Override
 	@Column(name = "rekeningnr")
@@ -35,6 +36,17 @@ public class BoekrekeningPO extends JpaIdentifiableVersioned implements Boekreke
 	@Override
 	public void setOmschrijving(String omschrijving) {
 		this.omschrijving = omschrijving;
+	}
+
+    @Override
+	@Column(name = "totalisatie")
+	public Boolean getTotalisatie() {
+		return totalisatie;
+	}
+
+    @Override
+	public void setTotalisatie(Boolean totalisatie) {
+		this.totalisatie = totalisatie;
 	}
 
 	@Override

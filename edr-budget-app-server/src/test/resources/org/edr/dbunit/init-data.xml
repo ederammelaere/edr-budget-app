@@ -5,17 +5,17 @@
 	<bankrekening id="2" version="0" rekeningnr="BE27 0000 1111 3333"
 		omschrijving="test-rekening2" />
 
-	<boekrekening id="1" version="0" rekeningnr="110000"
+	<boekrekening id="1" version="0" rekeningnr="110000" totalisatie="false"
 		omschrijving="cash uitgaven" />
-	<boekrekening id="2" version="0" rekeningnr="000000"
+	<boekrekening id="2" version="0" rekeningnr="000000" totalisatie="true"
 		omschrijving="resultaat" />
-	<boekrekening id="3" version="0" rekeningnr="100000"
+	<boekrekening id="3" version="0" rekeningnr="100000" totalisatie="true"
 		omschrijving="uitgaven" />
-	<boekrekening id="4" version="0" rekeningnr="200000"
+	<boekrekening id="4" version="0" rekeningnr="200000" totalisatie="true"
 		omschrijving="inkomsten" />
-	<boekrekening id="5" version="0" rekeningnr="220000"
+	<boekrekening id="5" version="0" rekeningnr="220000" totalisatie="false"
 		omschrijving="inkomsten op rekening"  />
-	<boekrekening id="6" version="0" rekeningnr="220100"
+	<boekrekening id="6" version="0" rekeningnr="220100" totalisatie="false"
 		omschrijving="diverse inkomsten op rekening" />
 
 	<boeking id="1" version="0" bankrekeningid="1" boekrekeningid="1"
