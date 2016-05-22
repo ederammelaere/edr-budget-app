@@ -19,7 +19,7 @@ public class BankrekeningServiceTest extends AbstractJunitTest {
 		List<Bankrekening> bankrekeningen = bankrekeningService.findBankrekeningen();
 		Assert.assertEquals(2, bankrekeningen.size());
 		Assert.assertEquals("BE27 0000 1111 2222", bankrekeningen.get(0).getRekeningnr());
-		Assert.assertEquals(new BigDecimal("108.00"), bankrekeningen.get(0).getSaldo());
+		Assert.assertEquals(new BigDecimal("127.00"), bankrekeningen.get(0).getSaldo());
 		Assert.assertEquals(new BigDecimal("0"), bankrekeningen.get(1).getSaldo());
 	}
 

@@ -18,6 +18,20 @@
 	<boekrekening id="6" version="0" rekeningnr="220100" totalisatie="false"
 		omschrijving="diverse inkomsten op rekening" />
 
+	<journaal id="1" version="0" bankrekeningid="1" datum="2014-05-01"
+			  afschriftnummer="2" transactienummer="16" tegenpartij_rekening="BEXX"
+			  tegenpartij_naam="Pizza Cosi" tegenpartij_adres="Scheldestraat 22 bus1"
+			  tegenpartij_plaats="9890 Gavere" transactie="betalen via bancontact"
+			  valutadatum="2014-05-01" bedrag="4.5" devies="EUR" bic="" landcode="BE" />
+	<journaal id="2" version="0" bankrekeningid="1" datum="2014-06-01"
+			  afschriftnummer="2" transactienummer="15" tegenpartij_rekening="BEYY"
+			  tegenpartij_naam="Base" tegenpartij_adres="" tegenpartij_plaats="Brussel"
+			  transactie="gsm mei 2014" valutadatum="2012-06-03" bedrag="19.0"
+			  devies="EUR" bic="" landcode="BE" />
+
+	<boeking id="5" version="0" bankrekeningid="1" boekrekeningid="6"
+			 omschrijving="onbekend" datum="2012-06-03" bedrag="19.0"
+			 journaalid="2" />
 	<boeking id="1" version="0" bankrekeningid="1" boekrekeningid="1"
 		omschrijving="sigaretten" datum="2014-04-24" bedrag="4.75" />
 	<boeking id="2" version="0" bankrekeningid="1" boekrekeningid="6"
@@ -26,17 +40,6 @@
 		omschrijving="onbekend" datum="2013-04-29" bedrag="40.7" />
 	<boeking id="4" version="0" bankrekeningid="1" boekrekeningid="6"
 			 omschrijving="onbekend" datum="2013-04-30" bedrag="22.3" />
-
-	<journaal id="1" version="0" bankrekeningid="1" datum="2014-05-01"
-		afschriftnummer="2" transactienummer="16" tegenpartij_rekening="BEXX"
-		tegenpartij_naam="Pizza Cosi" tegenpartij_adres="Scheldestraat 22 bus1"
-		tegenpartij_plaats="9890 Gavere" transactie="betalen via bancontact"
-		valutadatum="2014-05-01" bedrag="4.5" devies="EUR" bic="" landcode="BE" />
-	<journaal id="2" version="0" bankrekeningid="1" datum="2014-06-01"
-		afschriftnummer="2" transactienummer="15" tegenpartij_rekening="BEYY"
-		tegenpartij_naam="Base" tegenpartij_adres="" tegenpartij_plaats="Brussel"
-		transactie="gsm mei 2014" valutadatum="2014-06-03" bedrag="19.0"
-		devies="EUR" bic="" landcode="BE" />
 
 	<nextkey entityname="bankrekening" sequence_next_hi_value="2" />
 	<nextkey entityname="boekrekening" sequence_next_hi_value="2" />

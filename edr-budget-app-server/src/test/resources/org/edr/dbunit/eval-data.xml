@@ -25,7 +25,7 @@
 		afschriftnummer="2" transactienummer="15" tegenpartij_rekening="BEYY"
 		tegenpartij_rekeningid="[null]" tegenpartij_naam="Base"
 		tegenpartij_adres="" tegenpartij_plaats="Brussel" transactie="gsm mei 2014"
-		valutadatum="2014-06-03" bedrag="19.0" devies="EUR" bic="" landcode="BE" />
+		valutadatum="2012-06-03" bedrag="19.0" devies="EUR" bic="" landcode="BE" />
 	<journaal004 id="10" version="0" bankrekeningid="1"
 		datum="2014-07-22" afschriftnummer="3" transactienummer="18"
 		tegenpartij_rekening="" tegenpartij_rekeningid="[null]"
