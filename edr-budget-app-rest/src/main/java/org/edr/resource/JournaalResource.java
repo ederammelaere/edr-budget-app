@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.edr.po.Boeking;
 import org.edr.po.Journaal;
 import org.edr.po.jpa.JournaalPO;
 import org.edr.services.BoekingService;
@@ -23,30 +24,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Path("journaal")
 public class JournaalResource {
 
-	@Autowired
-	JournaalService journaalService;
+    @Autowired
+    JournaalService journaalService;
 
-	@Autowired
-	BoekingService boekingService;
+    @Autowired
+    BoekingService boekingService;
 
-	@Path("/upload")
-	@POST
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public void createJournaal(@FormDataParam("journaalbestand") InputStream fileInputStream) {
-		journaalService.loadJournaalFromStream(new BufferedReader(new InputStreamReader(fileInputStream)));
-	}
+    @Path("/upload")
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public void createJournaal(@FormDataParam("journaalbestand") InputStream fileInputStream) {
+        journaalService.loadJournaalFromStream(new BufferedReader(new InputStreamReader(fileInputStream)));
+    }
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Journaal> findJournaal(@QueryParam("jaar") int jaar) {
-		return journaalService.findJournaal(jaar);
-	}
+    @Path("/previousBoekingen")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Boeking> findPreviousBoekingen(@QueryParam("tegenpartijRekening") String tegenpartijRekening) {
+        return journaalService.findPreviousBoekingen(tegenpartijRekening);
+    }
 
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/{id}")
-	public void saveBoekingen(JournaalPO journaal) {
-		boekingService.saveBoekingen(journaal);
-	}
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Journaal> findJournaal(@QueryParam("jaar") int jaar) {
+        return journaalService.findJournaal(jaar);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public void saveBoekingen(JournaalPO journaal) {
+        boekingService.saveBoekingen(journaal);
+    }
 
 }

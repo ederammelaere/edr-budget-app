@@ -1,17 +1,16 @@
 package org.edr.services;
 
-import static org.junit.Assert.assertEquals;
+import org.edr.junit.AbstractJunitTest;
+import org.edr.po.Boeking;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.PersistenceException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import javax.persistence.PersistenceException;
-
-import org.edr.junit.AbstractJunitTest;
-import org.edr.po.jpa.BoekingPO;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.junit.Assert.assertEquals;
 
 public class JournaalServiceTest extends AbstractJunitTest {
 
@@ -66,7 +65,7 @@ public class JournaalServiceTest extends AbstractJunitTest {
         assertEquals(0, journaalService.findPreviousBoekingen("ONBESTAAND").size());
         assertEquals(0, journaalService.findPreviousBoekingen("BEXX").size());
 
-        List<BoekingPO> beyy = journaalService.findPreviousBoekingen("BEYY");
+        List<Boeking> beyy = journaalService.findPreviousBoekingen("BEYY");
         assertEquals(1, beyy.size());
         assertEquals(5, beyy.get(0).getId().longValue());
         assertEquals(6, beyy.get(0).getBoekrekening().getId().longValue());

@@ -1,27 +1,5 @@
 package org.edr.services.impl;
 
-import java.io.BufferedReader;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
-
 import org.apache.commons.lang3.StringUtils;
 import org.edr.po.Bankrekening;
 import org.edr.po.Boeking;
@@ -34,6 +12,25 @@ import org.edr.services.JournaalService;
 import org.edr.util.services.StandaardAbstractService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
+import java.io.BufferedReader;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StandaardJournaalService extends StandaardAbstractService implements JournaalService {
 
@@ -137,7 +134,7 @@ public class StandaardJournaalService extends StandaardAbstractService implement
     }
 
     @Override
-    public List<BoekingPO> findPreviousBoekingen(String tegenpartijRekening) {
+    public List<Boeking> findPreviousBoekingen(String tegenpartijRekening) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
         CriteriaQuery<Long> criteriaQueryPreviousJournaalid = cb.createQuery(Long.class);
@@ -152,7 +149,7 @@ public class StandaardJournaalService extends StandaardAbstractService implement
 
         logger.info("tegenpartijRekening " + tegenpartijRekening + " => " + previousJournaalid);
 
-        CriteriaQuery<BoekingPO> criteriaQueryPreviousBoekingen = cb.createQuery(BoekingPO.class);
+        CriteriaQuery<Boeking> criteriaQueryPreviousBoekingen = cb.createQuery(Boeking.class);
         Root<BoekingPO> root = criteriaQueryPreviousBoekingen.from(BoekingPO.class);
         criteriaQueryPreviousBoekingen.select(root);
         criteriaQueryPreviousBoekingen.where(cb.equal(root.get(BoekingPO_.journaal), previousJournaalid));

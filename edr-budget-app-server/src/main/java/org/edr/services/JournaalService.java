@@ -1,10 +1,10 @@
 package org.edr.services;
 
+import org.edr.po.Boeking;
+import org.edr.po.Journaal;
+
 import java.io.BufferedReader;
 import java.util.List;
-
-import org.edr.po.Journaal;
-import org.edr.po.jpa.BoekingPO;
 
 public interface JournaalService {
 
@@ -12,6 +12,6 @@ public interface JournaalService {
 
 	List<Journaal> findJournaal(int jaar);
 
-	List<BoekingPO> findPreviousBoekingen(String tegenpartijRekening);
+	List<Boeking> findPreviousBoekingen(String tegenpartijRekening);
 
 }
