@@ -138,14 +138,19 @@ public class StandaardJournaalService extends StandaardAbstractService implement
 
     @Override
     public List<BoekingPO> findPreviousBoekingen(String tegenpartijRekening) {
-        Query queryPreviousJournaalid = entityManager.createNativeQuery("select max(id) from journaal J where tegenpartij_rekening = ? "
-                + "and exists (select * from boeking where journaalid = J.id)");
-        queryPreviousJournaalid.setParameter(1, tegenpartijRekening);
-        BigInteger previousJournaalid = (BigInteger) queryPreviousJournaalid.getSingleResult();
-
-        System.out.println(previousJournaalid);
-
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Long> criteriaQueryPreviousJournaalid = cb.createQuery(Long.class);
+        Root<JournaalPO> rootJournaal = criteriaQueryPreviousJournaalid.from(JournaalPO.class);
+        criteriaQueryPreviousJournaalid.select(cb.max(rootJournaal.get(JournaalPO_.id)));
+        criteriaQueryPreviousJournaalid.where(
+                cb.and(
+                        cb.equal(rootJournaal.get(JournaalPO_.tegenpartijRekening), tegenpartijRekening),
+                        cb.isNotEmpty(rootJournaal.get(JournaalPO_.boekingen))));
+
+        Long previousJournaalid = entityManager.createQuery(criteriaQueryPreviousJournaalid).getSingleResult();
+
+        logger.info("tegenpartijRekening " + tegenpartijRekening + " => " + previousJournaalid);
 
         CriteriaQuery<BoekingPO> criteriaQueryPreviousBoekingen = cb.createQuery(BoekingPO.class);
         Root<BoekingPO> root = criteriaQueryPreviousBoekingen.from(BoekingPO.class);

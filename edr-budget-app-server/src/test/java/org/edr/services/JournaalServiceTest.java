@@ -64,6 +64,7 @@ public class JournaalServiceTest extends AbstractJunitTest {
     @Test
     public void test8() {
         assertEquals(0, journaalService.findPreviousBoekingen("ONBESTAAND").size());
+        assertEquals(0, journaalService.findPreviousBoekingen("BEXX").size());
 
         List<BoekingPO> beyy = journaalService.findPreviousBoekingen("BEYY");
         assertEquals(1, beyy.size());
