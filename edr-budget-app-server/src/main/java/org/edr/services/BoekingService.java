@@ -1,5 +1,6 @@
 package org.edr.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.edr.po.Boeking;
@@ -16,5 +17,7 @@ public interface BoekingService {
 	void deleteBoeking(Long id);
 
 	void saveBoekingen(Journaal journaal);
+
+	List<Boeking> findManueleBoekingen(LocalDate referentiedatum);
 
 }

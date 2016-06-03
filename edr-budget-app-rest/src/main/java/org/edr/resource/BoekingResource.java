@@ -1,5 +1,6 @@
 package org.edr.resource;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -20,32 +21,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Path("boeking")
 public class BoekingResource {
 
-	@Autowired
-	BoekingService boekingService;
+    @Autowired
+    BoekingService boekingService;
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Boeking> findBoekingen(@QueryParam("jaar") int jaar) {
-		return boekingService.findBoekingen(jaar);
-	}
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Boeking> findBoekingen(@QueryParam("jaar") int jaar) {
+        return boekingService.findBoekingen(jaar);
+    }
 
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void createBoeking(BoekingPO boeking) {
-		boekingService.createBoeking(boeking);
-	}
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/manueel/{jaar}/{maand}/{dag}")
+    public List<Boeking> findManueleBoekingen(@PathParam("jaar") int jaar, @PathParam("maand") int maand,
+                                              @PathParam("dag") int dag) {
+        return boekingService.findManueleBoekingen(LocalDate.of(jaar, maand, dag));
+    }
 
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/{id}")
-	public void updateBoeking(BoekingPO boeking) {
-		boekingService.updateBoeking(boeking);
-	}
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void createBoeking(BoekingPO boeking) {
+        boekingService.createBoeking(boeking);
+    }
 
-	@DELETE
-	@Path("/{id}")
-	public void deleteBoeking(@PathParam("id") Long id) {
-		boekingService.deleteBoeking(id);
-	}
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public void updateBoeking(BoekingPO boeking) {
+        boekingService.updateBoeking(boeking);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void deleteBoeking(@PathParam("id") Long id) {
+        boekingService.deleteBoeking(id);
+    }
 
 }

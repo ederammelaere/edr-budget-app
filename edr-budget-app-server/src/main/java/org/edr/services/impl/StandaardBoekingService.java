@@ -1,6 +1,7 @@
 package org.edr.services.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,89 +19,103 @@ import org.edr.util.services.StandaardAbstractService;
 
 public class StandaardBoekingService extends StandaardAbstractService implements BoekingService {
 
-	@Override
-	public List<Boeking> findBoekingen(int jaar) {
+    @Override
+    public List<Boeking> findBoekingen(int jaar) {
 
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
-		CriteriaQuery<Boeking> criteriaQueryBoeking = cb.createQuery(Boeking.class);
-		Root<BoekingPO> boekingFrom = criteriaQueryBoeking.from(BoekingPO.class);
-		criteriaQueryBoeking.select(boekingFrom);
-		boekingFrom.fetch(BoekingPO_.bankrekening);
-		boekingFrom.fetch(BoekingPO_.boekrekening);
-		criteriaQueryBoeking
-				.where(cb.equal(cb.function("year", Integer.class, boekingFrom.get(BoekingPO_.datum)), jaar));
-		criteriaQueryBoeking.orderBy(cb.asc(boekingFrom.get(BoekingPO_.datum)), cb.asc(boekingFrom.get(BoekingPO_.id)));
+        CriteriaQuery<Boeking> criteriaQueryBoeking = cb.createQuery(Boeking.class);
+        Root<BoekingPO> boekingFrom = criteriaQueryBoeking.from(BoekingPO.class);
+        criteriaQueryBoeking.select(boekingFrom);
+        boekingFrom.fetch(BoekingPO_.bankrekening);
+        boekingFrom.fetch(BoekingPO_.boekrekening);
+        criteriaQueryBoeking
+                .where(cb.equal(cb.function("year", Integer.class, boekingFrom.get(BoekingPO_.datum)), jaar));
+        criteriaQueryBoeking.orderBy(cb.asc(boekingFrom.get(BoekingPO_.datum)), cb.asc(boekingFrom.get(BoekingPO_.id)));
 
-		return entityManager.createQuery(criteriaQueryBoeking).getResultList();
-	}
+        return entityManager.createQuery(criteriaQueryBoeking).getResultList();
+    }
 
-	@Override
-	public void createBoeking(Boeking boeking) {
-		boeking.setBankrekening(entityManager.find(BankrekeningPO.class, boeking.getBankrekening().getId()));
-		boeking.setBoekrekening(entityManager.find(BoekrekeningPO.class, boeking.getBoekrekening().getId()));
-		entityManager.persist(boeking);
-	}
+    @Override
+    public void createBoeking(Boeking boeking) {
+        boeking.setBankrekening(entityManager.find(BankrekeningPO.class, boeking.getBankrekening().getId()));
+        boeking.setBoekrekening(entityManager.find(BoekrekeningPO.class, boeking.getBoekrekening().getId()));
+        entityManager.persist(boeking);
+    }
 
-	@Override
-	public void deleteBoeking(Long id) {
-		entityManager.remove(entityManager.find(BoekingPO.class, id));
-	}
+    @Override
+    public void deleteBoeking(Long id) {
+        entityManager.remove(entityManager.find(BoekingPO.class, id));
+    }
 
-	@Override
-	public void updateBoeking(Boeking boeking) {
-		entityManager.merge(boeking);
-	}
+    @Override
+    public void updateBoeking(Boeking boeking) {
+        entityManager.merge(boeking);
+    }
 
-	@Override
-	public void saveBoekingen(Journaal journaal) {
-		BigDecimal bedrag = new BigDecimal(0.00);
-		for (Boeking boeking : journaal.getBoekingen()) {
-			bedrag = bedrag.add(boeking.getBedrag());
-		}
+    @Override
+    public void saveBoekingen(Journaal journaal) {
+        BigDecimal bedrag = new BigDecimal(0.00);
+        for (Boeking boeking : journaal.getBoekingen()) {
+            bedrag = bedrag.add(boeking.getBedrag());
+        }
 
-		boolean transferBoeking = (bedrag.compareTo(BigDecimal.ZERO) == 0 && journaal.getBoekingen().size() == 2);
+        boolean transferBoeking = (bedrag.compareTo(BigDecimal.ZERO) == 0 && journaal.getBoekingen().size() == 2);
 
-		if (!bedrag.equals(journaal.getBedrag()) && !transferBoeking) {
-			throw new IllegalArgumentException("Bedrag komt niet overeen");
-		}
+        if (!bedrag.equals(journaal.getBedrag()) && !transferBoeking) {
+            throw new IllegalArgumentException("Bedrag komt niet overeen");
+        }
 
-		findBoekingen(journaal).stream().forEach(s -> {
-			entityManager.remove(s);
-		});
+        findBoekingen(journaal).stream().forEach(s -> {
+            entityManager.remove(s);
+        });
 
-		if (!transferBoeking) {
-			for (Boeking boeking : journaal.getBoekingen()) {
-				boeking.setId(null);
-				boeking.setVersion(0);
-				boeking.setJournaal(journaal);
-				boeking.setBankrekening(journaal.getBankrekening());
-				boeking.setDatum(journaal.getDatum());
-				createBoeking(boeking);
-			}
-		} else {
-			for (Boeking boeking : journaal.getBoekingen()) {
-				boeking.setId(null);
-				boeking.setVersion(0);
-				boeking.setJournaal(journaal);
-				boeking.setDatum(journaal.getDatum());
-				createBoeking(boeking);
-				if (boeking.getBedrag().abs().compareTo(journaal.getBedrag().abs()) != 0) {
-					throw new IllegalArgumentException("Ongeldige transfer");
-				}
-			}
-		}
-	}
+        if (!transferBoeking) {
+            for (Boeking boeking : journaal.getBoekingen()) {
+                boeking.setId(null);
+                boeking.setVersion(0);
+                boeking.setJournaal(journaal);
+                boeking.setBankrekening(journaal.getBankrekening());
+                boeking.setDatum(journaal.getDatum());
+                createBoeking(boeking);
+            }
+        } else {
+            for (Boeking boeking : journaal.getBoekingen()) {
+                boeking.setId(null);
+                boeking.setVersion(0);
+                boeking.setJournaal(journaal);
+                boeking.setDatum(journaal.getDatum());
+                createBoeking(boeking);
+                if (boeking.getBedrag().abs().compareTo(journaal.getBedrag().abs()) != 0) {
+                    throw new IllegalArgumentException("Ongeldige transfer");
+                }
+            }
+        }
+    }
 
-	public List<Boeking> findBoekingen(Journaal journaal) {
+    public List<Boeking> findBoekingen(Journaal journaal) {
 
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
-		CriteriaQuery<Boeking> criteriaQueryBoeking = cb.createQuery(Boeking.class);
-		Root<BoekingPO> boekingFrom = criteriaQueryBoeking.from(BoekingPO.class);
-		criteriaQueryBoeking.select(boekingFrom);
-		criteriaQueryBoeking.where(cb.equal(boekingFrom.get(BoekingPO_.journaal), journaal));
+        CriteriaQuery<Boeking> criteriaQueryBoeking = cb.createQuery(Boeking.class);
+        Root<BoekingPO> boekingFrom = criteriaQueryBoeking.from(BoekingPO.class);
+        criteriaQueryBoeking.select(boekingFrom);
+        criteriaQueryBoeking.where(cb.equal(boekingFrom.get(BoekingPO_.journaal), journaal));
 
-		return entityManager.createQuery(criteriaQueryBoeking).getResultList();
-	}
+        return entityManager.createQuery(criteriaQueryBoeking).getResultList();
+    }
+
+    @Override
+    public List<Boeking> findManueleBoekingen(LocalDate referentiedatum) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Boeking> criteriaQueryBoeking = cb.createQuery(Boeking.class);
+        Root<BoekingPO> boekingFrom = criteriaQueryBoeking.from(BoekingPO.class);
+        criteriaQueryBoeking.select(boekingFrom);
+        criteriaQueryBoeking.where(cb.and(
+                cb.isNull(boekingFrom.get(BoekingPO_.journaal))),
+                cb.equal(boekingFrom.get(BoekingPO_.datum), referentiedatum));
+
+        return entityManager.createQuery(criteriaQueryBoeking).getResultList();
+    }
 }
