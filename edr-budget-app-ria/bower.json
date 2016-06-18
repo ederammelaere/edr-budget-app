@@ -12,7 +12,8 @@
     "angular-sanitize": "1.2.6",
     "angular-route": "1.2.6",
     "angular-bootstrap": "~0.12.0",
-    "angu-fixed-header-table": "*"
+    "angu-fixed-header-table": "*",
+    "datejs": "~1.0.0-rc3"
   },
   "devDependencies": {
     "angular-mocks": "1.2.6",

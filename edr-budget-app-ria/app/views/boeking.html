@@ -1,77 +1,155 @@
 <h2>Boekingen</h2>
 
 <div>
-	<label>Jaar:</label> <input type="number" ng-model="jaar"/>
-	<label>Filter: <input type="text" ng-model="inputFilter"/></label>
-	<hr>
+  <label>Jaar:</label> <input type="number" ng-model="jaar"/>
+  <label>Filter: <input type="text" ng-model="inputFilter"/></label>
+  <hr>
 </div>
 
 <button ng-click="toevoegen()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></button>
+<button ng-click="toevoegenManueel()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign"></span>
+</button>
 
 <table class="table table-striped table-condensed" fixed-header table-height="700px">
-	<thead>
-		<tr>
-			<th>bankrekening</th>
-			<th>bankrekening - omschrijving</th>
-			<th>boekrekening</th>
-			<th>boekrekening - omschrijving</th>
-			<th>boeking - omschrijving</th>
-			<th>datum</th>
-			<th>bedrag</th>
-			<th>journaalid</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat="boeking in boekingen | filter : tekstFilter ">
-			<td>{{boeking.bankrekening.rekeningnr}}</td>
-			<td>{{boeking.bankrekening.omschrijving}}</td>
-			<td>{{boeking.boekrekening.rekeningnr}}</td>
-			<td>{{boeking.boekrekening.omschrijving}}</td>
-			<td>{{boeking.omschrijving}}</td>
-			<td>{{boeking.datum}}</td>
-			<td>{{boeking.bedrag}}</td>
-			<td>{{boeking.isJournaalSet}}</td>
-			<td>
-				<button ng-click="verwijderen($index)" ng-disabled="boeking.isJournaalSet" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
-			 	<button ng-click="bijwerken($index)" ng-disabled="boeking.isJournaalSet" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-			</td>
-		</tr>
-	</tbody>
+  <thead>
+  <tr>
+    <th>bankrekening</th>
+    <th>bankrekening - omschrijving</th>
+    <th>boekrekening</th>
+    <th>boekrekening - omschrijving</th>
+    <th>boeking - omschrijving</th>
+    <th>datum</th>
+    <th>bedrag</th>
+    <th>journaalid</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="boeking in boekingen | filter : tekstFilter ">
+    <td>{{boeking.bankrekening.rekeningnr}}</td>
+    <td>{{boeking.bankrekening.omschrijving}}</td>
+    <td>{{boeking.boekrekening.rekeningnr}}</td>
+    <td>{{boeking.boekrekening.omschrijving}}</td>
+    <td>{{boeking.omschrijving}}</td>
+    <td>{{boeking.datum}}</td>
+    <td>{{boeking.bedrag}}</td>
+    <td>{{boeking.isJournaalSet}}</td>
+    <td>
+      <button ng-click="verwijderen($index)" ng-disabled="boeking.isJournaalSet" class="btn btn-default btn-sm"><span
+        class="glyphicon glyphicon-trash"></span></button>
+      <button ng-click="bijwerken($index)" ng-disabled="boeking.isJournaalSet" class="btn btn-default btn-sm"><span
+        class="glyphicon glyphicon-pencil"></span></button>
+    </td>
+  </tr>
+  </tbody>
 </table>
 
 <script type="text/ng-template" id="boekingModal.html">
-	<div class="modal-header">
-    	<h3 class="modal-title">{{actie}} van een boeking</h3>
-    </div>
-    <div class="modal-body">
-		<form ng-submit="save()" class="boekingForm" role="form" id="myform">
-			<div class="form-group">
-				<label for="bankrekening">Bankrekening:</label>
-				<select id="bankrekening" class="form-control" ng-model="formObj.bankrekening" ng-init="initBankrekeningen()"
-					ng-options="bankrekening.rekeningnr + ' - ' + bankrekening.omschrijving for bankrekening in bankrekeningen track by bankrekening.id" />
-			</div>
-			<div class="form-group">
-				<label for="boekrekening">Boekrekening:</label>
-				<select class="form-control" ng-model="formObj.boekrekening" ng-init="initBoekrekeningen()"
-					ng-options="boekrekening.rekeningnr  + ' - ' + boekrekening.omschrijving for boekrekening in boekrekeningen | filter:{totalisatie:'false'} track by boekrekening.id" />
-			</div>
-			<div class="form-group">
-				<label for="omschrijving">Omschrijving:</label>
-				<input id="omschrijving" type="text" class="form-control" ng-model="formObj.omschrijving" size="50" placeholder="Geef een omschrijving voor de boeking"/ required >
-			</div>
-			<div class="form-group">
-				<label for="datum">Datum:</label>
-				<input id="datum" type="date" class="form-control" ng-model="formObj.datum" required />
-			</div>
-			<div class="form-group">
-				<label for="bedrag">Bedrag:</label>
-				<input id="bedrag" type="text" class="form-control" ng-model="formObj.bedrag" placeholder="Bedrag in EUR" required />
-			</div>
-		</form>
-	</div>
-	<div class="modal-footer">
-		<button type="submit" form="myform" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-save"></span></button>
-		<button type="reset" ng-click="reset()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
-	</div>
+  <div class="modal-header">
+    <h3 class="modal-title">{{actie}} van een boeking</h3>
+  </div>
+  <div class="modal-body">
+    <form ng-submit="save()" class="boekingForm" role="form" id="myform">
+      <div class="form-group">
+        <label for="bankrekening">Bankrekening:</label>
+        <select id="bankrekening" class="form-control" ng-model="formObj.bankrekening" ng-init="initBankrekeningen()"
+                ng-options="bankrekening.rekeningnr + ' - ' + bankrekening.omschrijving for bankrekening in bankrekeningen track by bankrekening.id"/>
+      </div>
+      <div class="form-group">
+        <label for="boekrekening">Boekrekening:</label>
+        <select class="form-control" ng-model="formObj.boekrekening" ng-init="initBoekrekeningen()"
+                ng-options="boekrekening.rekeningnr  + ' - ' + boekrekening.omschrijving for boekrekening in boekrekeningen | filter:{totalisatie:'false'} track by boekrekening.id"/>
+      </div>
+      <div class="form-group">
+        <label for="omschrijving">Omschrijving:</label>
+        <input id="omschrijving" type="text" class="form-control" ng-model="formObj.omschrijving" size="50"
+               placeholder="Geef een omschrijving voor de boeking"/ required >
+      </div>
+      <div class="form-group">
+        <label for="datum">Datum:</label>
+        <input id="datum" type="date" class="form-control" ng-model="formObj.datum" required/>
+      </div>
+      <div class="form-group">
+        <label for="bedrag">Bedrag:</label>
+        <input id="bedrag" type="text" class="form-control" ng-model="formObj.bedrag" placeholder="Bedrag in EUR"
+               required/>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" form="myform" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-save"></span>
+    </button>
+    <button type="reset" ng-click="reset()" class="btn btn-default btn-sm"><span
+      class="glyphicon glyphicon-remove"></span></button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="boekingManueelModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Toevoegen van manuele boekingen</h3>
+  </div>
+  <div class="modal-body">
+    <form ng-submit="save()" class="form-horizontal" role="form" id="myformManueel">
+      <div class="form-group">
+        <div class="col-md-12">
+          <div class="form-group row">
+            <div class="col-md-2">
+              <label class="col-md-3 control-label">Referentiedatum:</label>
+            </div>
+            <div class="col-md-2">
+              <input class="form-control form-inline" id="referentiedatum" type="date"
+                     ng-model="referentiedatum">
+            </div>
+            <div class="col-md-1">
+              <button><span class="glyphicon glyphicon-search"></span></button>
+            </div>
+            <div class="col-md-2">
+              <label class="col-md-3 control-label">Boekdatum:</label>
+            </div>
+            <div class="col-md-2">
+              <input class="form-control form-inline" id="boekdatum" type="date"
+                     ng-model="boekdatum">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-12">
+          <div class="form-group row">
+            <div class="col-md-4">
+              <label>Bankrekening - boekrekening:</label>
+            </div>
+            <div class="col-md-6">
+              <label>Omschrijving:</label>
+            </div>
+            <div class="col-md-2">
+              <label>Datum:</label>
+            </div>
+
+            <div ng-repeat="boeking in boekingen">
+              <div class="col-md-4">
+                <div class="form-control-static">
+                  {{boeking.bankrekening.rekeningnr + ' - ' + boeking.bankrekening.omschrijving}} -
+                  {{boeking.boekrekening.rekeningnr + ' - ' + boeking.boekrekening.omschrijving}}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <input type="text" class="form-control" ng-model="boeking.omschrijving" size="50"
+                       placeholder="Geef een omschrijving voor de boeking" required>
+              </div>
+              <div class="col-md-2">
+                <input type="text" class="form-control" ng-model="boeking.bedrag" placeholder="Bedrag in EUR" required/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" form="myformManueel" class="btn btn-success btn-sm"><span
+      class="glyphicon glyphicon-save"></span></button>
+    <button type="reset" ng-click="reset()" class="btn btn-default btn-sm"><span
+      class="glyphicon glyphicon-remove"></span></button>
+  </div>
 </script>
