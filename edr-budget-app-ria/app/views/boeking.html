@@ -101,7 +101,7 @@
                      ng-model="referentiedatum">
             </div>
             <div class="col-md-1">
-              <button><span class="glyphicon glyphicon-search"></span></button>
+              <button ng-click="search()" type="button"><span class="glyphicon glyphicon-search"></span></button>
             </div>
             <div class="col-md-2">
               <label class="col-md-3 control-label">Boekdatum:</label>
@@ -116,29 +116,32 @@
       <div class="form-group">
         <div class="col-md-12">
           <div class="form-group row">
-            <div class="col-md-4">
+            <div class="col-md-5">
               <label>Bankrekening - boekrekening:</label>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
               <label>Omschrijving:</label>
             </div>
             <div class="col-md-2">
-              <label>Datum:</label>
+              <label>Bedrag:</label>
             </div>
 
             <div ng-repeat="boeking in boekingen">
-              <div class="col-md-4">
+              <div class="col-md-5">
                 <div class="form-control-static">
                   {{boeking.bankrekening.rekeningnr + ' - ' + boeking.bankrekening.omschrijving}} -
                   {{boeking.boekrekening.rekeningnr + ' - ' + boeking.boekrekening.omschrijving}}
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-3">
                 <input type="text" class="form-control" ng-model="boeking.omschrijving" size="50"
                        placeholder="Geef een omschrijving voor de boeking" required>
               </div>
               <div class="col-md-2">
                 <input type="text" class="form-control" ng-model="boeking.bedrag" placeholder="Bedrag in EUR" required/>
+              </div>
+              <div class="col-md-1">
+                <button ng-click="verwijderen($index)" type="button"><span class="glyphicon glyphicon-minus"></span></span></button>
               </div>
             </div>
           </div>
