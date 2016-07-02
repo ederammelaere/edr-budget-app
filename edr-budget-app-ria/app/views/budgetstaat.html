@@ -14,6 +14,7 @@
       <th>boeking {{referentieJaar}}</th>
       <th>boeking referentie</th>
 			<th>boeking {{jaar}}</th>
+      <th>verschil</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -23,6 +24,7 @@
       <td>{{budgetstaatitem.referentieJaarBedrag}}</td>
       <td>{{budgetstaatitem.referentieBedrag}}</td>
 			<td>{{budgetstaatitem.geboektBedrag}}</td>
+      <td>{{budgetstaatitem.geboektBedrag - budgetstaatitem.referentieBedrag | number : 2 }}</td>
 		</tr>
 	</tbody>
 </table>
