@@ -24,7 +24,7 @@
       <td>{{budgetstaatitem.referentieJaarBedrag}}</td>
       <td>{{budgetstaatitem.referentieBedrag}}</td>
 			<td>{{budgetstaatitem.geboektBedrag}}</td>
-      <td>{{budgetstaatitem.geboektBedrag - budgetstaatitem.referentieBedrag | number : 2 }}</td>
+      <td>{{budgetstaatitem.geboektBedrag - budgetstaatitem.referentieBedrag | afronden }}</td>
 		</tr>
 	</tbody>
 </table>
