@@ -82,7 +82,7 @@ public class StandaardJournaalService extends StandaardAbstractService implement
                 .skip(12)
                 .filter(firstlineFilter)
                 .map(s -> s.split(";", -1))
-                .map(s -> new IntermediairJournaal(s))
+                .map(IntermediairJournaal::new)
                 .map(s -> {
                     Journaal journaal = new JournaalPO();
 
