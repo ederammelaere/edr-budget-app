@@ -66,12 +66,8 @@ public class StandaardJournaalService extends StandaardAbstractService implement
         }
 
         // Ophalen van maximum datum en afschriftnummer
-        Date sqlMaxDatum = (Date) entityManager.createNativeQuery("select max(datum) from journaal").getSingleResult();
-        LocalDate maxDatum = sqlMaxDatum == null ? null : LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(sqlMaxDatum.getTime()), ZoneId.systemDefault()).toLocalDate();
-        Integer maxAfschriftnummer = maxDatum == null ? null : (Integer) entityManager
-                .createNativeQuery("select max(afschriftnummer) from journaal where datum = ?")
-                .setParameter(1, sqlMaxDatum).getSingleResult();
+        LocalDate maxDatum = getMaxDatum();
+        Integer maxAfschriftnummer = getMaxAfschriftnummer(maxDatum);
 
         logger.info("maxDatum = " + maxDatum + "; maxAfschriftnummer = " + maxAfschriftnummer);
 
@@ -131,6 +127,25 @@ public class StandaardJournaalService extends StandaardAbstractService implement
         if (firstlineFilter.isFirstline()) {
             throw new RuntimeException("Er werd geen header lijn gevonden");
         }
+    }
+
+    private Integer getMaxAfschriftnummer(LocalDate maxDatum) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Integer> query = cb.createQuery(Integer.class);
+        Root<JournaalPO> from = query.from(JournaalPO.class);
+        query.select(cb.max(from.get(JournaalPO_.afschriftnummer)));
+        query.where(cb.equal(from.get(JournaalPO_.datum), maxDatum));
+
+        return entityManager.createQuery(query).getSingleResult();
+    }
+
+    private LocalDate getMaxDatum() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<LocalDate> query = cb.createQuery(LocalDate.class);
+        Root<JournaalPO> from = query.from(JournaalPO.class);
+        query.select(cb.greatest(from.get(JournaalPO_.datum)));
+
+        return entityManager.createQuery(query).getSingleResult();
     }
 
     @Override

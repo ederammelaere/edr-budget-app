@@ -114,7 +114,11 @@ public class StandaardBudgetStaatService extends StandaardAbstractService implem
 
         // Stap 1 - bepalen van uiterste boekingsdatum
 
-        List<LocalDate> uitersteBoekingsdatumList = entityManager.createQuery("select max(datum) from BoekingPO").getResultList();
+        CriteriaQuery<LocalDate> uitersteBoekingsdatumQuery=  cb.createQuery(LocalDate.class);
+        Root<BoekingPO> from = uitersteBoekingsdatumQuery.from(BoekingPO.class);
+        uitersteBoekingsdatumQuery.select(cb.greatest(from.get(BoekingPO_.datum)));
+
+        List<LocalDate> uitersteBoekingsdatumList = entityManager.createQuery(uitersteBoekingsdatumQuery).getResultList();
         LocalDate uitersteBoekingsdatum = null;
 
         if (uitersteBoekingsdatumList.size() == 1)

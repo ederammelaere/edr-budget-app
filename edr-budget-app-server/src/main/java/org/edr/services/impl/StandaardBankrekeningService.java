@@ -1,11 +1,5 @@
 package org.edr.services.impl;
 
-import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
 import org.edr.po.Bankrekening;
 import org.edr.po.jpa.BankrekeningPO;
 import org.edr.po.jpa.BankrekeningPO_;
@@ -15,54 +9,56 @@ import org.edr.services.BankrekeningService;
 import org.edr.util.services.StandaardAbstractService;
 import org.springframework.util.Assert;
 
+import javax.persistence.Tuple;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class StandaardBankrekeningService extends StandaardAbstractService implements BankrekeningService {
 
-	@Override
-	public void createBankrekening(Bankrekening bankrekening) {
-		entityManager.persist(bankrekening);
-	}
+    @Override
+    public void createBankrekening(Bankrekening bankrekening) {
+        entityManager.persist(bankrekening);
+    }
 
-	@Override
-	public List<Bankrekening> findBankrekeningen() {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+    @Override
+    public List<Bankrekening> findBankrekeningen() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
-		CriteriaQuery<Bankrekening> criteriaQueryBankrekening = cb.createQuery(Bankrekening.class);
-		Root<BankrekeningPO> bankrekeningFrom = criteriaQueryBankrekening.from(BankrekeningPO.class);
-		criteriaQueryBankrekening.select(bankrekeningFrom);
-		criteriaQueryBankrekening.orderBy(cb.asc(bankrekeningFrom.get(BankrekeningPO_.rekeningnr)));
+        CriteriaQuery<Tuple> criteriaQueryBankrekening = cb.createTupleQuery();
+        Root<BankrekeningPO> bankrekeningFrom = criteriaQueryBankrekening.from(BankrekeningPO.class);
 
-		List<Bankrekening> resultList = entityManager.createQuery(criteriaQueryBankrekening).getResultList();
+        Subquery<BigDecimal> subquery = criteriaQueryBankrekening.subquery(BigDecimal.class);
+        Root<BoekingPO> boekingFrom = subquery.from(BoekingPO.class);
+        subquery.where(cb.equal(bankrekeningFrom, boekingFrom.get(BoekingPO_.bankrekening)));
+        subquery.select(cb.sum(boekingFrom.get(BoekingPO_.bedrag)));
 
-		// Opzoeken van geboekte bedragen
-		CriteriaQuery<BoekingPO> criteriaQueryBoeking = cb.createQuery(BoekingPO.class);
-		Root<BoekingPO> boekingFrom = criteriaQueryBoeking.from(BoekingPO.class);
-		criteriaQueryBoeking.multiselect(boekingFrom.get(BoekingPO_.bankrekening),
-				cb.sum(boekingFrom.get(BoekingPO_.bedrag)));
-		criteriaQueryBoeking.groupBy(boekingFrom.get(BoekingPO_.bankrekening));
+        criteriaQueryBankrekening.select(cb.tuple(bankrekeningFrom.alias("bankrek"),
+                subquery.getSelection().alias("saldo")));
+        criteriaQueryBankrekening.orderBy(cb.asc(bankrekeningFrom.get(BankrekeningPO_.rekeningnr)));
 
-		entityManager.createQuery(criteriaQueryBoeking).getResultList().stream().forEach(s -> {
-			boolean found = false;
-			for (int i = 0; i < resultList.size(); i++) {
-				if (resultList.get(i).getId().equals(s.getBankrekening().getId())) {
-					resultList.get(i).setSaldo(s.getBedrag());
-					found = true;
-					break;
-				}
-			}
-			Assert.isTrue(found);
-		});
+        return entityManager.createQuery(criteriaQueryBankrekening).getResultList().stream().map(s -> {
 
-		return resultList;
-	}
+            Bankrekening bankrekening = (Bankrekening) s.get("bankrek");
+            BigDecimal saldo = (BigDecimal)s.get("saldo");
+            bankrekening.setSaldo(saldo == null ? BigDecimal.ZERO : saldo);
 
-	@Override
-	public void updateBankrekening(Bankrekening bankrekening) {
-		entityManager.merge(bankrekening);
-	}
+            return bankrekening;
+        }).collect(Collectors.toList());
+    }
 
-	@Override
-	public void deleteBankrekening(Long id) {
-		entityManager.remove(entityManager.find(BankrekeningPO.class, id));
-	}
+    @Override
+    public void updateBankrekening(Bankrekening bankrekening) {
+        entityManager.merge(bankrekening);
+    }
+
+    @Override
+    public void deleteBankrekening(Long id) {
+        entityManager.remove(entityManager.find(BankrekeningPO.class, id));
+    }
 
 }

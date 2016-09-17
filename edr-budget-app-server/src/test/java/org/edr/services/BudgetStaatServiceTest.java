@@ -3,14 +3,21 @@ package org.edr.services;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.edr.domain.BudgetStaat;
 import org.edr.junit.AbstractJunitTest;
 import org.edr.po.Boekrekening;
+import org.edr.po.jpa.BoekingPO;
+import org.edr.po.jpa.BoekingPO_;
 import org.edr.po.jpa.BoekrekeningPO;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 public class BudgetStaatServiceTest extends AbstractJunitTest {
 
@@ -92,4 +99,17 @@ public class BudgetStaatServiceTest extends AbstractJunitTest {
 		assertEquals(new BigDecimal("63.00"), budgetStaatList.get(0).getReferentieJaarBedrag());
 		assertEquals(BigDecimal.ZERO, budgetStaatList.get(1).getReferentieJaarBedrag());
 	}
+
+	@Test
+	public void test6() {
+		LocalDate datumViaJPAQL = (LocalDate) entityManager.createQuery("select max(datum) from BoekingPO").getResultList().get(0);
+
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<LocalDate> uitersteBoekingsdatumQuery=  cb.createQuery(LocalDate.class);
+        Root<BoekingPO> from = uitersteBoekingsdatumQuery.from(BoekingPO.class);
+        uitersteBoekingsdatumQuery.select(cb.greatest(from.get(BoekingPO_.datum)));
+        LocalDate datumViaCriteria = entityManager.createQuery(uitersteBoekingsdatumQuery).getResultList().get(0);
+
+        assertEquals(datumViaCriteria, datumViaJPAQL);
+    }
 }
