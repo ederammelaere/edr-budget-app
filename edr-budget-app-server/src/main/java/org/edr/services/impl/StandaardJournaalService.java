@@ -185,7 +185,7 @@ public class StandaardJournaalService extends StandaardAbstractService implement
                 return true;
 
             firstline = false;
-            if (!t.equals("Rekening;Boekingsdatum;Afschriftnummer;Transactienummer;Rekening tegenpartij;Naam tegenpartij bevat;Straat en nummer;"
+            if (!t.equals("Rekening;Boekingsdatum;Rekeninguittrekselnummer;Transactienummer;Rekening tegenpartij;Naam tegenpartij bevat;Straat en nummer;"
                     + "Postcode en plaats;Transactie;Valutadatum;Bedrag;Devies;BIC;Landcode;Mededelingen"))
                 throw new RuntimeException("Header lijn is niet zoals verwacht");
 

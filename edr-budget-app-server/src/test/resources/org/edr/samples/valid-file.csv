@@ -10,7 +10,7 @@ Rekening tegenpartij;
 Laatste saldo;3.159,36 EUR
 Datum/uur van het laatste saldo;23/04/2014 18:43:30
 ;
-Rekening;Boekingsdatum;Afschriftnummer;Transactienummer;Rekening tegenpartij;Naam tegenpartij bevat;Straat en nummer;Postcode en plaats;Transactie;Valutadatum;Bedrag;Devies;BIC;Landcode;Mededelingen
+Rekening;Boekingsdatum;Rekeninguittrekselnummer;Transactienummer;Rekening tegenpartij;Naam tegenpartij bevat;Straat en nummer;Postcode en plaats;Transactie;Valutadatum;Bedrag;Devies;BIC;Landcode;Mededelingen
 BE27 0000 1111 2222;22/07/2014;3;18;;BROOKLYN ROESELARE;;;UW EUROPESE DOMICILIERING 000004457967 VOOR BASE       Company NV MEDEDELING: BASE Company NV/                Contract/0004457967412707150000000    0000007750/000004457967 SCHULDEISERSREFERTE:           00044579674127071500000000000007750                    REF. : 0819684035915 VAL. 04-08;22/07/2014;-119,95;EUR;;
 BE27 0000 1111 2222;22/07/2014;3;17;;FOR MEN TIELT;;;AANKOOP BANCONTACT/MISTER CASH;22/07/2014;-144,90;EUR;;
 BE27 0000 1111 2222;22/07/2014;0;17;;FOR MEN TIELT;;;AANKOOP BANCONTACT/MISTER CASH;22/07/2014;-144,90;EUR;;
