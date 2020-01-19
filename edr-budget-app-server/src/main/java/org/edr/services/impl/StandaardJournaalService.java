@@ -114,7 +114,7 @@ public class StandaardJournaalService extends StandaardAbstractService implement
                 .filter(s -> s.getAfschriftnummer() > 0
                         && (maxDatum == null || s.getDatum().compareTo(maxDatum) > 0 || (s.getDatum().equals(maxDatum) && s
                         .getAfschriftnummer() > maxAfschriftnummer))).forEach(s -> {
-            if (!s.getLandcode().equals("BE") && !s.getLandcode().isEmpty()) {
+            if (!s.getLandcode().equals("BE") && !s.getLandcode().isEmpty() && !s.getLandcode().equals("00")) {
                 throw new RuntimeException("Onverwachte landcode " + s.getLandcode());
             }
             if (!s.getDevies().equals("EUR")) {
