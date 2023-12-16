@@ -27,8 +27,6 @@ import org.edr.util.services.StandaardAbstractService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static javafx.scene.input.KeyCode.N;
-
 public class StandaardBudgetStaatService extends StandaardAbstractService implements BudgetStaatService {
 
     private static final Logger logger = LoggerFactory.getLogger(StandaardBudgetStaatService.class);

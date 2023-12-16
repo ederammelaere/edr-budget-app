@@ -82,11 +82,11 @@ angular.module('edrBudgetAppRiaApp')
       var initialiseer = function (journaalitem) {
         $scope.isNormaal = true;
 
-        if (journaalitem.boekingen.length == 0 && journaalitem.tegenpartijRekening) {
+        if (journaalitem.boekingen.length == 0) {
           // Opzoeken van gelijkaardige boekingen in bestaande input
           $http({
             method: "GET",
-            url: baseRestPath + 'journaal/previousBoekingen?tegenpartijRekening=' + journaalitem.tegenpartijRekening
+            url: baseRestPath + 'journaal/previousBoekingen/' + journaalitem.id
           })
             .success(function (data) {
                 for (var index in data) {
@@ -104,12 +104,10 @@ angular.module('edrBudgetAppRiaApp')
                   var indexTegenpartij = indexRekening == 0 ? 1 : 0;
                   journaalitem.boekingen[indexRekening].bedrag = journaalitem.bedrag;
                   journaalitem.boekingen[indexTegenpartij].bedrag = -1 * journaalitem.bedrag;
-                }
-                else if (journaalitem.boekingen.length > 1) {
+                } else if (journaalitem.boekingen.length > 1) {
                   journaalitem.boekingen = journaalitem.boekingen.slice(0, 1);
                   journaalitem.boekingen[0].bedrag = journaalitem.bedrag;
-                }
-                else if (journaalitem.boekingen.length == 1) {
+                } else if (journaalitem.boekingen.length == 1) {
                   journaalitem.boekingen[0].bedrag = journaalitem.bedrag;
                 }
 
@@ -130,8 +128,7 @@ angular.module('edrBudgetAppRiaApp')
               $scope.isNormaal = false;
               journaalitem.boekingen = [];
             }
-          }
-          else if (journaalitem.boekingen[1].bedrag == journaalitem.bedrag) {
+          } else if (journaalitem.boekingen[1].bedrag == journaalitem.bedrag) {
             if (journaalitem.boekingen[0].bedrag == -1 * journaalitem.bedrag) {
               $scope.transferboeking.boekrekening = journaalitem.boekingen[1].boekrekening;
               $scope.transferboeking.bankrekening = journaalitem.boekingen[0].bankrekening;

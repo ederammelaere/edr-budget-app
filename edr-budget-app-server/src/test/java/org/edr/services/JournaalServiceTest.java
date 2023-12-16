@@ -41,7 +41,7 @@ public class JournaalServiceTest extends AbstractJunitTest {
     public void test5() {
         journaalService.loadJournaalFromStream(openReader("org/edr/samples/valid-file.csv"));
         entityManager.flush();
-        assertSQL("journaal004", "select * from journaal order by id");
+        assertSQL("journaal004", "select * from journaal where id > 5 order by id");
     }
 
     @Test(expected = PersistenceException.class)
@@ -62,13 +62,16 @@ public class JournaalServiceTest extends AbstractJunitTest {
 
     @Test
     public void test8() {
-        assertEquals(0, journaalService.findPreviousBoekingen("ONBESTAAND").size());
-        assertEquals(0, journaalService.findPreviousBoekingen("BEXX").size());
+        assertEquals(0, journaalService.findPreviousBoekingen(1L).size());
 
-        List<Boeking> beyy = journaalService.findPreviousBoekingen("BEYY");
+        List<Boeking> beyy = journaalService.findPreviousBoekingen(2L);
         assertEquals(1, beyy.size());
         assertEquals(5, beyy.get(0).getId().longValue());
         assertEquals(6, beyy.get(0).getBoekrekening().getId().longValue());
+
+        List<Boeking> patternMatch = journaalService.findPreviousBoekingen(3L);
+        assertEquals(1, patternMatch.size());
+        assertEquals("test patroon", patternMatch.get(0).getOmschrijving());
     }
 
     private BufferedReader openReader(String classpathResource) {

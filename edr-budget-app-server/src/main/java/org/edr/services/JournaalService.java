@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface JournaalService {
 
-	void loadJournaalFromStream(BufferedReader reader);
+    void loadJournaalFromStream(BufferedReader reader);
 
-	List<Journaal> findJournaal(int jaar);
+    List<Journaal> findJournaal(int jaar);
 
-	List<Boeking> findPreviousBoekingen(String tegenpartijRekening);
+    List<Boeking> findPreviousBoekingen(Long journaalId);
 
 }

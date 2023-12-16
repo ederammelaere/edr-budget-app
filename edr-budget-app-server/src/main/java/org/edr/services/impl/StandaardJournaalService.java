@@ -13,18 +13,16 @@ import org.edr.util.services.StandaardAbstractService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import java.io.BufferedReader;
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.math.BigInteger;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,15 +112,15 @@ public class StandaardJournaalService extends StandaardAbstractService implement
                 .filter(s -> s.getAfschriftnummer() > 0
                         && (maxDatum == null || s.getDatum().compareTo(maxDatum) > 0 || (s.getDatum().equals(maxDatum) && s
                         .getAfschriftnummer() > maxAfschriftnummer))).forEach(s -> {
-            if (!s.getLandcode().equals("BE") && !s.getLandcode().isEmpty() && !s.getLandcode().equals("00")) {
-                throw new RuntimeException("Onverwachte landcode " + s.getLandcode());
-            }
-            if (!s.getDevies().equals("EUR")) {
-                throw new RuntimeException("Onverwachte munt " + s.getDevies());
-            }
+                    if (!s.getLandcode().equals("BE") && !s.getLandcode().isEmpty() && !s.getLandcode().equals("00")) {
+                        throw new RuntimeException("Onverwachte landcode " + s.getLandcode());
+                    }
+                    if (!s.getDevies().equals("EUR")) {
+                        throw new RuntimeException("Onverwachte munt " + s.getDevies());
+                    }
 
-            entityManager.persist(s);
-        });
+                    entityManager.persist(s);
+                });
 
         if (firstlineFilter.isFirstline()) {
             throw new RuntimeException("Er werd geen header lijn gevonden");
@@ -149,25 +147,50 @@ public class StandaardJournaalService extends StandaardAbstractService implement
     }
 
     @Override
-    public List<Boeking> findPreviousBoekingen(String tegenpartijRekening) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+    public List<Boeking> findPreviousBoekingen(Long journaalId) {
+        Journaal nieuwJournaal = entityManager.find(JournaalPO.class, journaalId);
+        Long previousJournaalid = null;
 
-        CriteriaQuery<Long> criteriaQueryPreviousJournaalid = cb.createQuery(Long.class);
-        Root<JournaalPO> rootJournaal = criteriaQueryPreviousJournaalid.from(JournaalPO.class);
-        criteriaQueryPreviousJournaalid.select(cb.max(rootJournaal.get(JournaalPO_.id)));
-        criteriaQueryPreviousJournaalid.where(
-                cb.and(
-                        cb.equal(rootJournaal.get(JournaalPO_.tegenpartijRekening), tegenpartijRekening),
-                        cb.isNotEmpty(rootJournaal.get(JournaalPO_.boekingen))));
+        if (!nieuwJournaal.getTegenpartijRekening().trim().isEmpty()) {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
-        Long previousJournaalid = entityManager.createQuery(criteriaQueryPreviousJournaalid).getSingleResult();
+            CriteriaQuery<Long> criteriaQueryPreviousJournaalid = cb.createQuery(Long.class);
+            Root<JournaalPO> rootJournaal = criteriaQueryPreviousJournaalid.from(JournaalPO.class);
+            criteriaQueryPreviousJournaalid.select(cb.max(rootJournaal.get(JournaalPO_.id)));
+            criteriaQueryPreviousJournaalid.where(
+                    cb.and(
+                            cb.equal(rootJournaal.get(JournaalPO_.tegenpartijRekening),
+                                    nieuwJournaal.getTegenpartijRekening()),
+                            cb.isNotEmpty(rootJournaal.get(JournaalPO_.boekingen))));
 
-        logger.info("tegenpartijRekening " + tegenpartijRekening + " => " + previousJournaalid);
+            previousJournaalid = entityManager.createQuery(criteriaQueryPreviousJournaalid).getSingleResult();
+        }
 
-        CriteriaQuery<Boeking> criteriaQueryPreviousBoekingen = cb.createQuery(Boeking.class);
+        if (previousJournaalid == null) {
+            Query patternQuery = entityManager.createNativeQuery(
+                    "select max(id) from journaal J "
+                            + " where J.transactie like ( "
+                            + " select pattern from patterns "
+                            + " where (select J2.transactie from journaal J2 where J2.id = ? ) like pattern ) "
+                            + " and 1<=( select count(*) from boeking B where B.journaalid = J.id ) "
+            );
+
+            patternQuery.setParameter(1, nieuwJournaal.getId());
+            List<BigInteger> resultList = patternQuery.getResultList();
+            if (!resultList.isEmpty() && resultList.get(0) != null) {
+                previousJournaalid = resultList.get(0).longValue();
+            }
+        }
+
+        logger.info("tegenpartijRekening " + nieuwJournaal.getTegenpartijRekening() + " => " +
+                previousJournaalid);
+
+        CriteriaBuilder cb2 = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Boeking> criteriaQueryPreviousBoekingen = cb2.createQuery(Boeking.class);
         Root<BoekingPO> root = criteriaQueryPreviousBoekingen.from(BoekingPO.class);
         criteriaQueryPreviousBoekingen.select(root);
-        criteriaQueryPreviousBoekingen.where(cb.equal(root.get(BoekingPO_.journaal), previousJournaalid));
+        criteriaQueryPreviousBoekingen.where(cb2.equal(root.get(BoekingPO_.journaal), previousJournaalid));
 
         return entityManager.createQuery(criteriaQueryPreviousBoekingen).getResultList();
     }
