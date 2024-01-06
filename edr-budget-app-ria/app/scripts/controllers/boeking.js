@@ -23,7 +23,11 @@ angular.module('edrBudgetAppRiaApp')
       formObj.datum = formObj.datum.split("-").reverse().toString().replace(/,/g, "/");
       Boeking.save(addIdObject(formObj), formObj, succesHandler(refresh), errorHandler);
     };
-
+	
+	$scope.refreshManueel = function() {
+		refresh();
+	}
+	
     $scope.verwijderen = function (index) {
       Boeking.remove({id: $scope.boekingen[index].id}, succesHandler(refresh), errorHandler);
     };
@@ -37,8 +41,8 @@ angular.module('edrBudgetAppRiaApp')
     $scope.toevoegen = function () {
       MyModalWindow.openModal({}, $scope.save, 'boekingModal.html');
     };
-
-    $scope.inputFilter = "";
+	
+	$scope.inputFilter = "";
     $scope.tekstFilter = function (boeking) {
       if ($scope.inputFilter == "") {
         return true;
@@ -67,6 +71,15 @@ angular.module('edrBudgetAppRiaApp')
         }
       });
     };
+	
+	$scope.toevoegenTransfer = function () {
+      var modalInstance = $modal.open({
+        templateUrl: 'boekingTransferModal.html',
+        controller: 'BoekingTransferModalInstanceCtrl',
+        windowClass: 'app-modal-window',
+      });
+    };
+
   }]);
 
 angular.module('edrBudgetAppRiaApp')
@@ -106,6 +119,50 @@ angular.module('edrBudgetAppRiaApp')
 
       $scope.reset = function () {
         $modalInstance.dismiss('cancel');
+      };
+
+    }]);
+
+angular.module('edrBudgetAppRiaApp')
+  .controller('BoekingTransferModalInstanceCtrl', ['$scope', '$modalInstance', '$http', 'baseRestPath',
+		'Bankrekening', 'Boekrekening', 'Boeking',
+    function ($scope, $modalInstance, $http, baseRestPath, Bankrekening, Boekrekening, Boeking) {
+
+      $scope.saveTransfer = function () {
+		$scope.formObj.datum = $scope.formObj.datum.split("-").reverse().toString().replace(/,/g, "/");
+		
+		var vanObject = angular.copy($scope.formObj);
+		var naarObject = angular.copy($scope.formObj);
+		
+		delete vanObject.bankrekeningVan;
+		delete vanObject.bankrekeningNaar;
+		delete naarObject.bankrekeningVan;
+		delete naarObject.bankrekeningNaar;
+		
+		vanObject.bankrekening = $scope.formObj.bankrekeningVan;
+		naarObject.bankrekening = $scope.formObj.bankrekeningNaar;
+		
+		vanObject.bedrag = -1.0 * $scope.formObj.bedrag;
+		
+		console.log(vanObject);
+		console.log(naarObject);
+
+		Boeking.save({}, vanObject, succesHandler(function () {}), errorHandler);
+		Boeking.save({}, naarObject, succesHandler(function () {}), errorHandler);
+		
+        $modalInstance.close($scope.boekingen);
+      };
+
+      $scope.reset = function () {
+        $modalInstance.dismiss('cancel');
+      };
+	  
+	  $scope.initBankrekeningen = function () {
+        $scope.bankrekeningen = Bankrekening.query();
+      };
+
+      $scope.initBoekrekeningen = function () {
+        $scope.boekrekeningen = Boekrekening.query();
       };
 
     }]);
