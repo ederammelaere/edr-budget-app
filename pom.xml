@@ -16,7 +16,7 @@
 	</modules>
 
 	<properties>
-		<hibernate.version>4.3.5.Final</hibernate.version>
+		<hibernate.version>5.3.20.Final</hibernate.version>
 		<spring.version>4.0.3.RELEASE</spring.version>
 		<spring.jpa.version>1.5.2.RELEASE</spring.jpa.version>
 		<junit.version>4.11</junit.version>
